@@ -241,7 +241,7 @@
     // 1. Renderizar Categorías
     function renderCategorias() {
       elListCategorias.innerHTML = dbCategorias.map(cat => `
-        <div class="cat-card ${activeCategoryId === cat.id ? 'active' : ''}" style="--cat-color: ${cat.color}" onclick="selectCategory(${cat.id})">
+        <div class="cat-card ${activeCategoryId == cat.id ? 'active' : ''}" style="--cat-color: ${cat.color}" onclick="selectCategory('${cat.id}')">
           <div class="cat-title">${cat.nombre}</div>
           <div class="cat-desc">${cat.descripcion}</div>
         </div>
@@ -250,11 +250,11 @@
 
     // 2. Renderizar Conceptos
     function renderConceptos() {
-      const filtrados = dbGlosario.filter(g => g.categoriaId === activeCategoryId);
-      const catActiva = dbCategorias.find(c => c.id === activeCategoryId);
+      // ⚠️ CORRECCIÓN: Uso de == para evitar problemas de tipos (string vs number)
+      const filtrados = dbGlosario.filter(g => g.categoriaId == activeCategoryId);
+      const catActiva = dbCategorias.find(c => c.id == activeCategoryId);
       const colorActivo = catActiva ? catActiva.color : '#ccc';
       
-      // Asigna el color al contenedor de la tarjeta lateral también
       colTarjetaContainer.style.setProperty('--cat-color', colorActivo);
 
       if (filtrados.length === 0) {
@@ -263,7 +263,7 @@
       }
 
       elGridConceptos.innerHTML = filtrados.map(g => `
-        <div class="concept-card ${activeConceptId === g.id ? 'active' : ''}" style="--cat-color: ${colorActivo}" onclick="selectConcept(${g.id})">
+        <div class="concept-card ${activeConceptId == g.id ? 'active' : ''}" style="--cat-color: ${colorActivo}" onclick="selectConcept('${g.id}')">
           <span class="concept-type">${g.tipo}</span>
           <div class="concept-title">${g.titulo}</div>
           <div class="concept-summary">${g.resumen}</div>
@@ -273,7 +273,7 @@
 
     // 3. Renderizar Detalle de Tarjeta
     function renderTarjeta() {
-      const concepto = dbGlosario.find(g => g.id === activeConceptId);
+      const concepto = dbGlosario.find(g => g.id == activeConceptId);
       
       if (!concepto) {
         elDetailTarjeta.innerHTML = '<div class="empty-state">Selecciona un concepto para ver el detalle.</div>';
@@ -304,7 +304,6 @@
       activeConceptId = id;
       renderConceptos();
       renderTarjeta();
-      // Abre el modal en vista móvil
       colTarjetaContainer.classList.add('mobile-open'); 
     }
 
