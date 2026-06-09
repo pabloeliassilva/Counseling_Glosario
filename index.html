@@ -116,6 +116,22 @@
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 10px;
     }
+    
+    /* Separador de Letras */
+    .letter-divider {
+      grid-column: 1 / -1; /* Hace que ocupe todo el ancho de la grilla */
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--text-main);
+      padding: 15px 0 5px 0;
+      border-bottom: 2px solid var(--border);
+      margin-top: 5px;
+    }
+    .letter-divider:first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
     .concept-card {
       background: var(--bg-panel);
       padding: 15px;
@@ -309,7 +325,20 @@
         return;
       }
 
-      elGridConceptos.innerHTML = filtrados.map(g => {
+      let htmlCartas = '';
+      let letraActual = '';
+
+      filtrados.forEach(g => {
+        // Obtener la primera letra (mayúscula) para agrupar
+        let tituloLimpio = String(g.titulo || '').trim();
+        let primeraLetra = tituloLimpio.charAt(0).toUpperCase() || '#';
+
+        // Si la letra es nueva, insertamos el separador
+        if (primeraLetra !== letraActual) {
+          letraActual = primeraLetra;
+          htmlCartas += `<div class="letter-divider">${letraActual}</div>`;
+        }
+
         let colorCard = colorActivo;
         // Si estamos en "Todas", asignamos el color particular a cada punto
         if (activeCategoryId === 'all') {
@@ -317,14 +346,16 @@
            if (catOriginal) colorCard = catOriginal.color;
         }
 
-        return `
+        htmlCartas += `
         <div class="concept-card ${activeConceptId == g.id ? 'active' : ''}" style="--cat-color: ${colorCard}" onclick="selectConcept('${g.id}')">
           <div class="color-dot"></div>
           <div class="concept-title">${g.titulo}</div>
           <div class="concept-summary">${g.resumen}</div>
         </div>
         `;
-      }).join('');
+      });
+
+      elGridConceptos.innerHTML = htmlCartas;
     }
 
     // 3. Renderizar Detalle de Tarjeta
