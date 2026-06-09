@@ -14,7 +14,7 @@
       --text-muted: #7f8c8d;
       --border: #ecf0f1;
       --hover: #f7f9f9;
-      --brand-color: #00B894; /* Color principal solicitado */
+      --brand-color: #00B894; 
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
@@ -29,7 +29,6 @@
       overflow: hidden;
     }
 
-    /* Banner estilizado y centrado */
     header {
       background: linear-gradient(135deg, var(--brand-color), #008a6e);
       color: white;
@@ -56,7 +55,6 @@
       gap: 15px;
     }
 
-    /* Columnas compartidas */
     .col {
       background: var(--bg-panel);
       border-radius: 8px;
@@ -95,17 +93,28 @@
     .cat-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; color: var(--text-main); }
     .cat-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
 
-    /* Columna 2: Conceptos (Ahora Scrolleable independientemente) */
+    /* Estilo especial para el botón del formulario */
+    .cat-card-form {
+      border: 2px dashed #3498db;
+      margin-top: 20px;
+      background-color: #f0f8ff;
+    }
+    .cat-card-form.active {
+      border-style: solid;
+      background-color: #e1f0fa;
+      border-left: 4px solid #3498db;
+    }
+
+    /* Columna 2: Conceptos */
     .col-conceptos { 
       flex: 1; 
       min-width: 300px; 
       background: transparent; 
       border: none; 
       box-shadow: none; 
-      overflow-y: auto; /* Garantiza el scroll de la sección media */
-      padding-right: 5px; /* Espacio para la barra de scroll */
+      overflow-y: auto;
+      padding-right: 5px; 
     }
-    /* Estilos para que la barra de scroll se vea más limpia */
     .col-conceptos::-webkit-scrollbar { width: 6px; }
     .col-conceptos::-webkit-scrollbar-track { background: transparent; }
     .col-conceptos::-webkit-scrollbar-thumb { background: #dcdde1; border-radius: 4px; }
@@ -117,9 +126,8 @@
       gap: 10px;
     }
     
-    /* Separador de Letras */
     .letter-divider {
-      grid-column: 1 / -1; /* Hace que ocupe todo el ancho de la grilla */
+      grid-column: 1 / -1; 
       font-size: 1.5rem;
       font-weight: 900;
       color: var(--text-main);
@@ -127,10 +135,7 @@
       border-bottom: 2px solid var(--border);
       margin-top: 5px;
     }
-    .letter-divider:first-child {
-      margin-top: 0;
-      padding-top: 0;
-    }
+    .letter-divider:first-child { margin-top: 0; padding-top: 0; }
 
     .concept-card {
       background: var(--bg-panel);
@@ -145,7 +150,6 @@
     .concept-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.08); }
     .concept-card.active { outline: 2px solid var(--cat-color, var(--brand-color)); }
     
-    /* Punto de color de categoría en la tarjeta */
     .color-dot {
       width: 12px;
       height: 12px;
@@ -164,7 +168,6 @@
     .detail-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; color: var(--text-main); }
     .detail-summary { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; font-weight: 500;}
     
-    /* Botón Google */
     .btn-google {
       display: inline-flex;
       align-items: center;
@@ -188,7 +191,28 @@
     
     .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); font-style: italic; }
 
-    /* Botón Volver (solo visible en móvil) */
+    /* Nueva Columna: Formulario */
+    .col-form {
+      display: none; /* Oculto por defecto */
+      flex: 1;
+      border-top: 4px solid #3498db;
+      background: var(--bg-panel);
+    }
+    .col-form iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Lógica CSS para mostrar el formulario */
+    .app-container.show-form .col-conceptos,
+    .app-container.show-form .col-tarjeta {
+      display: none !important;
+    }
+    .app-container.show-form .col-form {
+      display: flex;
+    }
+
     .btn-mobile-close {
       display: none;
       background-color: var(--bg-app);
@@ -229,16 +253,19 @@
       }
       .cat-card.active { background-color: var(--cat-color); border-color: var(--cat-color); }
       .cat-card.active .cat-title { color: #fff; }
+      .cat-card-form { margin-top: 0; }
       .cat-desc { display: none; } 
 
       .col-conceptos { padding-right: 0; }
       .conceptos-grid { grid-template-columns: 1fr; }
       
-      .col-tarjeta {
-        display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      .col-tarjeta, .app-container.show-form .col-form {
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
         width: 100%; height: 100%; z-index: 1000; border-radius: 0;
       }
+      .col-tarjeta { display: none; }
       .col-tarjeta.mobile-open { display: flex; }
+      
       .btn-mobile-close { display: block; }
     }
   </style>
@@ -249,7 +276,7 @@
     <h1>🌸 Glosario de Counseling</h1>
   </header>
 
-  <div class="app-container">
+  <div class="app-container" id="main-app-container">
     
     <aside class="col col-categorias">
       <div class="col-header">Categorías</div>
@@ -269,6 +296,11 @@
       </div>
     </article>
 
+    <section class="col col-form" id="col-form-container">
+      <button class="btn-mobile-close" onclick="closeForm()">Volver al glosario</button>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScj4G-N0KKV4czPMos1Aoh-VmGWUeHxVEW6Su7vi-AoaOXvzg/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+    </section>
+
   </div>
 
   <script>
@@ -278,6 +310,7 @@
     let activeCategoryId = null;
     let activeConceptId = null;
 
+    const elAppContainer = document.getElementById('main-app-container');
     const elListCategorias = document.getElementById('list-categorias');
     const elGridConceptos = document.getElementById('grid-conceptos');
     const elDetailTarjeta = document.getElementById('detail-tarjeta');
@@ -299,13 +332,22 @@
         </div>
       `).join('');
 
-      elListCategorias.innerHTML = cardTodas + cardsCategorias;
+      const cardForm = `
+        <div class="cat-card cat-card-form ${activeCategoryId === 'form' ? 'active' : ''}" style="--cat-color: #3498db" onclick="openForm()">
+          <div class="cat-title">📝 Sugerir concepto</div>
+          <div class="cat-desc">Propone nuevos términos para el glosario</div>
+        </div>
+      `;
+
+      elListCategorias.innerHTML = cardTodas + cardsCategorias + cardForm;
     }
 
     // 2. Renderizar Conceptos
     function renderConceptos() {
+      if (activeCategoryId === 'form') return; // Si estamos en el formulario, no renderizamos conceptos
+
       let filtrados = [];
-      let colorActivo = 'var(--brand-color)'; // Toma el verde principal por defecto
+      let colorActivo = 'var(--brand-color)'; 
       
       if (activeCategoryId === 'all' || !activeCategoryId) {
         filtrados = [...dbGlosario].sort((a, b) => String(a.titulo || '').localeCompare(String(b.titulo || ''), 'es'));
@@ -329,18 +371,15 @@
       let letraActual = '';
 
       filtrados.forEach(g => {
-        // Obtener la primera letra (mayúscula) para agrupar
         let tituloLimpio = String(g.titulo || '').trim();
         let primeraLetra = tituloLimpio.charAt(0).toUpperCase() || '#';
 
-        // Si la letra es nueva, insertamos el separador
         if (primeraLetra !== letraActual) {
           letraActual = primeraLetra;
           htmlCartas += `<div class="letter-divider">${letraActual}</div>`;
         }
 
         let colorCard = colorActivo;
-        // Si estamos en "Todas", asignamos el color particular a cada punto
         if (activeCategoryId === 'all') {
            const catOriginal = dbCategorias.find(c => c.id == g.categoriaId);
            if (catOriginal) colorCard = catOriginal.color;
@@ -360,6 +399,8 @@
 
     // 3. Renderizar Detalle de Tarjeta
     function renderTarjeta() {
+      if (activeCategoryId === 'form') return;
+
       const concepto = dbGlosario.find(g => g.id == activeConceptId);
       
       if (!concepto) {
@@ -367,7 +408,6 @@
         return;
       }
 
-      // Generar URL codificada para Google
       const googleSearchUrl = "https://www.google.com/search?q=" + encodeURIComponent("Counseling: " + concepto.titulo);
 
       elDetailTarjeta.innerHTML = `
@@ -385,12 +425,12 @@
       `;
     }
 
-    // Acciones de interacción
+    // Acciones de interacción generales
     function selectCategory(id) {
+      elAppContainer.classList.remove('show-form'); // Ocultar formulario si estaba abierto
       activeCategoryId = id;
       activeConceptId = null;
       
-      // Reiniciar scroll al cambiar categoría
       elGridConceptos.parentElement.scrollTop = 0; 
       
       renderCategorias();
@@ -403,7 +443,6 @@
       renderConceptos();
       renderTarjeta();
       
-      // Actualizar el color lateral de la tarjeta de detalle si estamos en modo "Todas"
       if (activeCategoryId === 'all') {
         const concepto = dbGlosario.find(g => g.id == activeConceptId);
         const cat = dbCategorias.find(c => c.id == (concepto ? concepto.categoriaId : null));
@@ -415,8 +454,20 @@
       colTarjetaContainer.classList.add('mobile-open'); 
     }
 
+    // Acciones para Móvil y Formulario
     function closeMobileDetail() {
       colTarjetaContainer.classList.remove('mobile-open');
+    }
+
+    function openForm() {
+      activeCategoryId = 'form';
+      activeConceptId = null;
+      elAppContainer.classList.add('show-form'); // Activar vista de formulario
+      renderCategorias(); // Actualizar el menú visualmente
+    }
+
+    function closeForm() {
+      selectCategory('all'); // Botón volver móvil desde el form te devuelve a "Todas"
     }
 
     // Inicialización: Seleccionamos "Todas" por defecto
