@@ -82,21 +82,22 @@
     .cat-card {
       padding: 12px;
       border: 1px solid var(--border);
+      border-left: 5px solid var(--cat-color, var(--brand-color));
       border-radius: 6px;
       margin-bottom: 10px;
       cursor: pointer;
       transition: all 0.2s;
     }
     .cat-card:hover { background-color: var(--hover); }
-    .cat-card.active { border-left: 4px solid var(--cat-color, var(--brand-color)); background-color: var(--hover); }
+    .cat-card.active { border-left-width: 8px; background-color: var(--hover); box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
     .cat-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; color: var(--text-main); }
     .cat-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
 
-    .cat-card-form { border: 2px dashed #3498db; margin-top: 15px; background-color: #f0f8ff; }
-    .cat-card-form.active { border-style: solid; background-color: #e1f0fa; border-left: 4px solid #3498db; }
+    .cat-card-form { border-color: #3498db; border-style: dashed; border-left-style: solid; margin-top: 15px; background-color: #f0f8ff; }
+    .cat-card-form.active { background-color: #e1f0fa; }
     
-    .cat-card-game { border: 2px solid #9b59b6; margin-top: 10px; background-color: #fcf4ff; }
-    .cat-card-game.active { background-color: #f4e1fa; border-left: 4px solid #9b59b6; }
+    .cat-card-game { border-color: #9b59b6; margin-top: 10px; background-color: #fcf4ff; }
+    .cat-card-game.active { background-color: #f4e1fa; }
 
     .col-conceptos { 
       flex: 1; min-width: 300px; background: transparent; border: none; box-shadow: none; overflow-y: auto; padding-right: 5px; 
@@ -157,7 +158,7 @@
       display: flex; align-items: center; gap: 15px; flex: 1; min-width: 250px;
     }
     .counselor-avatar { font-size: 2.2rem; }
-    .counselor-msg { font-style: italic; font-size: 1rem; font-weight: 500; line-height: 1.3;}
+    .counselor-msg { font-style: italic; font-size: 1rem; font-weight: 500; line-height: 1.3; transition: opacity 0.4s ease;}
     .dashboard-score {
       background: white; color: #8e44ad; padding: 8px 18px; border-radius: 25px;
       font-weight: 900; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;
@@ -257,9 +258,10 @@
       .col-categorias .col-header { display: none; }
       .col-categorias .col-content { display: flex; flex-direction: row; overflow-x: auto; padding: 5px; gap: 8px; -ms-overflow-style: none; scrollbar-width: none;  }
       .col-categorias .col-content::-webkit-scrollbar { display: none; }
-      .cat-card { min-width: max-content; margin-bottom: 0; padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border); background-color: var(--bg-panel); }
-      .cat-card.active { background-color: var(--cat-color); border-color: var(--cat-color); }
+      .cat-card { min-width: max-content; margin-bottom: 0; padding: 8px 16px; border-radius: 20px; border: 2px solid var(--cat-color, var(--brand-color)); background-color: var(--bg-panel); border-left: 2px solid var(--cat-color, var(--brand-color));}
+      .cat-card.active { background-color: var(--cat-color); color: #fff; }
       .cat-card.active .cat-title { color: #fff; }
+      .cat-card.active .cat-desc { color: rgba(255,255,255,0.8); display: none; }
       .cat-card-form, .cat-card-game { margin-top: 0; }
       .cat-desc { display: none; } 
       .col-conceptos { padding-right: 0; }
@@ -382,9 +384,21 @@
       () => startWordle(), () => startSopa(), () => startInvasores(), () => startRunner()
     ];
 
+    // --- MENSAJES DEL TABLERO GLOBAL (15 seg) ---
     function obtenerMensajeCounselor() {
       return frasesCounselor[Math.floor(Math.random() * frasesCounselor.length)];
     }
+
+    setInterval(() => {
+      const msgs = document.querySelectorAll('.counselor-msg');
+      msgs.forEach(msg => {
+        msg.style.opacity = 0;
+        setTimeout(() => {
+          msg.innerText = '"' + obtenerMensajeCounselor() + '"';
+          msg.style.opacity = 1;
+        }, 400);
+      });
+    }, 15000);
 
     function renderDashboardHTML() {
       return `
@@ -400,11 +414,35 @@
       `;
     }
 
+    // --- OBTENER MANUAL DE INSTRUCCIONES ---
+    function obtenerManual() {
+        const manuals = {
+            flashcards: "Gira la tarjeta haciendo clic sobre ella. Evalúa tu conocimiento usando los botones inferiores.",
+            trivia_1: "Lee la definición detenidamente y haz clic en el concepto que le corresponda.",
+            trivia_2: "Indica si la afirmación es Verdadera o Falsa según el glosario.",
+            matching: "Haz clic en un concepto y luego en su definición para emparejarlos. Repite hasta vaciar el tablero.",
+            hangman: "Adivina el concepto letra por letra. Tienes 6 vidas, usa la pista sabiamente.",
+            simulador: "Lee lo que dice el consultante y elige la intervención del Counselor más empática y libre de juicios.",
+            empatia: "Clasifica velozmente si la frase es una respuesta empática (verde) o una barrera/simpatía inadecuada (rojo).",
+            corrientes: "Haz clic en la corriente teórica (caja) a la que pertenece el concepto que aparece en pantalla.",
+            autores: "Descubre qué autor célebre de la psicología o el counseling formuló la cita en pantalla.",
+            crucigrama: "Escribe las palabras exactas para cada definición en los campos de texto y luego comprueba tus respuestas.",
+            fragmentado: "Haz clic en los fragmentos de texto en el orden correcto para reconstruir la oración terapéutica.",
+            bombardeo: "Selecciona las respuestas correctas lo más rápido posible. El juego termina cuando el temporizador llega a cero.",
+            wordle: "Adivina el concepto. Si la letra está en su posición correcta se pintará de verde; si existe pero en otro lugar, de amarillo.",
+            sopa: "Selecciona las letras del tablero para formar el concepto indicado. Tienes 10 rondas para resolver todo lo más rápido que puedas.",
+            invasores: "Usa Flechas o Botones Izq/Der para mover el sillón. Dispara Empatía (Espacio) para eliminar los bloqueos que caen. Atrapa los regalos 🎁 para mejorar tus habilidades.",
+            runner: "La carrera de la Alianza Terapéutica. Toca la pantalla o presiona Espacio/Arriba para saltar (y doble salto). Esquiva bloqueos y atrapa la escucha activa."
+        };
+        if(!manuals[juegoActual]) return "";
+        return `<div style="margin-top: 30px; padding: 15px; background: #fff; border-top: 2px dashed #bdc3c7; color: #7f8c8d; font-size: 0.85rem; text-align: left; border-radius: 8px;"><strong>📖 Manual de Instrucciones:</strong> ${manuals[juegoActual]}</div>`;
+    }
+
     function renderCategorias() {
       const cardTodas = `<div class="cat-card ${activeCategoryId === 'all' ? 'active' : ''}" style="--cat-color: var(--brand-color)" onclick="selectCategory('all')"><div class="cat-title">Todas las categorías</div><div class="cat-desc">Ver todos los ítems alfabéticamente</div></div>`;
       const cardsCategorias = dbCategorias.map(cat => `<div class="cat-card ${activeCategoryId == cat.id ? 'active' : ''}" style="--cat-color: ${cat.color}" onclick="selectCategory('${cat.id}')"><div class="cat-title">${cat.nombre}</div><div class="cat-desc">${cat.descripcion}</div></div>`).join('');
-      const cardForm = `<div class="cat-card cat-card-form ${activeCategoryId === 'form' ? 'active' : ''}" style="--cat-color: #3498db" onclick="openSection('form')"><div class="cat-title">📝 Sugerir concepto</div><div class="cat-desc">Propone nuevos términos</div></div>`;
-      const cardGame = `<div class="cat-card cat-card-game ${activeCategoryId === 'game' ? 'active' : ''}" style="--cat-color: #9b59b6" onclick="openSection('game')"><div class="cat-title">🎮 Arcade de Juegos</div><div class="cat-desc">16 modalidades interactivas</div></div>`;
+      const cardForm = `<div class="cat-card cat-card-form ${activeCategoryId === 'form' ? 'active' : ''}" style="--cat-color: #3498db" onclick="openSection('form')"><div class="cat-title">📝 Contactar al Counselor</div><div class="cat-desc">Propone nuevos términos</div></div>`;
+      const cardGame = `<div class="cat-card cat-card-game ${activeCategoryId === 'game' ? 'active' : ''}" style="--cat-color: #9b59b6" onclick="openSection('game')"><div class="cat-title">🎮 COUNSELOR PLAY</div><div class="cat-desc">16 modalidades interactivas</div></div>`;
       elListCategorias.innerHTML = cardTodas + cardsCategorias + cardForm + cardGame;
     }
 
@@ -505,9 +543,10 @@
       if(loopInvasores) cancelAnimationFrame(loopInvasores);
       if(loopRunner) cancelAnimationFrame(loopRunner);
       modoMaraton = false;
+      juegoActual = '';
       
       elArcadeView.innerHTML = renderDashboardHTML() + `
-        <h2 class="arcade-title">🕹️ Arcade del Counselor</h2>
+        <h2 class="arcade-title">🕹️ COUNSELOR PLAY</h2>
         <p class="arcade-subtitle">Elige una modalidad para repasar interactivamente</p>
         
         <div class="arcade-grid">
@@ -555,7 +594,7 @@
     function renderFlashcardRonda() {
       if(ronda >= 10 || ronda >= bancoJuego.length) return renderFinalResult();
       let item = bancoJuego[ronda];
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button><div class="game-active-header"><span>🃏 Tarjetas de Memoria</span><span>Tarjeta ${ronda + 1} / 10</span></div><div class="flashcard-box" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-face flashcard-front"><h2>${item.titulo}</h2><span>👆 Toca para girar</span></div><div class="flashcard-face flashcard-back"><p><b>Definición:</b><br>${item.resumen}</p></div></div></div><div class="flashcard-actions"><button class="btn-action-fc btn-fc-wrong" onclick="nextFlashcard(false)">🔴 No la sabía</button><button class="btn-action-fc btn-fc-correct" onclick="nextFlashcard(true)">🟢 ¡Me la sabía!</button></div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button><div class="game-active-header"><span>🃏 Tarjetas de Memoria</span><span>Tarjeta ${ronda + 1} / 10</span></div><div class="flashcard-box" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-face flashcard-front"><h2>${item.titulo}</h2><span>👆 Toca para girar</span></div><div class="flashcard-face flashcard-back"><p><b>Definición:</b><br>${item.resumen}</p></div></div></div><div class="flashcard-actions"><button class="btn-action-fc btn-fc-wrong" onclick="nextFlashcard(false)">🔴 No la sabía</button><button class="btn-action-fc btn-fc-correct" onclick="nextFlashcard(true)">🟢 ¡Me la sabía!</button></div>` + obtenerManual();
     }
     function nextFlashcard(supo) { 
       let item = bancoJuego[ronda];
@@ -582,7 +621,7 @@
       if(ronda >= 10 || ronda >= bancoJuego.length) return renderFinalResult();
       let p = bancoJuego[ronda];
       let botones = p.opciones.map(o => `<button class="option-btn" onclick="evaluarRespuestaTrivia(this, '${escapeString(o)}', '${escapeString(p.correcta)}')">${o}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>❓ Trivia</span><span>Ronda ${ronda + 1} / 10</span></div><div class="game-text-question">${p.pregunta}</div><div class="options-stack">${botones}</div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>❓ Trivia</span><span>Ronda ${ronda + 1} / 10</span></div><div class="game-text-question">${p.pregunta}</div><div class="options-stack">${botones}</div>` + obtenerManual();
     }
     function evaluarRespuestaTrivia(btn, sel, corr) {
       elArcadeView.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
@@ -613,7 +652,7 @@
       }
       let cHtml = bancoJuego.conceptos.map(c => `<div class="match-item ${bancoJuego.matchedIds.includes(c.id)?'matched':''} ${itemsSeleccionadosMatching.concepto===c.id?'selected':''}" ${!bancoJuego.matchedIds.includes(c.id)?`onclick="selectMatchItem('concepto', '${c.id}')"`:''}>${c.texto}</div>`).join('');
       let dHtml = bancoJuego.definiciones.map(d => `<div class="match-item ${bancoJuego.matchedIds.includes(d.id)?'matched':''} ${itemsSeleccionadosMatching.definicion===d.id?'selected':''}" ${!bancoJuego.matchedIds.includes(d.id)?`onclick="selectMatchItem('definicion', '${d.id}')"`:''}>${d.texto}</div>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔗 Match</span><span>Completados: ${bancoJuego.matchedIds.length} / 5</span></div><div class="match-container"><div class="match-col"><h3>Conceptos</h3>${cHtml}</div><div class="match-col"><h3>Definiciones</h3>${dHtml}</div></div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔗 Match</span><span>Completados: ${bancoJuego.matchedIds.length} / 5</span></div><div class="match-container"><div class="match-col"><h3>Conceptos</h3>${cHtml}</div><div class="match-col"><h3>Definiciones</h3>${dHtml}</div></div>` + obtenerManual();
     }
     function selectMatchItem(col, id) {
       itemsSeleccionadosMatching[col] = id;
@@ -635,7 +674,7 @@
     }
     function renderHangmanBoard() {
       let tHtml = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split('').map(l => `<button class="hang-letter ${hangWordObj.usadas.includes(l)?'used':''}" ${hangWordObj.usadas.includes(l)?'disabled':`onclick="guessHangmanLetter('${l}')"`}>${l}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔤 Ahorcado</span><span>Palabra ${ronda+1}/3 | Vidas: ${hangWordObj.vidas}</span></div><div class="game-text-question"><b>Pista:</b> "${hangWordObj.pista}"</div><div style="font-size:2rem; letter-spacing:5px; margin:20px 0; word-break: break-all;">${hangWordObj.oculta}</div><div style="display:flex; flex-wrap:wrap; gap:5px; justify-content:center; max-width:400px; margin:0 auto;">${tHtml}</div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔤 Ahorcado</span><span>Palabra ${ronda+1}/3 | Vidas: ${hangWordObj.vidas}</span></div><div class="game-text-question"><b>Pista:</b> "${hangWordObj.pista}"</div><div style="font-size:2rem; letter-spacing:5px; margin:20px 0; word-break: break-all;">${hangWordObj.oculta}</div><div style="display:flex; flex-wrap:wrap; gap:5px; justify-content:center; max-width:400px; margin:0 auto;">${tHtml}</div>` + obtenerManual();
     }
     function guessHangmanLetter(l) {
       hangWordObj.usadas.push(l); let lN = normalizarP(l);
@@ -664,7 +703,7 @@
       let p = bancoJuego[ronda];
       let opciones = mezclarArray([p.correct, ...p.wrong]);
       let botones = opciones.map(o => `<button class="option-btn" onclick="evaluarSimulador(this, '${escapeString(o)}', '${escapeString(p.correct)}')">${o}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>💬 Elige la Intervención</span><span>Caso ${ronda + 1} / 3</span></div><div class="game-text-question" style="background:#e8f4f8; border-color:#3498db;"><b>Consultante:</b><br><br>"${p.q}"</div><p style="margin-bottom:15px; color:var(--text-muted);">Como Counselor, ¿cuál sería tu mejor respuesta?</p><div class="options-stack">${botones}</div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>💬 Elige la Intervención</span><span>Caso ${ronda + 1} / 3</span></div><div class="game-text-question" style="background:#e8f4f8; border-color:#3498db;"><b>Consultante:</b><br><br>"${p.q}"</div><p style="margin-bottom:15px; color:var(--text-muted);">Como Counselor, ¿cuál sería tu mejor respuesta?</p><div class="options-stack">${botones}</div>` + obtenerManual();
     }
     function evaluarSimulador(btn, sel, corr) {
       elArcadeView.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
@@ -679,7 +718,7 @@
     function renderEmpatia() {
       if(ronda >= bancoJuego.length) { puntajeJuego = puntajeJuego * 2; return renderFinalResult(); }
       let p = bancoJuego[ronda];
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>⚖️ ¿Empatía o Inadecuado?</span><span>Frase ${ronda + 1} / 5</span></div><div class="flashcard-box" style="cursor:default; border:none; box-shadow:0 10px 20px rgba(0,0,0,0.1);"><div class="flashcard-face flashcard-front" style="position:relative;"><h2>"${p.text}"</h2></div></div><div class="swipe-container"><button class="btn-swipe bg-red" onclick="evaluarEmpatia(false, ${p.isEmpatia})">Simpatía / Inadecuado</button><button class="btn-swipe bg-green" onclick="evaluarEmpatia(true, ${p.isEmpatia})">Empatía / Adecuado</button></div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>⚖️ ¿Empatía o Inadecuado?</span><span>Frase ${ronda + 1} / 5</span></div><div class="flashcard-box" style="cursor:default; border:none; box-shadow:0 10px 20px rgba(0,0,0,0.1);"><div class="flashcard-face flashcard-front" style="position:relative;"><h2>"${p.text}"</h2></div></div><div class="swipe-container"><button class="btn-swipe bg-red" onclick="evaluarEmpatia(false, ${p.isEmpatia})">Simpatía / Inadecuado</button><button class="btn-swipe bg-green" onclick="evaluarEmpatia(true, ${p.isEmpatia})">Empatía / Adecuado</button></div>` + obtenerManual();
     }
     function evaluarEmpatia(respuesta, correcta) {
       historialRespuestas.push({ pre: bancoJuego[ronda].text, res: respuesta?"Empatía":"Inadecuado", cor: correcta?"Empatía":"Inadecuado", exp: correcta ? "Validación y acompañamiento." : "Bloquea o minimiza la emoción." });
@@ -700,7 +739,7 @@
       if(ronda >= bancoJuego.conceptos.length) { puntajeJuego = puntajeJuego * 2; return renderFinalResult(); }
       let c = bancoJuego.conceptos[ronda];
       let cajas = bancoJuego.cats.map(cat => `<div class="drop-box" onclick="evaluarCorriente(${cat.id}, ${c.categoriaId})">${cat.nombre}</div>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🗂️ Cajas de Corrientes</span><span>Concepto ${ronda + 1} / 5</span></div><h2 style="font-size:2.5rem; margin:30px 0; color:#34495e;">${c.titulo}</h2><p style="color:var(--text-muted);">¿A qué enfoque/categoría pertenece?</p><div class="box-container">${cajas}</div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🗂️ Cajas de Corrientes</span><span>Concepto ${ronda + 1} / 5</span></div><h2 style="font-size:2.5rem; margin:30px 0; color:#34495e;">${c.titulo}</h2><p style="color:var(--text-muted);">¿A qué enfoque/categoría pertenece?</p><div class="box-container">${cajas}</div>` + obtenerManual();
     }
     function evaluarCorriente(selId, corrId) {
       let catSel = bancoJuego.cats.find(c=>c.id==selId).nombre;
@@ -719,7 +758,7 @@
       let opciones = mezclarArray(autoresList).slice(0, 4);
       if(!opciones.includes(p.autor)) opciones[0] = p.autor; opciones = mezclarArray(opciones);
       let botones = opciones.map(o => `<button class="option-btn" onclick="evaluarAutores(this, '${escapeString(o)}', '${escapeString(p.autor)}')">${o}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>👤 ¿Quién lo dijo?</span><span>Cita ${ronda + 1} / 4</span></div><div class="game-text-question" style="font-style:italic;">"${p.cita}"</div><div class="options-stack">${botones}</div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>👤 ¿Quién lo dijo?</span><span>Cita ${ronda + 1} / 4</span></div><div class="game-text-question" style="font-style:italic;">"${p.cita}"</div><div class="options-stack">${botones}</div>` + obtenerManual();
     }
     function evaluarAutores(btn, sel, corr) {
       elArcadeView.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
@@ -739,7 +778,7 @@
     }
     function renderCrucigrama() {
       let inputs = cruciObj.map((c, i) => `<div class="cross-row"><div class="cross-clue">${i+1}. ${c.res}</div><input type="text" class="cross-input" id="cruci_${i}" maxlength="${c.t.length}" placeholder="${c.t.length} letras" value="${c.val}"></div>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>📝 Crucigrama</span><span>5 Palabras</span></div>${inputs}<button class="game-play-btn" style="margin-top:20px;" onclick="checkCrucigrama()">Comprobar Respuestas</button>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>📝 Crucigrama</span><span>5 Palabras</span></div>${inputs}<button class="game-play-btn" style="margin-top:20px;" onclick="checkCrucigrama()">Comprobar Respuestas</button>` + obtenerManual();
     }
     function checkCrucigrama() {
       puntajeJuego = 0; historialRespuestas = [];
@@ -775,7 +814,7 @@
         return `<div class="frag-word ${isUsed?'used':''}" ${isUsed?'':`onclick="clickFrag(${i})"`}>${w}</div>`;
       }).join('');
       let currentSentence = fragObj.sel.map(idx => fragObj.arr[idx]).join(' ');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🧩 Fragmentado</span><span>Frase ${ronda + 1} / 3</span></div><h3 style="color:#9b59b6; margin-bottom:10px;">${bancoJuego[ronda].titulo}</h3><div style="min-height:50px; font-size:1.1rem; font-style:italic; margin:20px 0;">${currentSentence}</div><div class="frag-container">${fHtml}</div><button class="game-back-menu" onclick="fragObj.sel=[]; renderFragmentado()">↻ Limpiar</button>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🧩 Fragmentado</span><span>Frase ${ronda + 1} / 3</span></div><h3 style="color:#9b59b6; margin-bottom:10px;">${bancoJuego[ronda].titulo}</h3><div style="min-height:50px; font-size:1.1rem; font-style:italic; margin:20px 0;">${currentSentence}</div><div class="frag-container">${fHtml}</div><button class="game-back-menu" onclick="fragObj.sel=[]; renderFragmentado()">↻ Limpiar</button>` + obtenerManual();
       
       if(fragObj.sel.length === fragObj.arr.length && fragObj.arr.length > 0) {
         if(currentSentence === fragObj.real) { 
@@ -810,7 +849,7 @@
     }
     function renderBombardeo() {
       let botones = bombObj.current.ops.map(o => `<button class="option-btn" style="padding:10px; font-size:0.9rem;" onclick="evaluarBombardeo('${escapeString(o)}')">${o}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Salir</button><div class="game-active-header"><span>⏱️ Bombardeo</span><span>Score: ${bombObj.score}</span></div><div class="timer-bar"><div class="timer-fill" id="bomb-bar" style="width:${(bombObj.time/60)*100}%"></div></div><div class="game-text-question" style="font-size:1rem; padding:15px;">${bombObj.current.q}</div><div class="options-stack">${botones}</div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Salir</button><div class="game-active-header"><span>⏱️ Bombardeo</span><span>Score: ${bombObj.score}</span></div><div class="timer-bar"><div class="timer-fill" id="bomb-bar" style="width:${(bombObj.time/60)*100}%"></div></div><div class="game-text-question" style="font-size:1rem; padding:15px;">${bombObj.current.q}</div><div class="options-stack">${botones}</div>` + obtenerManual();
     }
     function evaluarBombardeo(sel) { 
         if(sel === bombObj.current.c) bombObj.score++; 
@@ -827,7 +866,7 @@
     }
     function renderWordleBoard() {
       let histHtml = wObj.historial.map(h => `<div style="display:flex;gap:5px;justify-content:center;margin-bottom:5px;">${h.split('').map((letra, i) => { let color = '#bdc3c7'; if(wObj.palabra[i] === letra) color = '#2ecc71'; else if(wObj.palabra.includes(letra)) color = '#f1c40f'; return `<span style="width:35px;height:35px;display:flex;align-items:center;justify-content:center;background:${color};color:white;font-weight:bold;border-radius:4px;">${letra}</span>`}).join('')}</div>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🟩 Wordle Clínico</span><span>Intentos: ${wObj.intentos}/6</span></div><p>Palabra de <b>${wObj.palabra.length} letras</b>.</p><div style="margin:20px 0;">${histHtml}</div><input type="text" id="w-input" maxlength="${wObj.palabra.length}" style="text-transform:uppercase;padding:10px;font-size:1.2rem;width:200px;text-align:center;"><br><button class="game-play-btn" onclick="checkWordle()">Comprobar</button>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🟩 Wordle Clínico</span><span>Intentos: ${wObj.intentos}/6</span></div><p>Palabra de <b>${wObj.palabra.length} letras</b>.</p><div style="margin:20px 0;">${histHtml}</div><input type="text" id="w-input" maxlength="${wObj.palabra.length}" style="text-transform:uppercase;padding:10px;font-size:1.2rem;width:200px;text-align:center;"><br><button class="game-play-btn" onclick="checkWordle()">Comprobar</button>` + obtenerManual();
     }
     function checkWordle() {
       let el = document.getElementById('w-input');
@@ -951,7 +990,7 @@
         ${hG}
         <button class="game-play-btn" onclick="checkSopa()">Comprobar</button>
         ${btnTerminar}
-      `;
+      ` + obtenerManual();
     }
 
     function clickSopa(r, c) { 
@@ -995,7 +1034,7 @@
     function startInvasores() {
       historialRespuestas = []; juegoActual = 'invasores'; puntajeJuego = 0;
       invState = { 
-        playing: true, score: 0, playerX: 250, playerW: 80, playerH: 20, 
+        playing: true, score: 0, playerX: 250, playerW: 60, playerH: 40, 
         bullets: [], enemies: [], powerups: [], lastEnemy: 0, keys: {}, 
         lives: 3, speedMod: 1, level: 1, weaponType: 0, weaponTimer: 0
       };
@@ -1010,7 +1049,7 @@
           <button class="btn-space btn-space-shoot" onmousedown="shootInv()" ontouchstart="shootInv()">⚡ Disparar Empatía</button>
           <button class="btn-space" onmousedown="invState.keys.ArrowRight=true" onmouseup="invState.keys.ArrowRight=false" ontouchstart="invState.keys.ArrowRight=true" ontouchend="invState.keys.ArrowRight=false">Der ➡️</button>
         </div>
-      `;
+      ` + obtenerManual();
 
       document.addEventListener('keydown', invKeyDown);
       document.addEventListener('keyup', invKeyUp);
@@ -1023,12 +1062,12 @@
     function shootInv() {
         if(!invState.playing) return;
         if (invState.weaponType === 1) { 
-            invState.bullets.push({ x: invState.playerX + 15, y: 320, w: 4, h: 10, dmg: 1, color: '#3498db' });
-            invState.bullets.push({ x: invState.playerX + invState.playerW - 19, y: 320, w: 4, h: 10, dmg: 1, color: '#3498db' });
+            invState.bullets.push({ x: invState.playerX + 5, y: 290, w: 4, h: 10, dmg: 1, color: '#3498db' });
+            invState.bullets.push({ x: invState.playerX + invState.playerW - 9, y: 290, w: 4, h: 10, dmg: 1, color: '#3498db' });
         } else if (invState.weaponType === 2) { 
-            invState.bullets.push({ x: invState.playerX + invState.playerW/2 - 12, y: 320, w: 24, h: 12, dmg: 3, color: '#2ecc71' });
+            invState.bullets.push({ x: invState.playerX + invState.playerW/2 - 12, y: 290, w: 24, h: 12, dmg: 3, color: '#2ecc71' });
         } else { 
-            invState.bullets.push({ x: invState.playerX + invState.playerW/2 - 2, y: 320, w: 4, h: 10, dmg: 1, color: '#f1c40f' });
+            invState.bullets.push({ x: invState.playerX + invState.playerW/2 - 2, y: 290, w: 4, h: 10, dmg: 1, color: '#f1c40f' });
         }
     }
 
@@ -1070,10 +1109,19 @@
 
         ctx.fillStyle = '#1a1a2e'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+        // DIBUJAR AL COUNSELOR SENTADO EN SILLÓN INDIVIDUAL
+        let px = invState.playerX;
+        ctx.fillStyle = '#7f8c8d'; // Gris oscuro para sillón
+        ctx.fillRect(px + 10, 310, 40, 40); // Asiento
+        ctx.fillRect(px + 15, 290, 30, 20); // Respaldo
+        ctx.fillStyle = '#95a5a6'; // Apoyabrazos
+        ctx.fillRect(px + 2, 305, 12, 30); 
+        ctx.fillRect(px + 46, 305, 12, 30);
+        // Tipito
         ctx.fillStyle = invState.weaponType === 0 ? '#2ecc71' : (invState.weaponType === 1 ? '#3498db' : '#f1c40f');
-        ctx.fillRect(invState.playerX, 330, invState.playerW, invState.playerH);
-        ctx.fillStyle = 'white'; ctx.font = '12px Arial'; ctx.textAlign = 'center';
-        ctx.fillText("Counselor", invState.playerX + invState.playerW/2, 345);
+        ctx.beginPath(); ctx.arc(px + 30, 295, 8, 0, Math.PI*2); ctx.fill(); // Cabeza
+        ctx.fillRect(px + 22, 305, 16, 20); // Torso
+        ctx.fillStyle = 'white'; ctx.font = '9px Arial'; ctx.textAlign = 'center'; ctx.fillText("Tú", px + 30, 315);
 
         for(let i = invState.powerups.length - 1; i >= 0; i--) {
             let p = invState.powerups[i];
@@ -1081,7 +1129,7 @@
             ctx.fillStyle = '#f39c12'; ctx.fillRect(p.x, p.y, p.w, p.h);
             ctx.fillStyle = 'white'; ctx.font = '12px Arial'; ctx.fillText("🎁", p.x + p.w/2, p.y + 15);
 
-            if(p.x < invState.playerX + invState.playerW && p.x + p.w > invState.playerX && p.y + p.h > 330) {
+            if(p.x < invState.playerX + invState.playerW && p.x + p.w > invState.playerX && p.y + p.h > 310) {
                 invState.weaponType = p.type; 
                 invState.weaponTimer = 400; 
                 invState.score += 2; 
@@ -1160,7 +1208,7 @@
       historialRespuestas = []; juegoActual = 'runner'; puntajeJuego = 0;
       runState = {
         playing: true, score: 0, distance: 0,
-        p: { x: 50, y: 250, w: 30, h: 40, vy: 0, jumps: 0, invincibility: 0 },
+        p: { x: 50, y: 250, w: 35, h: 35, vy: 0, jumps: 0, invincibility: 0 },
         floorY: 290, gravity: 0.6, jumpForce: -10, speed: 5,
         obstacles: [], coins: [], powerups: [],
         frames: 0, lives: 3
@@ -1174,7 +1222,7 @@
         <div class="space-controls">
           <button class="btn-space btn-space-shoot" style="background:#27ae60;" onmousedown="jumpRunner()" ontouchstart="jumpRunner(event)">⬆️ SALTAR</button>
         </div>
-      `;
+      ` + obtenerManual();
 
       document.addEventListener('keydown', runKeyDown);
       loopRunner = requestAnimationFrame(updateRunner);
@@ -1244,14 +1292,17 @@
       ctx.fillStyle = '#795548'; ctx.fillRect(0, runState.floorY, canvas.width, canvas.height - runState.floorY);
       ctx.fillStyle = '#8bc34a'; ctx.fillRect(0, runState.floorY, canvas.width, 10);
 
+      // Dibujar Persona corriendo como Emoji
+      ctx.font = '35px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
       if(runState.p.invincibility > 0 && Math.floor(runState.frames / 5) % 2 === 0) {
-        ctx.fillStyle = '#f1c40f'; 
+        ctx.filter = 'drop-shadow(0px 0px 8px #f1c40f)';
+        ctx.fillText("🏃", runState.p.x + runState.p.w/2, runState.p.y - 2);
+        ctx.filter = 'none';
       } else {
-        ctx.fillStyle = '#2980b9'; 
+        ctx.fillText("🏃", runState.p.x + runState.p.w/2, runState.p.y - 2);
       }
-      ctx.fillRect(runState.p.x, runState.p.y, runState.p.w, runState.p.h);
-      ctx.fillStyle = 'white'; ctx.font = '10px Arial'; ctx.textAlign = 'center';
-      ctx.fillText("Tú", runState.p.x + runState.p.w/2, runState.p.y - 5);
       
       for(let i = runState.coins.length - 1; i >= 0; i--) {
         let c = runState.coins[i];
