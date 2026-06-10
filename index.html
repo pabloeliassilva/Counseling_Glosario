@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Glosario Counseling</title>
+  <title>🌸 Enciclopedia de Counseling</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;500;700;900&display=swap');
     
     :root {
-      --bg-app: #f5f6fa;
+      --bg-app: #fcfcfc;
       --bg-panel: #ffffff;
       --text-main: #2c3e50;
       --text-muted: #7f8c8d;
-      --border: #ecf0f1;
-      --hover: #f7f9f9;
+      --border: #e2e8f0;
+      --hover: #f8fafc;
       --brand-color: #00B894; 
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
     
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background-color: var(--bg-app);
       color: var(--text-main);
       height: 100vh;
@@ -30,20 +30,22 @@
     }
 
     header {
-      background: linear-gradient(135deg, var(--brand-color), #008a6e);
+      background: linear-gradient(135deg, #1e293b, #334155, var(--brand-color));
       color: white;
-      padding: 25px 20px;
+      padding: 30px 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       z-index: 10;
+      border-bottom: 3px solid #00B894;
     }
     header h1 {
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      font-family: 'Lora', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
       margin: 0;
     }
 
@@ -55,6 +57,19 @@
       gap: 15px;
     }
 
+    /* FOOTER */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      padding: 8px 15px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      z-index: 10;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.02);
+      line-height: 1.4;
+    }
+
     .col {
       background: var(--bg-panel);
       border-radius: 8px;
@@ -62,7 +77,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
 
     .col-header {
@@ -70,15 +85,14 @@
       border-bottom: 1px solid var(--border);
       font-weight: 700;
       background-color: var(--bg-panel);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
     }
 
-    .col-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-    }
+    .col-content { flex: 1; overflow-y: auto; padding: 10px; }
 
-    .col-categorias { width: 300px; flex-shrink: 0; }
+    .col-categorias { width: 320px; flex-shrink: 0; }
     .cat-card {
       padding: 12px;
       border: 1px solid var(--border);
@@ -88,56 +102,54 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    .cat-card:hover { background-color: var(--hover); }
+    .cat-card:hover { background-color: var(--hover); transform: translateX(2px); }
     .cat-card.active { border-left-width: 8px; background-color: var(--hover); box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
     .cat-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; color: var(--text-main); }
     .cat-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
 
-    .cat-card-form { border-color: #3498db; border-style: dashed; border-left-style: solid; margin-top: 15px; background-color: #f0f8ff; }
-    .cat-card-form.active { background-color: #e1f0fa; }
+    .cat-card-form { border-color: #3498db; border-style: dashed; border-left-style: solid; background-color: #f0f8ff; flex: 1; }
+    .cat-card-wa { border-color: #25D366; background-color: #e8f5e9; flex: 1; display:flex; flex-direction:column; text-decoration:none; }
     
     .cat-card-game { border-color: #9b59b6; margin-top: 10px; background-color: #fcf4ff; }
     .cat-card-game.active { background-color: #f4e1fa; }
 
-    .col-conceptos { 
-      flex: 1; min-width: 300px; background: transparent; border: none; box-shadow: none; overflow-y: auto; padding-right: 5px; 
-    }
+    .col-conceptos { flex: 1; min-width: 300px; background: transparent; border: none; box-shadow: none; overflow-y: auto; padding-right: 5px; }
     .col-conceptos::-webkit-scrollbar { width: 6px; }
     .col-conceptos::-webkit-scrollbar-track { background: transparent; }
-    .col-conceptos::-webkit-scrollbar-thumb { background: #dcdde1; border-radius: 4px; }
+    .col-conceptos::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     
-    .conceptos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+    .conceptos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
     
-    .letter-divider { grid-column: 1 / -1; font-size: 1.5rem; font-weight: 900; color: var(--text-main); padding: 15px 0 5px 0; border-bottom: 2px solid var(--border); margin-top: 5px; }
+    .letter-divider { grid-column: 1 / -1; font-family: 'Lora', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-main); padding: 15px 0 5px 0; border-bottom: 2px solid var(--border); margin-top: 5px; }
     .letter-divider:first-child { margin-top: 0; padding-top: 0; }
 
     .concept-card {
-      background: var(--bg-panel); padding: 15px; border: 1px solid var(--border);
-      border-top: 4px solid var(--cat-color, var(--brand-color)); border-radius: 6px;
-      cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: transform 0.2s;
+      background: var(--bg-panel); padding: 18px; border: 1px solid var(--border);
+      border-top: 4px solid var(--cat-color, var(--brand-color)); border-radius: 8px;
+      cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.03); transition: transform 0.2s, box-shadow 0.2s;
     }
-    .concept-card:hover { transform: translateY(-2px); }
+    .concept-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.06); }
     .concept-card.active { outline: 2px solid var(--cat-color, var(--brand-color)); }
     
-    .color-dot { width: 12px; height: 12px; border-radius: 50%; background-color: var(--cat-color, var(--brand-color)); margin-bottom: 8px; display: inline-block; }
-    .concept-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; }
-    .concept-summary { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;}
+    .color-dot { width: 12px; height: 12px; border-radius: 50%; background-color: var(--cat-color, var(--brand-color)); margin-bottom: 10px; display: inline-block; }
+    .concept-title { font-family: 'Lora', serif; font-weight: 700; font-size: 1.15rem; margin-bottom: 8px; }
+    .concept-summary { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;}
 
     .col-tarjeta { width: 450px; flex-shrink: 0; border-top: 4px solid var(--cat-color, var(--brand-color)); }
-    .detail-container { padding: 20px; }
-    .detail-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; color: var(--text-main); }
-    .detail-summary { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; font-weight: 500;}
+    .detail-container { padding: 25px; }
+    .detail-title { font-family: 'Lora', serif; font-size: 2rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+    .detail-summary { font-size: 1.1rem; margin-bottom: 25px; line-height: 1.6; font-weight: 500;}
     
     .btn-google {
-      display: inline-flex; align-items: center; justify-content: center; background-color: #f1f3f4;
-      color: #3c4043; border: 1px solid #dadce0; padding: 10px 18px; border-radius: 20px;
-      text-decoration: none; font-weight: 500; font-size: 0.9rem; margin-bottom: 25px;
+      display: inline-flex; align-items: center; justify-content: center; background-color: #f1f5f9;
+      color: #334155; border: 1px solid #cbd5e1; padding: 10px 20px; border-radius: 25px;
+      text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-bottom: 30px; transition: 0.2s;
     }
-    .btn-google:hover { background-color: #e8eaed; }
+    .btn-google:hover { background-color: #e2e8f0; }
 
-    .section-title { font-size: 0.85rem; text-transform: uppercase; color: var(--cat-color, var(--brand-color)); margin: 20px 0 10px; text-align: center; border-bottom: 1px solid var(--border); font-weight: 700; }
-    .detail-text { font-size: 0.95rem; line-height: 1.6; color: #34495e; margin-bottom: 20px; }
-    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); font-style: italic; }
+    .section-title { font-size: 0.85rem; text-transform: uppercase; color: var(--cat-color, var(--brand-color)); margin: 25px 0 15px; text-align: left; border-bottom: 2px solid var(--border); padding-bottom: 5px; font-weight: 700; letter-spacing: 1px;}
+    .detail-text { font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 25px; }
+    .empty-state { text-align: center; padding: 50px 20px; color: var(--text-muted); font-style: italic; }
 
     .col-form, .col-game { display: none; flex: 1; border-top: 4px solid; background: var(--bg-panel); overflow-y: auto; }
     .col-form { border-color: #3498db; }
@@ -151,118 +163,126 @@
       background: linear-gradient(135deg, #8e44ad, #9b59b6);
       color: white; padding: 15px 25px; border-radius: 12px;
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 25px; box-shadow: 0 6px 12px rgba(155,89,182,0.2);
-      flex-wrap: wrap; gap: 10px; border: 2px solid #e1bee7;
+      margin-bottom: 25px; box-shadow: 0 6px 15px rgba(155,89,182,0.25);
+      flex-wrap: wrap; gap: 15px; border: 2px solid #e1bee7;
     }
-    .dashboard-counselor {
-      display: flex; align-items: center; gap: 15px; flex: 1; min-width: 250px;
-    }
-    .counselor-avatar { font-size: 2.2rem; }
-    .counselor-msg { font-style: italic; font-size: 1rem; font-weight: 500; line-height: 1.3; transition: opacity 0.4s ease;}
+    .dashboard-counselor { display: flex; align-items: center; gap: 15px; flex: 1; min-width: 250px; text-align: left; }
+    .counselor-avatar { font-size: 2.5rem; }
+    .counselor-msg { font-family: 'Lora', serif; font-style: italic; font-size: 1.05rem; font-weight: 500; line-height: 1.4; transition: opacity 0.4s ease;}
     .dashboard-score {
-      background: white; color: #8e44ad; padding: 8px 18px; border-radius: 25px;
-      font-weight: 900; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;
+      background: white; color: #8e44ad; padding: 10px 20px; border-radius: 30px;
+      font-weight: 900; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    .arcade-title { color: #9b59b6; font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; }
-    .arcade-subtitle { color: var(--text-muted); margin-bottom: 30px; font-size: 1.05rem; }
+    .arcade-title { font-family: 'Lora', serif; color: #9b59b6; font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+    .arcade-subtitle { color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem; }
     
-    .arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; margin-bottom: 20px; }
+    .arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; width: 100%; margin-bottom: 20px; }
     .arcade-card {
-      background: white; border: 2px solid #e1bee7; border-radius: 12px; padding: 20px; cursor: pointer;
+      background: white; border: 2px solid #f1e4f5; border-radius: 12px; padding: 25px 20px; cursor: pointer;
       transition: all 0.2s; display: flex; flex-direction: column; align-items: center; text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     }
-    .arcade-card:hover { transform: translateY(-3px); border-color: #9b59b6; box-shadow: 0 6px 12px rgba(155,89,182,0.15); }
-    .arcade-icon { font-size: 2.5rem; margin-bottom: 12px; }
-    .arcade-name { font-weight: 700; font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px; }
-    .arcade-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; flex: 1; }
+    .arcade-card:hover { transform: translateY(-4px); border-color: #9b59b6; box-shadow: 0 8px 20px rgba(155,89,182,0.15); }
+    .arcade-icon { font-size: 2.8rem; margin-bottom: 15px; }
+    .arcade-name { font-weight: 700; font-size: 1.15rem; color: var(--text-main); margin-bottom: 10px; }
+    .arcade-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
 
     /* COMPONENTES DE JUEGO */
-    .game-active-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 25px; color: #9b59b6; width: 100%; padding-bottom: 10px; border-bottom: 2px solid #f4e1fa; }
-    .game-play-btn { background: #9b59b6; color: white; border: none; padding: 12px 25px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; font-weight: bold; margin-top: 15px; }
-    .game-back-menu { background: none; border: 1px solid #9b59b6; color: #9b59b6; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: background 0.2s; }
-    .game-back-menu:hover { background: #fcf4ff; }
+    .game-active-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 25px; color: #9b59b6; width: 100%; padding-bottom: 12px; border-bottom: 2px solid #f4e1fa; font-size: 1.1rem;}
+    .game-play-btn { font-family: 'Montserrat', sans-serif; background: #9b59b6; color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; font-weight: 700; margin-top: 15px; transition: 0.2s; box-shadow: 0 4px 6px rgba(155,89,182,0.3);}
+    .game-play-btn:hover { background: #8e44ad; transform: translateY(-2px); }
+    .game-back-menu { background: none; border: 2px solid #9b59b6; color: #9b59b6; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: 700; margin-bottom: 20px; transition: all 0.2s; }
+    .game-back-menu:hover { background: #9b59b6; color: white; }
 
-    .flashcard-box { width: 100%; max-width: 450px; height: 280px; perspective: 1000px; margin: 0 auto 30px auto; cursor: pointer; }
-    .flashcard-inner { width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s; position: relative; }
+    /* FLASH CHALLENGE TIMER */
+    .flash-timer-overlay { position: fixed; top: 20px; right: 20px; background: #ff4757; color: white; font-weight: 900; font-size: 1.8rem; padding: 15px 25px; border-radius: 30px; z-index: 9999; box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4); border: 3px solid #ff6b81; animation: pulse 1s infinite alternate; }
+    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
+
+    .flashcard-box { width: 100%; max-width: 500px; height: 300px; perspective: 1000px; margin: 0 auto 30px auto; cursor: pointer; }
+    .flashcard-inner { width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); position: relative; }
     .flashcard-box.flipped .flashcard-inner { transform: rotateY(180deg); }
-    .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 3px solid #9b59b6; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
+    .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 3px solid #9b59b6; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
     .flashcard-front { background: #fdf8ff; color: var(--text-main); }
-    .flashcard-front h2 { font-size: 1.8rem; font-weight: 900; }
+    .flashcard-front h2 { font-family: 'Lora', serif; font-size: 2rem; font-weight: 700; }
     .flashcard-back { background: white; transform: rotateY(180deg); overflow-y: auto; text-align: left; justify-content: flex-start; }
     .flashcard-actions { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
-    .btn-action-fc { border: none; padding: 12px 20px; border-radius: 25px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; gap: 8px; }
-    .btn-fc-wrong { background: #e74c3c; } .btn-fc-correct { background: #2ecc71; }
+    .btn-action-fc { font-family: 'Montserrat', sans-serif; border: none; padding: 14px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; color: white; display: flex; align-items: center; gap: 8px; font-size: 1.05rem; transition: 0.2s;}
+    .btn-action-fc:hover { transform: scale(1.05); }
+    .btn-fc-wrong { background: #e74c3c; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3); } 
+    .btn-fc-correct { background: #2ecc71; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3); }
 
-    .game-text-question { font-size: 1.2rem; font-weight: 500; margin-bottom: 25px; line-height: 1.5; text-align: left; background: #fdfdfd; padding: 20px; border-left: 5px solid #9b59b6; border-radius: 4px; }
-    .options-stack { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto; }
-    .option-btn { background: white; border: 2px solid #bdc3c7; padding: 15px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 500; text-align: left; }
-    .option-btn:hover { border-color: #9b59b6; background: #fef9ff; }
-    .option-btn.correct { background: #2ecc71 !important; color: white !important; border-color: #27ae60 !important; }
+    .game-text-question { font-size: 1.25rem; font-weight: 500; margin-bottom: 25px; line-height: 1.6; text-align: left; background: #fdfdfd; padding: 25px; border-left: 6px solid #9b59b6; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
+    .options-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 650px; margin: 0 auto; }
+    .option-btn { font-family: 'Montserrat', sans-serif; background: white; border: 2px solid #cbd5e1; padding: 16px 20px; border-radius: 10px; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; font-weight: 500; text-align: left; }
+    .option-btn:hover { border-color: #9b59b6; background: #fef9ff; transform: translateX(5px); }
+    .option-btn.correct { background: #2ecc71 !important; color: white !important; border-color: #27ae60 !important; font-weight: 700;}
     .option-btn.wrong { background: #e74c3c !important; color: white !important; border-color: #c0392b !important; }
 
-    .match-container { display: flex; gap: 20px; width: 100%; max-width: 700px; margin: 0 auto; text-align: left; }
-    .match-col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-    .match-item { background: white; border: 2px solid #bdc3c7; padding: 12px 15px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; font-weight: 500; min-height: 70px; display: flex; align-items: center; transition: all 0.2s; }
-    .match-item:hover { border-color: #9b59b6; }
-    .match-item.selected { border-color: #9b59b6; background: #f3e5f5; box-shadow: 0 0 8px rgba(155,89,182,0.3); }
-    .match-item.matched { background: #e8f5e9; border-color: #2ecc71; color: #27ae60; cursor: default; opacity: 0.6; }
+    .match-container { display: flex; gap: 20px; width: 100%; max-width: 800px; margin: 0 auto; text-align: left; }
+    .match-col { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .match-item { background: white; border: 2px solid #cbd5e1; padding: 15px; border-radius: 8px; font-size: 0.95rem; cursor: pointer; font-weight: 500; min-height: 80px; display: flex; align-items: center; transition: all 0.2s; }
+    .match-item:hover { border-color: #9b59b6; transform: scale(1.02); }
+    .match-item.selected { border-color: #9b59b6; background: #f3e5f5; box-shadow: 0 0 10px rgba(155,89,182,0.3); }
+    .match-item.matched { background: #e8f5e9; border-color: #2ecc71; color: #27ae60; cursor: default; opacity: 0.6; transform: none;}
 
-    .result-box { background: #faf6fc; border: 2px dashed #9b59b6; padding: 40px 20px; border-radius: 12px; max-width: 550px; margin: 0 auto; }
-    .result-score { font-size: 4rem; font-weight: 900; color: #9b59b6; margin: 15px 0; }
+    .result-box { background: #faf6fc; border: 3px dashed #9b59b6; padding: 40px 30px; border-radius: 15px; max-width: 600px; margin: 0 auto; box-shadow: 0 10px 30px rgba(155,89,182,0.1); }
+    .result-score { font-size: 4.5rem; font-weight: 900; color: #9b59b6; margin: 20px 0; font-family: 'Lora', serif;}
 
     /* ESTILOS ESPECÍFICOS NUEVOS JUEGOS */
-    .swipe-container { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
-    .btn-swipe { flex: 1; padding: 20px; font-size: 1.2rem; font-weight: bold; border-radius: 12px; border: none; cursor: pointer; color: white; transition: transform 0.1s; }
-    .btn-swipe:active { transform: scale(0.95); }
+    .swipe-container { display: flex; gap: 20px; justify-content: center; margin-top: 25px; }
+    .btn-swipe { font-family: 'Montserrat', sans-serif; flex: 1; padding: 22px; font-size: 1.25rem; font-weight: 700; border-radius: 15px; border: none; cursor: pointer; color: white; transition: transform 0.1s; box-shadow: 0 6px 12px rgba(0,0,0,0.15);}
+    .btn-swipe:active { transform: scale(0.95); box-shadow: 0 2px 5px rgba(0,0,0,0.15);}
     .bg-red { background-color: #e74c3c; } .bg-green { background-color: #2ecc71; }
 
     .box-container { display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap;}
-    .drop-box { flex: 1; min-width: 150px; border: 3px dashed #bdc3c7; border-radius: 12px; padding: 20px 10px; font-weight: bold; cursor: pointer; background: #f8f9fa; transition: all 0.2s;}
-    .drop-box:hover { border-color: #9b59b6; background: #f4e1fa; }
+    .drop-box { flex: 1; min-width: 160px; border: 3px dashed #bdc3c7; border-radius: 12px; padding: 25px 15px; font-weight: 700; cursor: pointer; background: #f8f9fa; transition: all 0.2s; font-size: 1.1rem;}
+    .drop-box:hover { border-color: #9b59b6; background: #f4e1fa; transform: translateY(-3px);}
 
-    .frag-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; min-height: 80px; padding: 15px; border: 2px dashed #bdc3c7; border-radius: 8px;}
-    .frag-word { background: #3498db; color: white; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; user-select: none; }
-    .frag-word.used { background: #ecf0f1; color: #bdc3c7; cursor: default; }
+    .frag-container { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 25px 0; min-height: 90px; padding: 20px; border: 2px dashed #cbd5e1; border-radius: 10px; background: #f1f5f9;}
+    .frag-word { background: #3498db; color: white; padding: 12px 18px; border-radius: 8px; cursor: pointer; font-weight: 700; user-select: none; box-shadow: 0 3px 6px rgba(52,152,219,0.3); transition: 0.2s;}
+    .frag-word:hover { transform: translateY(-2px); }
+    .frag-word.used { background: #e2e8f0; color: #94a3b8; cursor: default; box-shadow: none; transform: none; }
 
-    .cross-row { display: flex; gap: 5px; justify-content: center; margin-bottom: 15px; align-items: center; }
-    .cross-clue { font-size: 0.85rem; width: 250px; text-align: right; padding-right: 15px; color: #34495e; line-height: 1.2; }
-    .cross-input { letter-spacing: 5px; font-family: monospace; font-size: 1.2rem; padding: 8px; border: 2px solid #bdc3c7; border-radius: 4px; width: 200px; text-transform: uppercase; text-align: center; }
+    .cross-row { display: flex; gap: 10px; justify-content: center; margin-bottom: 18px; align-items: center; }
+    .cross-clue { font-size: 0.95rem; width: 280px; text-align: right; padding-right: 15px; color: #334155; line-height: 1.3; font-weight: 500;}
+    .cross-input { font-family: 'Courier New', monospace; letter-spacing: 5px; font-size: 1.3rem; padding: 10px; border: 2px solid #cbd5e1; border-radius: 6px; width: 220px; text-transform: uppercase; text-align: center; font-weight: 700;}
+    .cross-input:focus { outline: none; border-color: #9b59b6; background: #fdf8ff;}
 
-    .timer-bar { height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
-    .timer-fill { height: 100%; background: #e74c3c; width: 100%; transition: width 1s linear; }
+    .timer-bar { height: 12px; background: #e2e8f0; border-radius: 6px; overflow: hidden; margin-bottom: 25px; }
+    .timer-fill { height: 100%; background: linear-gradient(90deg, #e74c3c, #ff7675); width: 100%; transition: width 1s linear; }
 
     /* SPACE INVADERS & RUNNER */
-    .canvas-game { border: 3px solid #9b59b6; border-radius: 8px; width: 100%; max-width: 600px; height: 350px; display: block; margin: 0 auto; touch-action: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    #space-canvas { background: #1a1a2e; }
+    .canvas-game { border: 4px solid #9b59b6; border-radius: 10px; width: 100%; max-width: 600px; height: 350px; display: block; margin: 0 auto; touch-action: none; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+    #space-canvas { background: #0f172a; }
     #runner-canvas { background: #e0f7fa; }
     
-    .space-controls { display: flex; justify-content: center; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-    .btn-space { padding: 15px 25px; font-size: 1.2rem; font-weight: bold; background: #9b59b6; color: white; border: none; border-radius: 8px; cursor: pointer; touch-action: manipulation; }
-    .btn-space:active { background: #8e44ad; transform: scale(0.95); }
-    .btn-space-shoot { background: #e74c3c; width: 100%; max-width: 250px; }
+    .space-controls { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-space { font-family: 'Montserrat', sans-serif; padding: 15px 30px; font-size: 1.2rem; font-weight: 700; background: #9b59b6; color: white; border: none; border-radius: 10px; cursor: pointer; touch-action: manipulation; box-shadow: 0 4px 0 #8e44ad; transition: 0.1s;}
+    .btn-space:active { background: #8e44ad; transform: translateY(4px); box-shadow: none; }
+    .btn-space-shoot { background: #e74c3c; box-shadow: 0 4px 0 #c0392b; width: 100%; max-width: 280px; }
+    .btn-space-shoot:active { background: #c0392b; }
 
     .app-container.show-form .col-conceptos, .app-container.show-form .col-tarjeta { display: none !important; }
     .app-container.show-form .col-form { display: flex; }
     .app-container.show-game .col-conceptos, .app-container.show-game .col-tarjeta { display: none !important; }
     .app-container.show-game .col-game { display: flex; }
 
-    .btn-mobile-close { display: none; background-color: var(--bg-app); color: var(--text-main); border: 1px solid var(--border); padding: 12px 20px; margin: 15px 15px 0 15px; border-radius: 6px; font-weight: 700; cursor: pointer; text-align: left; }
+    .btn-mobile-close { display: none; background-color: var(--bg-app); color: var(--text-main); border: 1px solid var(--border); padding: 14px 22px; margin: 15px 15px 0 15px; border-radius: 8px; font-weight: 700; cursor: pointer; text-align: left; }
     .btn-mobile-close::before { content: "← "; }
 
     @media (max-width: 1024px) {
-      header h1 { font-size: 1.5rem; }
+      header h1 { font-size: 1.6rem; text-align: center;}
       .app-container { flex-direction: column; padding: 10px; gap: 10px; overflow: hidden; }
       .col-categorias { width: 100%; height: auto; flex-shrink: 0; border: none; box-shadow: none; background: transparent; }
       .col-categorias .col-header { display: none; }
-      .col-categorias .col-content { display: flex; flex-direction: row; overflow-x: auto; padding: 5px; gap: 8px; -ms-overflow-style: none; scrollbar-width: none;  }
+      .col-categorias .col-content { display: flex; flex-direction: row; overflow-x: auto; padding: 5px; gap: 10px; -ms-overflow-style: none; scrollbar-width: none;  }
       .col-categorias .col-content::-webkit-scrollbar { display: none; }
-      .cat-card { min-width: max-content; margin-bottom: 0; padding: 8px 16px; border-radius: 20px; border: 2px solid var(--cat-color, var(--brand-color)); background-color: var(--bg-panel); border-left: 2px solid var(--cat-color, var(--brand-color));}
+      .cat-card { min-width: max-content; margin-bottom: 0; padding: 10px 18px; border-radius: 25px; border: 2px solid var(--cat-color, var(--brand-color)); background-color: var(--bg-panel); border-left: 2px solid var(--cat-color, var(--brand-color)); display:flex; align-items:center;}
       .cat-card.active { background-color: var(--cat-color); color: #fff; }
-      .cat-card.active .cat-title { color: #fff; }
-      .cat-card.active .cat-desc { color: rgba(255,255,255,0.8); display: none; }
-      .cat-card-form, .cat-card-game { margin-top: 0; }
+      .cat-card.active .cat-title { color: #fff; margin-bottom: 0;}
+      .cat-card.active .cat-desc { display: none; }
+      .cat-card-form, .cat-card-game, .cat-card-wa { margin-top: 0; display:flex; align-items:center; flex-direction:row;}
       .cat-desc { display: none; } 
       .col-conceptos { padding-right: 0; }
       .conceptos-grid { grid-template-columns: 1fr; }
@@ -275,7 +295,7 @@
       .btn-mobile-close { display: block; }
       .match-container { flex-direction: column; }
       .cross-row { flex-direction: column; align-items: center; }
-      .cross-clue { width: 100%; text-align: center; padding-right: 0; margin-bottom: 5px; }
+      .cross-clue { width: 100%; text-align: center; padding-right: 0; margin-bottom: 8px; }
       .dashboard-counselor { min-width: 100%; text-align: center; justify-content: center; }
     }
   </style>
@@ -283,19 +303,19 @@
 <body>
 
   <header>
-    <h1>🌸 Glosario de Counseling</h1>
+    <h1>🌸 Enciclopedia de Counseling 🌸</h1>
   </header>
 
   <div class="app-container" id="main-app-container">
     
     <aside class="col col-categorias">
-      <div class="col-header">Categorías</div>
+      <div class="col-header">Módulos & Accesos</div>
       <div class="col-content" id="list-categorias"></div>
     </aside>
 
     <section class="col col-conceptos">
       <div class="conceptos-grid" id="grid-conceptos">
-        <div class="empty-state">Cargando...</div>
+        <div class="empty-state">Cargando la enciclopedia...</div>
       </div>
     </section>
 
@@ -315,6 +335,10 @@
     </section>
 
   </div>
+  
+  <footer>
+    🌸 Lilian Beatriz Romano. Counselor y Licenciada en Ciencias de la Educación. CEL: 3541 38-5904. Del Campillo 1478. Bialet Massé. Córdoba. | Actualizado: 10/6/2026, 12:23:43 🌸
+  </footer>
 
   <script>
     const dbCategorias = [{"id":1,"nombre":"Actitudes del profesional","descripcion":"Disposición empática, auténtica y libre de juicios para crear un espacio seguro.","color":"#00B894"},{"id":2,"nombre":"El proceso del consultante","descripcion":"Las vivencias, descubrimientos y la evolución emocional de quien busca ayuda.","color":"#E88D8D"},{"id":3,"nombre":"Filosofía humanista","descripcion":"Bases teóricas que confían en el potencial innato de la persona para desarrollarse.","color":"#F2B672"},{"id":4,"nombre":"Herramientas prácticas","descripcion":"Técnicas de comunicación utilizadas para guiar, ordenar y clarificar la sesión.","color":"#84A9C0"},{"id":5,"nombre":"La relación de ayuda","descripcion":"El vínculo de confianza y trabajo en equipo entre el counselor y el consultante.","color":"#B38CB0"},{"id":6,"nombre":"Límites y protección","descripcion":"El encuadre ético y de privacidad que garantiza la seguridad y transparencia del proceso.","color":"#A2B887"},{"id":7,"nombre":"Temas de consulta y crisis","descripcion":"Situaciones vitales, transiciones o dificultades específicas que motivan el acompañamiento.","color":"#C78B9D"},{"id":9,"nombre":"Links","descripcion":"Vinculos a sitios Web","color":"#8C87BA"}];
@@ -376,6 +400,12 @@
     let indiceMaraton = 0;
     let puntajeMaraton = 0;
     let maxPuntajeMaraton = 0;
+    
+    // VARIABLES DESAFÍO FLASH
+    let modoFlash = false;
+    let flashTimerInterval = null;
+    let flashTimeRestante = 60;
+
     const MARATON_JUEGOS = [
       () => startFlashcards(), () => startTrivia(1), () => startTrivia(2),
       () => startMatching(), () => startHangman(), () => startSimulador(),
@@ -383,6 +413,65 @@
       () => startCrucigrama(), () => startFragmentado(), () => startBombardeo(),
       () => startWordle(), () => startSopa(), () => startInvasores(), () => startRunner()
     ];
+
+    // --- AUDIO API: MÚSICA MIDI POR JUEGO ---
+    let audioCtx = null;
+    let activeOscillators = [];
+
+    function initAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function stopMidiMusic() {
+      activeOscillators.forEach(osc => { try { osc.stop(); } catch(e) {} });
+      activeOscillators = [];
+    }
+
+    function playMidiTheme(gameString) {
+      initAudio();
+      stopMidiMusic();
+      if (!audioCtx) return;
+
+      const t = audioCtx.currentTime;
+      let melody = [];
+      let tempo = 0.2;
+      let type = 'sine';
+
+      // Generar una musiquita única basada en el título del juego
+      switch(gameString) {
+        case 'flashcards': melody = [523.25, 659.25, 783.99, 1046.50]; tempo=0.15; break;
+        case 'trivia_1': case 'trivia_2': melody = [440, 440, 554.37, 659.25]; tempo=0.2; type='triangle'; break;
+        case 'matching': melody = [392, 493.88, 587.33, 783.99, 587.33]; tempo=0.12; break;
+        case 'hangman': melody = [220, 207.65, 196]; tempo=0.4; type='sawtooth'; break;
+        case 'simulador': melody = [261.63, 329.63, 392.00, 523.25, 392.00]; tempo=0.25; break;
+        case 'empatia': melody = [523.25, 659.25, 783.99]; tempo=0.2; break;
+        case 'corrientes': melody = [349.23, 440, 523.25, 698.46]; tempo=0.18; break;
+        case 'autores': melody = [493.88, 440, 392, 493.88]; tempo=0.2; type='square'; break;
+        case 'crucigrama': melody = [261.63, 293.66, 329.63, 349.23, 392]; tempo=0.15; break;
+        case 'fragmentado': melody = [659.25, 523.25, 659.25, 783.99]; tempo=0.15; break;
+        case 'bombardeo': melody = [880, 880, 880, 1046.50]; tempo=0.1; type='square'; break;
+        case 'wordle': melody = [392, 523.25, 659.25, 783.99]; tempo=0.2; break;
+        case 'sopa': melody = [523.25, 587.33, 659.25, 698.46, 783.99]; tempo=0.1; break;
+        case 'invasores': melody = [196, 185, 174.61, 164.81]; tempo=0.3; type='sawtooth'; break;
+        case 'runner': melody = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63]; tempo=0.15; type='square'; break;
+        default: melody = [440, 880]; tempo=0.2; break;
+      }
+
+      melody.forEach((freq, i) => {
+        let osc = audioCtx.createOscillator();
+        let gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, t + i*tempo);
+        gain.gain.setValueAtTime(0.06, t + i*tempo);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + i*tempo + tempo - 0.05);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(t + i*tempo);
+        osc.stop(t + i*tempo + tempo);
+        activeOscillators.push(osc);
+      });
+    }
 
     // --- MENSAJES DEL TABLERO GLOBAL (15 seg) ---
     function obtenerMensajeCounselor() {
@@ -400,6 +489,24 @@
       });
     }, 15000);
 
+    // Sistema para mandar un resumen por mail (cliente correo del usuario)
+    function enviarResumenCorreo() {
+      let body = `Hola Pablo,%0D%0A%0D%0A`;
+      body += `Este es el resumen de mi sesión de juegos en la Enciclopedia de Counseling:%0D%0A%0D%0A`;
+      body += `🏆 Puntaje Global Acumulado: ${puntajeGlobalTotal} pts%0D%0A%0D%0A`;
+      
+      if(historialRespuestas.length > 0) {
+          body += `📋 Detalle de las últimas interacciones:%0D%0A`;
+          historialRespuestas.slice(-20).forEach((r, idx) => {
+              body += `${idx+1}. Contexto: ${r.pre.substring(0, 50)}... | Mi Respuesta: ${r.res} | Esperado: ${r.cor}%0D%0A`;
+          });
+      } else {
+          body += `No se han registrado respuestas detalladas en esta sesión aún.%0D%0A`;
+      }
+      
+      window.location.href = `mailto:pabloeliassilva@gmail.com?subject=Resumen de Progreso Arcade&body=${body}`;
+    }
+
     function renderDashboardHTML() {
       return `
         <div class="global-dashboard">
@@ -407,11 +514,25 @@
             <span class="counselor-avatar">🧠</span>
             <span class="counselor-msg">"${obtenerMensajeCounselor()}"</span>
           </div>
-          <div class="dashboard-score">
-            🏆 Global: ${puntajeGlobalTotal} pts
+          <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+            <div class="dashboard-score" id="ui-global-score">
+              🏆 Global: ${puntajeGlobalTotal} pts
+            </div>
+            <button onclick="enviarResumenCorreo()" style="background:rgba(255,255,255,0.2); border:1px solid white; color:white; padding:5px 15px; border-radius:20px; cursor:pointer; font-size:0.8rem; font-weight:bold;">📧 Enviar Progreso al Admin</button>
           </div>
         </div>
       `;
+    }
+
+    function updatePuntajeGlobal(puntos) {
+      puntajeGlobalTotal += puntos;
+      const el = document.getElementById('ui-global-score');
+      if(el) {
+        el.innerHTML = `🏆 Global: ${puntajeGlobalTotal} pts`;
+        el.style.transform = "scale(1.1)";
+        el.style.color = puntos > 0 ? "#2ecc71" : "#e74c3c";
+        setTimeout(() => { el.style.transform = "scale(1)"; el.style.color = "#8e44ad"; }, 300);
+      }
     }
 
     // --- OBTENER MANUAL DE INSTRUCCIONES ---
@@ -435,15 +556,20 @@
             runner: "La carrera de la Alianza Terapéutica. Toca la pantalla o presiona Espacio/Arriba para saltar (y doble salto). Esquiva bloqueos y atrapa la escucha activa."
         };
         if(!manuals[juegoActual]) return "";
-        return `<div style="margin-top: 30px; padding: 15px; background: #fff; border-top: 2px dashed #bdc3c7; color: #7f8c8d; font-size: 0.85rem; text-align: left; border-radius: 8px;"><strong>📖 Manual de Instrucciones:</strong> ${manuals[juegoActual]}</div>`;
+        return `<div style="margin-top: 30px; padding: 20px; background: #f8fafc; border-top: 2px dashed #cbd5e1; color: #64748b; font-size: 0.9rem; text-align: left; border-radius: 8px;"><strong>📖 Instrucciones:</strong> ${manuals[juegoActual]}</div>`;
     }
 
     function renderCategorias() {
-      const cardTodas = `<div class="cat-card ${activeCategoryId === 'all' ? 'active' : ''}" style="--cat-color: var(--brand-color)" onclick="selectCategory('all')"><div class="cat-title">Todas las categorías</div><div class="cat-desc">Ver todos los ítems alfabéticamente</div></div>`;
+      const cardTodas = `<div class="cat-card ${activeCategoryId === 'all' ? 'active' : ''}" style="--cat-color: var(--brand-color)" onclick="selectCategory('all')"><div class="cat-title">📚 Todas las categorías</div><div class="cat-desc">Ver todos los ítems alfabéticamente</div></div>`;
       const cardsCategorias = dbCategorias.map(cat => `<div class="cat-card ${activeCategoryId == cat.id ? 'active' : ''}" style="--cat-color: ${cat.color}" onclick="selectCategory('${cat.id}')"><div class="cat-title">${cat.nombre}</div><div class="cat-desc">${cat.descripcion}</div></div>`).join('');
-      const cardForm = `<div class="cat-card cat-card-form ${activeCategoryId === 'form' ? 'active' : ''}" style="--cat-color: #3498db" onclick="openSection('form')"><div class="cat-title">📝 Contactar al Counselor</div><div class="cat-desc">Propone nuevos términos</div></div>`;
-      const cardGame = `<div class="cat-card cat-card-game ${activeCategoryId === 'game' ? 'active' : ''}" style="--cat-color: #9b59b6" onclick="openSection('game')"><div class="cat-title">🎮 COUNSELOR PLAY</div><div class="cat-desc">16 modalidades interactivas</div></div>`;
-      elListCategorias.innerHTML = cardTodas + cardsCategorias + cardForm + cardGame;
+      
+      const cardForm = `<div class="cat-card cat-card-form ${activeCategoryId === 'form' ? 'active' : ''}" onclick="openSection('form')"><div class="cat-title">📝 Proponer Términos</div><div class="cat-desc">Formulario a Lilian</div></div>`;
+      const cardWhatsApp = `<a href="https://wa.me/5493541385904?text=Hola%20Lilian,%20me%20comunico%20desde%20la%20Enciclopedia%20de%20Counseling." target="_blank" class="cat-card cat-card-wa"><div class="cat-title">💬 WhatsApp</div><div class="cat-desc">+54 9 3541 38-5904</div></a>`;
+      const cardGridActions = `<div style="display:flex; gap:10px; margin-bottom:10px;">${cardForm}${cardWhatsApp}</div>`;
+      
+      const cardGame = `<div class="cat-card cat-card-game ${activeCategoryId === 'game' ? 'active' : ''}" onclick="openSection('game')"><div class="cat-title">🎮 COUNSELOR ARCADE</div><div class="cat-desc">Juega y evalúa tus conocimientos</div></div>`;
+      
+      elListCategorias.innerHTML = cardTodas + cardsCategorias + cardGridActions + cardGame;
     }
 
     function renderConceptos() {
@@ -481,15 +607,13 @@
     function renderTarjeta() {
       if (activeCategoryId === 'form' || activeCategoryId === 'game') return;
       const concepto = dbGlosario.find(g => g.id == activeConceptId);
-      if (!concepto) { elDetailTarjeta.innerHTML = '<div class="empty-state">Selecciona un concepto en el panel central.</div>'; return; }
-      const googleSearchUrl = "https://www.google.com/search?q=" + encodeURIComponent("Counseling: " + concepto.titulo);
-      elDetailTarjeta.innerHTML = `<div class="detail-container"><h1 class="detail-title">${concepto.titulo}</h1><p class="detail-summary">${concepto.resumen}</p><a href="${googleSearchUrl}" target="_blank" rel="noopener noreferrer" class="btn-google">🔍 Buscar en Google</a>${concepto.desarrolloHtml ? `<div class="section-title"><span>✍️ Desarrollo</span></div><div class="detail-text">${concepto.desarrolloHtml}</div>` : ''}${concepto.aplicacionHtml ? `<div class="section-title"><span>🛠️ Aplicaciones</span></div><div class="detail-text">${concepto.aplicacionHtml}</div>` : ''}</div>`;
+      if (!concepto) { elDetailTarjeta.innerHTML = '<div class="empty-state">Selecciona un concepto en el panel central para ver el desarrollo.</div>'; return; }
+      const googleSearchUrl = "https://www.google.com/search?q=" + encodeURIComponent("Counseling psicología " + concepto.titulo);
+      elDetailTarjeta.innerHTML = `<div class="detail-container"><h1 class="detail-title">${concepto.titulo}</h1><p class="detail-summary">${concepto.resumen}</p><a href="${googleSearchUrl}" target="_blank" rel="noopener noreferrer" class="btn-google">🔍 Ampliar en Google</a>${concepto.desarrolloHtml ? `<div class="section-title"><span>✍️ Desarrollo</span></div><div class="detail-text">${concepto.desarrolloHtml}</div>` : ''}${concepto.aplicacionHtml ? `<div class="section-title"><span>🛠️ Aplicación Clínica</span></div><div class="detail-text">${concepto.aplicacionHtml}</div>` : ''}</div>`;
     }
 
     function selectCategory(id) {
-      if(timerGlobal) clearInterval(timerGlobal);
-      if(loopInvasores) cancelAnimationFrame(loopInvasores);
-      if(loopRunner) cancelAnimationFrame(loopRunner);
+      cancelarTimersGlobales();
       elAppContainer.classList.remove('show-form'); elAppContainer.classList.remove('show-game');
       activeCategoryId = id; activeConceptId = null;
       if(elGridConceptos.parentElement) elGridConceptos.parentElement.scrollTop = 0; 
@@ -497,9 +621,7 @@
     }
 
     function openSection(type) {
-      if(timerGlobal) clearInterval(timerGlobal);
-      if(loopInvasores) cancelAnimationFrame(loopInvasores);
-      if(loopRunner) cancelAnimationFrame(loopRunner);
+      cancelarTimersGlobales();
       activeCategoryId = type; activeConceptId = null;
       elAppContainer.classList.remove('show-form'); elAppContainer.classList.remove('show-game');
       elAppContainer.classList.add('show-' + type);
@@ -517,6 +639,17 @@
     }
 
     function closeMobileDetail() { colTarjetaContainer.classList.remove('mobile-open'); }
+
+    function cancelarTimersGlobales() {
+      if(timerGlobal) clearInterval(timerGlobal);
+      if(loopInvasores) cancelAnimationFrame(loopInvasores);
+      if(loopRunner) cancelAnimationFrame(loopRunner);
+      if(flashTimerInterval) clearInterval(flashTimerInterval);
+      stopMidiMusic();
+      modoFlash = false;
+      let existingFlashUI = document.getElementById('flash-timer-ui');
+      if(existingFlashUI) existingFlashUI.remove();
+    }
 
     function normalizarP(str) { return str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : ''; }
     function mezclarArray(arr) { return [...arr].sort(() => Math.random() - 0.5); }
@@ -538,10 +671,36 @@
       MARATON_JUEGOS[0]();
     }
 
+    function startFlashChallenge() {
+      modoFlash = true;
+      flashTimeRestante = 60;
+      let randIndex = Math.floor(Math.random() * MARATON_JUEGOS.length);
+      
+      let flashUI = document.createElement('div');
+      flashUI.id = 'flash-timer-ui';
+      flashUI.className = 'flash-timer-overlay';
+      flashUI.innerText = "⏱️ 60s";
+      document.body.appendChild(flashUI);
+
+      MARATON_JUEGOS[randIndex]();
+
+      flashTimerInterval = setInterval(() => {
+        flashTimeRestante--;
+        let ui = document.getElementById('flash-timer-ui');
+        if(ui) ui.innerText = `⏱️ ${flashTimeRestante}s`;
+        
+        if(flashTimeRestante <= 0) {
+            clearInterval(flashTimerInterval);
+            modoFlash = false;
+            if(ui) ui.remove();
+            alert("⚡ ¡Tiempo Flash Cumplido!");
+            renderFinalResult();
+        }
+      }, 1000);
+    }
+
     function renderArcadeMenu() {
-      if(timerGlobal) clearInterval(timerGlobal);
-      if(loopInvasores) cancelAnimationFrame(loopInvasores);
-      if(loopRunner) cancelAnimationFrame(loopRunner);
+      cancelarTimersGlobales();
       modoMaraton = false;
       juegoActual = '';
       
@@ -550,10 +709,16 @@
         <p class="arcade-subtitle">Elige una modalidad para repasar interactivamente</p>
         
         <div class="arcade-grid">
-          <div class="arcade-card" style="grid-column: 1 / -1; border-color: #f1c40f; background: #fffdf0;" onclick="startMaraton()">
+          <div class="arcade-card" style="grid-column: 1 / -1; border-color: #f39c12; background: #fef9e7;" onclick="startMaraton()">
             <div class="arcade-icon">🏃‍♂️</div>
             <div class="arcade-name">Maratón de Counseling (16 Juegos)</div>
             <div class="arcade-desc">Modo continuo: Juega todas las modalidades de corrido y suma tu puntaje global.</div>
+          </div>
+
+          <div class="arcade-card" style="grid-column: 1 / -1; border-color: #ff4757; background: #fff0f1;" onclick="startFlashChallenge()">
+            <div class="arcade-icon">⚡</div>
+            <div class="arcade-name">DESAFÍO RANDOM FLASH</div>
+            <div class="arcade-desc">60 Segundos. Juego Aleatorio. ¡Pon a prueba tu velocidad clínica!</div>
           </div>
           
           <div class="arcade-card" style="border-color: #2980b9; background: #eaf2f8;" onclick="startRunner()">
@@ -590,20 +755,22 @@
     }
 
     // --- 1. FLASHCARDS ---
-    function startFlashcards() { historialRespuestas = []; juegoActual = 'flashcards'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbGlosario).slice(0, 10); renderFlashcardRonda(); }
+    function startFlashcards() { playMidiTheme('flashcards'); historialRespuestas = []; juegoActual = 'flashcards'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbGlosario).slice(0, 10); renderFlashcardRonda(); }
     function renderFlashcardRonda() {
       if(ronda >= 10 || ronda >= bancoJuego.length) return renderFinalResult();
       let item = bancoJuego[ronda];
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button><div class="game-active-header"><span>🃏 Tarjetas de Memoria</span><span>Tarjeta ${ronda + 1} / 10</span></div><div class="flashcard-box" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-face flashcard-front"><h2>${item.titulo}</h2><span>👆 Toca para girar</span></div><div class="flashcard-face flashcard-back"><p><b>Definición:</b><br>${item.resumen}</p></div></div></div><div class="flashcard-actions"><button class="btn-action-fc btn-fc-wrong" onclick="nextFlashcard(false)">🔴 No la sabía</button><button class="btn-action-fc btn-fc-correct" onclick="nextFlashcard(true)">🟢 ¡Me la sabía!</button></div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button><div class="game-active-header"><span>🃏 Tarjetas de Memoria</span><span>Tarjeta ${ronda + 1} / 10</span></div><div class="flashcard-box" onclick="this.classList.toggle('flipped')"><div class="flashcard-inner"><div class="flashcard-face flashcard-front"><h2>${item.titulo}</h2><span style="margin-top:15px; color:#8e44ad; font-weight:bold;">👆 Toca para girar</span></div><div class="flashcard-face flashcard-back"><p><b>Definición:</b><br><br>${item.resumen}</p></div></div></div><div class="flashcard-actions"><button class="btn-action-fc btn-fc-wrong" onclick="nextFlashcard(false)">🔴 No la sabía</button><button class="btn-action-fc btn-fc-correct" onclick="nextFlashcard(true)">🟢 ¡Me la sabía!</button></div>` + obtenerManual();
     }
     function nextFlashcard(supo) { 
       let item = bancoJuego[ronda];
       historialRespuestas.push({pre: item.titulo, res: supo?"Sí":"No", cor: item.titulo, exp: item.resumen});
-      if(supo) puntajeJuego++; ronda++; renderFlashcardRonda(); 
+      if(supo) { puntajeJuego++; updatePuntajeGlobal(1); } else { updatePuntajeGlobal(-1); }
+      ronda++; renderFlashcardRonda(); 
     }
 
     // --- 2. TRIVIAS ---
     function startTrivia(tipo) {
+      playMidiTheme('trivia_' + tipo);
       historialRespuestas = []; juegoActual = 'trivia_' + tipo; ronda = 0; puntajeJuego = 0; bancoJuego = [];
       let poolValidos = dbGlosario.filter(g => g.resumen && g.resumen.length > 5);
       let mezclados = mezclarArray(poolValidos).slice(0, 10);
@@ -628,14 +795,15 @@
       let pregClean = bancoJuego[ronda].pregunta.replace(/<[^>]*>?/gm, '');
       historialRespuestas.push({pre: pregClean, res: sel, cor: corr, exp: sel === corr ? "¡Acertaste la definición!" : "La respuesta correcta era " + corr});
       
-      if(sel === corr) { btn.classList.add('correct'); puntajeJuego++; } 
-      else { btn.classList.add('wrong'); elArcadeView.querySelectorAll('.option-btn').forEach(b => { if(b.innerText === corr) b.classList.add('correct'); }); }
+      if(sel === corr) { btn.classList.add('correct'); puntajeJuego++; updatePuntajeGlobal(1); } 
+      else { btn.classList.add('wrong'); updatePuntajeGlobal(-1); elArcadeView.querySelectorAll('.option-btn').forEach(b => { if(b.innerText === corr) b.classList.add('correct'); }); }
       setTimeout(() => { ronda++; renderTriviaRonda(); }, 1200);
     }
 
     // --- MATCHING ---
     let itemsSeleccionadosMatching = { concepto: null, definicion: null };
     function startMatching() {
+      playMidiTheme('matching');
       historialRespuestas = []; juegoActual = 'matching'; ronda = 0; puntajeJuego = 0;
       let pool = mezclarArray(dbGlosario.filter(g => g.resumen)).slice(0, 5);
       bancoJuego = { conceptos: mezclarArray(pool.map(g => ({ id: String(g.id), texto: g.titulo }))), definiciones: mezclarArray(pool.map(g => ({ id: String(g.id), texto: g.resumen.substring(0, 95) + '...' }))), matchedIds: [] };
@@ -652,19 +820,24 @@
       }
       let cHtml = bancoJuego.conceptos.map(c => `<div class="match-item ${bancoJuego.matchedIds.includes(c.id)?'matched':''} ${itemsSeleccionadosMatching.concepto===c.id?'selected':''}" ${!bancoJuego.matchedIds.includes(c.id)?`onclick="selectMatchItem('concepto', '${c.id}')"`:''}>${c.texto}</div>`).join('');
       let dHtml = bancoJuego.definiciones.map(d => `<div class="match-item ${bancoJuego.matchedIds.includes(d.id)?'matched':''} ${itemsSeleccionadosMatching.definicion===d.id?'selected':''}" ${!bancoJuego.matchedIds.includes(d.id)?`onclick="selectMatchItem('definicion', '${d.id}')"`:''}>${d.texto}</div>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔗 Match</span><span>Completados: ${bancoJuego.matchedIds.length} / 5</span></div><div class="match-container"><div class="match-col"><h3>Conceptos</h3>${cHtml}</div><div class="match-col"><h3>Definiciones</h3>${dHtml}</div></div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔗 Match</span><span>Completados: ${bancoJuego.matchedIds.length} / 5</span></div><div class="match-container"><div class="match-col"><h3 style="color:#2c3e50; margin-bottom:10px;">Conceptos</h3>${cHtml}</div><div class="match-col"><h3 style="color:#2c3e50; margin-bottom:10px;">Definiciones</h3>${dHtml}</div></div>` + obtenerManual();
     }
     function selectMatchItem(col, id) {
       itemsSeleccionadosMatching[col] = id;
       if(itemsSeleccionadosMatching.concepto && itemsSeleccionadosMatching.definicion) {
-        if(itemsSeleccionadosMatching.concepto === itemsSeleccionadosMatching.definicion) bancoJuego.matchedIds.push(itemsSeleccionadosMatching.concepto);
+        if(itemsSeleccionadosMatching.concepto === itemsSeleccionadosMatching.definicion) {
+            bancoJuego.matchedIds.push(itemsSeleccionadosMatching.concepto);
+            updatePuntajeGlobal(2);
+        } else {
+            updatePuntajeGlobal(-1);
+        }
         itemsSeleccionadosMatching = { concepto: null, definicion: null };
       }
       renderMatchingBoard();
     }
 
     // --- AHORCADO ---
-    function startHangman() { historialRespuestas = []; juegoActual = 'hangman'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbGlosario.filter(g => g.titulo.length > 3 && g.titulo.length < 25)).slice(0, 3); startHangmanWord(); }
+    function startHangman() { playMidiTheme('hangman'); historialRespuestas = []; juegoActual = 'hangman'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbGlosario.filter(g => g.titulo.length > 3 && g.titulo.length < 25)).slice(0, 3); startHangmanWord(); }
     let hangWordObj = {};
     function startHangmanWord() {
       if(ronda >= 3) return renderFinalResult();
@@ -673,8 +846,8 @@
       hangWordObj = { real, oculta, vidas: 6, usadas: [], pista: c.resumen }; renderHangmanBoard();
     }
     function renderHangmanBoard() {
-      let tHtml = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split('').map(l => `<button class="hang-letter ${hangWordObj.usadas.includes(l)?'used':''}" ${hangWordObj.usadas.includes(l)?'disabled':`onclick="guessHangmanLetter('${l}')"`}>${l}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔤 Ahorcado</span><span>Palabra ${ronda+1}/3 | Vidas: ${hangWordObj.vidas}</span></div><div class="game-text-question"><b>Pista:</b> "${hangWordObj.pista}"</div><div style="font-size:2rem; letter-spacing:5px; margin:20px 0; word-break: break-all;">${hangWordObj.oculta}</div><div style="display:flex; flex-wrap:wrap; gap:5px; justify-content:center; max-width:400px; margin:0 auto;">${tHtml}</div>` + obtenerManual();
+      let tHtml = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split('').map(l => `<button class="hang-letter ${hangWordObj.usadas.includes(l)?'used':''}" ${hangWordObj.usadas.includes(l)?'disabled':`onclick="guessHangmanLetter('${l}')"`} style="padding:10px 15px; margin:2px; border:1px solid #ccc; background:#fff; border-radius:5px; font-weight:bold; cursor:pointer;">${l}</button>`).join('');
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔤 Ahorcado</span><span>Palabra ${ronda+1}/3 | Vidas: ${hangWordObj.vidas} ❤️</span></div><div class="game-text-question"><b>Pista:</b> "${hangWordObj.pista}"</div><div style="font-family:monospace; font-size:2.5rem; letter-spacing:8px; margin:30px 0; word-break: break-all; color:#9b59b6;">${hangWordObj.oculta}</div><div style="display:flex; flex-wrap:wrap; gap:5px; justify-content:center; max-width:500px; margin:0 auto;">${tHtml}</div>` + obtenerManual();
     }
     function guessHangmanLetter(l) {
       hangWordObj.usadas.push(l); let lN = normalizarP(l);
@@ -682,12 +855,14 @@
         let nO = '';
         for(let i=0; i<hangWordObj.real.length; i++) nO += normalizarP(hangWordObj.real[i]) === lN ? hangWordObj.real[i] : hangWordObj.oculta[i];
         hangWordObj.oculta = nO;
+        updatePuntajeGlobal(1);
         if(!nO.includes('_')) { 
             historialRespuestas.push({pre: "Palabra Oculta", res: "Descubierta", cor: hangWordObj.real, exp: hangWordObj.pista});
-            puntajeJuego+=3; ronda++; setTimeout(startHangmanWord, 1000); 
+            puntajeJuego+=3; updatePuntajeGlobal(2); ronda++; setTimeout(startHangmanWord, 1000); 
         }
       } else {
         hangWordObj.vidas--;
+        updatePuntajeGlobal(-1);
         if(hangWordObj.vidas<=0) { 
             historialRespuestas.push({pre: "Palabra Oculta", res: "Fallida", cor: hangWordObj.real, exp: hangWordObj.pista});
             ronda++; setTimeout(startHangmanWord, 1500); 
@@ -697,37 +872,38 @@
     }
 
     // --- NUEVO 1: SIMULADOR DE DIÁLOGO ---
-    function startSimulador() { historialRespuestas = []; juegoActual = 'simulador'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraCasos).slice(0, 3); renderSimulador(); }
+    function startSimulador() { playMidiTheme('simulador'); historialRespuestas = []; juegoActual = 'simulador'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraCasos).slice(0, 3); renderSimulador(); }
     function renderSimulador() {
       if(ronda >= bancoJuego.length) { puntajeJuego = Math.round((puntajeJuego/3)*10); return renderFinalResult(); }
       let p = bancoJuego[ronda];
       let opciones = mezclarArray([p.correct, ...p.wrong]);
       let botones = opciones.map(o => `<button class="option-btn" onclick="evaluarSimulador(this, '${escapeString(o)}', '${escapeString(p.correct)}')">${o}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>💬 Elige la Intervención</span><span>Caso ${ronda + 1} / 3</span></div><div class="game-text-question" style="background:#e8f4f8; border-color:#3498db;"><b>Consultante:</b><br><br>"${p.q}"</div><p style="margin-bottom:15px; color:var(--text-muted);">Como Counselor, ¿cuál sería tu mejor respuesta?</p><div class="options-stack">${botones}</div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>💬 Elige la Intervención</span><span>Caso ${ronda + 1} / 3</span></div><div class="game-text-question" style="background:#f0f9ff; border-color:#3498db;"><b>Consultante:</b><br><br>"${p.q}"</div><p style="margin-bottom:15px; color:var(--text-muted); font-weight:bold;">Como Counselor, ¿cuál sería tu mejor respuesta?</p><div class="options-stack">${botones}</div>` + obtenerManual();
     }
     function evaluarSimulador(btn, sel, corr) {
       elArcadeView.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
       historialRespuestas.push({ pre: bancoJuego[ronda].q, res: sel, cor: corr, exp: "Se busca reflejar sentimientos y validar empáticamente." });
-      if(sel === corr) { btn.classList.add('correct'); puntajeJuego++; } 
-      else { btn.classList.add('wrong'); elArcadeView.querySelectorAll('.option-btn').forEach(b => { if(b.innerText === corr) b.classList.add('correct'); }); }
+      if(sel === corr) { btn.classList.add('correct'); puntajeJuego++; updatePuntajeGlobal(3); } 
+      else { btn.classList.add('wrong'); updatePuntajeGlobal(-1); elArcadeView.querySelectorAll('.option-btn').forEach(b => { if(b.innerText === corr) b.classList.add('correct'); }); }
       setTimeout(() => { ronda++; renderSimulador(); }, 1800);
     }
 
     // --- NUEVO 2: EMPATÍA O SIMPATÍA ---
-    function startEmpatia() { historialRespuestas = []; juegoActual = 'empatia'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraEmpatia).slice(0, 5); renderEmpatia(); }
+    function startEmpatia() { playMidiTheme('empatia'); historialRespuestas = []; juegoActual = 'empatia'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraEmpatia).slice(0, 5); renderEmpatia(); }
     function renderEmpatia() {
       if(ronda >= bancoJuego.length) { puntajeJuego = puntajeJuego * 2; return renderFinalResult(); }
       let p = bancoJuego[ronda];
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>⚖️ ¿Empatía o Inadecuado?</span><span>Frase ${ronda + 1} / 5</span></div><div class="flashcard-box" style="cursor:default; border:none; box-shadow:0 10px 20px rgba(0,0,0,0.1);"><div class="flashcard-face flashcard-front" style="position:relative;"><h2>"${p.text}"</h2></div></div><div class="swipe-container"><button class="btn-swipe bg-red" onclick="evaluarEmpatia(false, ${p.isEmpatia})">Simpatía / Inadecuado</button><button class="btn-swipe bg-green" onclick="evaluarEmpatia(true, ${p.isEmpatia})">Empatía / Adecuado</button></div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>⚖️ ¿Empatía o Inadecuado?</span><span>Frase ${ronda + 1} / 5</span></div><div class="flashcard-box" style="cursor:default; border:none; box-shadow:0 10px 30px rgba(0,0,0,0.1);"><div class="flashcard-face flashcard-front" style="position:relative;"><h2>"${p.text}"</h2></div></div><div class="swipe-container"><button class="btn-swipe bg-red" onclick="evaluarEmpatia(false, ${p.isEmpatia})">Simpatía / Inadecuado</button><button class="btn-swipe bg-green" onclick="evaluarEmpatia(true, ${p.isEmpatia})">Empatía / Adecuado</button></div>` + obtenerManual();
     }
     function evaluarEmpatia(respuesta, correcta) {
       historialRespuestas.push({ pre: bancoJuego[ronda].text, res: respuesta?"Empatía":"Inadecuado", cor: correcta?"Empatía":"Inadecuado", exp: correcta ? "Validación y acompañamiento." : "Bloquea o minimiza la emoción." });
-      if(respuesta === correcta) puntajeJuego++;
+      if(respuesta === correcta) { puntajeJuego++; updatePuntajeGlobal(2); } else { updatePuntajeGlobal(-1); }
       ronda++; renderEmpatia();
     }
 
     // --- NUEVO 3: CAJAS DE CORRIENTES ---
     function startCorrientes() {
+      playMidiTheme('corrientes');
       historialRespuestas = []; juegoActual = 'corrientes'; ronda = 0; puntajeJuego = 0;
       let catsUtiles = dbCategorias.filter(c => c.nombre.length > 3).slice(0, 3);
       if(catsUtiles.length < 2) return alert("Faltan categorías en la base de datos.");
@@ -739,18 +915,18 @@
       if(ronda >= bancoJuego.conceptos.length) { puntajeJuego = puntajeJuego * 2; return renderFinalResult(); }
       let c = bancoJuego.conceptos[ronda];
       let cajas = bancoJuego.cats.map(cat => `<div class="drop-box" onclick="evaluarCorriente(${cat.id}, ${c.categoriaId})">${cat.nombre}</div>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🗂️ Cajas de Corrientes</span><span>Concepto ${ronda + 1} / 5</span></div><h2 style="font-size:2.5rem; margin:30px 0; color:#34495e;">${c.titulo}</h2><p style="color:var(--text-muted);">¿A qué enfoque/categoría pertenece?</p><div class="box-container">${cajas}</div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🗂️ Cajas de Corrientes</span><span>Concepto ${ronda + 1} / 5</span></div><h2 style="font-family:'Lora',serif; font-size:3rem; margin:40px 0; color:#34495e; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">${c.titulo}</h2><p style="color:var(--text-muted); margin-bottom:15px; font-weight:bold;">¿A qué enfoque/categoría pertenece?</p><div class="box-container">${cajas}</div>` + obtenerManual();
     }
     function evaluarCorriente(selId, corrId) {
       let catSel = bancoJuego.cats.find(c=>c.id==selId).nombre;
       let catCor = dbCategorias.find(c=>c.id==corrId).nombre;
       historialRespuestas.push({pre: bancoJuego.conceptos[ronda].titulo, res: catSel, cor: catCor, exp: "Este concepto pertenece a: " + catCor});
-      if(selId == corrId) puntajeJuego++;
+      if(selId == corrId) { puntajeJuego++; updatePuntajeGlobal(2); } else { updatePuntajeGlobal(-1); }
       ronda++; renderCorrientes();
     }
 
     // --- NUEVO 4: ¿QUIÉN LO DIJO? ---
-    function startAutores() { historialRespuestas = []; juegoActual = 'autores'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraAutores).slice(0, 4); renderAutores(); }
+    function startAutores() { playMidiTheme('autores'); historialRespuestas = []; juegoActual = 'autores'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraAutores).slice(0, 4); renderAutores(); }
     function renderAutores() {
       if(ronda >= bancoJuego.length) { puntajeJuego = Math.round((puntajeJuego/4)*10); return renderFinalResult(); }
       let p = bancoJuego[ronda];
@@ -758,19 +934,20 @@
       let opciones = mezclarArray(autoresList).slice(0, 4);
       if(!opciones.includes(p.autor)) opciones[0] = p.autor; opciones = mezclarArray(opciones);
       let botones = opciones.map(o => `<button class="option-btn" onclick="evaluarAutores(this, '${escapeString(o)}', '${escapeString(p.autor)}')">${o}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>👤 ¿Quién lo dijo?</span><span>Cita ${ronda + 1} / 4</span></div><div class="game-text-question" style="font-style:italic;">"${p.cita}"</div><div class="options-stack">${botones}</div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>👤 ¿Quién lo dijo?</span><span>Cita ${ronda + 1} / 4</span></div><div class="game-text-question" style="font-family:'Lora',serif; font-style:italic; font-size:1.4rem;">"${p.cita}"</div><div class="options-stack">${botones}</div>` + obtenerManual();
     }
     function evaluarAutores(btn, sel, corr) {
       elArcadeView.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
       historialRespuestas.push({pre: bancoJuego[ronda].cita, res: sel, cor: corr, exp: "Cita perteneciente a " + corr});
-      if(sel === corr) { btn.classList.add('correct'); puntajeJuego++; } 
-      else { btn.classList.add('wrong'); elArcadeView.querySelectorAll('.option-btn').forEach(b => { if(b.innerText === corr) b.classList.add('correct'); }); }
+      if(sel === corr) { btn.classList.add('correct'); puntajeJuego++; updatePuntajeGlobal(2); } 
+      else { btn.classList.add('wrong'); updatePuntajeGlobal(-1); elArcadeView.querySelectorAll('.option-btn').forEach(b => { if(b.innerText === corr) b.classList.add('correct'); }); }
       setTimeout(() => { ronda++; renderAutores(); }, 1200);
     }
 
     // --- NUEVO 5: CRUCIGRAMA LINEAL ---
     let cruciObj = [];
     function startCrucigrama() {
+      playMidiTheme('crucigrama');
       historialRespuestas = []; juegoActual = 'crucigrama'; puntajeJuego = 0;
       let validos = mezclarArray(dbGlosario.filter(g => g.titulo.length > 3 && g.titulo.length < 12 && !g.titulo.includes(' '))).slice(0, 5);
       cruciObj = validos.map(g => ({ t: g.titulo, res: g.resumen.substring(0,80)+"...", val: '' }));
@@ -786,8 +963,8 @@
         let el = document.getElementById('cruci_'+i);
         if(el) {
           c.val = el.value.toUpperCase();
-          if(normalizarP(c.val) === normalizarP(c.t).toUpperCase()) { puntajeJuego += 2; el.style.borderColor = '#2ecc71'; el.style.backgroundColor = '#e8f5e9'; el.disabled = true; }
-          else { el.style.borderColor = '#e74c3c'; }
+          if(normalizarP(c.val) === normalizarP(c.t).toUpperCase()) { puntajeJuego += 2; updatePuntajeGlobal(2); el.style.borderColor = '#2ecc71'; el.style.backgroundColor = '#e8f5e9'; el.disabled = true; }
+          else { el.style.borderColor = '#e74c3c'; updatePuntajeGlobal(-1); }
           historialRespuestas.push({pre: c.res, res: c.val || "Vacío", cor: c.t, exp: "Definición de " + c.t});
         }
       });
@@ -797,6 +974,7 @@
     // --- NUEVO 6: CONCEPTO FRAGMENTADO ---
     let fragObj = { real: "", arr: [], sel: [] };
     function startFragmentado() {
+      playMidiTheme('fragmentado');
       historialRespuestas = []; juegoActual = 'fragmentado'; ronda = 0; puntajeJuego = 0;
       bancoJuego = mezclarArray(dbGlosario.filter(g => g.resumen.length > 20 && g.resumen.length < 100)).slice(0, 3);
       nextFragmentado();
@@ -814,14 +992,15 @@
         return `<div class="frag-word ${isUsed?'used':''}" ${isUsed?'':`onclick="clickFrag(${i})"`}>${w}</div>`;
       }).join('');
       let currentSentence = fragObj.sel.map(idx => fragObj.arr[idx]).join(' ');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🧩 Fragmentado</span><span>Frase ${ronda + 1} / 3</span></div><h3 style="color:#9b59b6; margin-bottom:10px;">${bancoJuego[ronda].titulo}</h3><div style="min-height:50px; font-size:1.1rem; font-style:italic; margin:20px 0;">${currentSentence}</div><div class="frag-container">${fHtml}</div><button class="game-back-menu" onclick="fragObj.sel=[]; renderFragmentado()">↻ Limpiar</button>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🧩 Fragmentado</span><span>Frase ${ronda + 1} / 3</span></div><h3 style="font-family:'Lora',serif; color:#9b59b6; margin-bottom:10px; font-size:1.8rem;">${bancoJuego[ronda].titulo}</h3><div style="min-height:60px; font-size:1.15rem; font-style:italic; margin:20px 0; padding:15px; background:white; border-radius:8px; border:1px solid #e2e8f0;">${currentSentence}</div><div class="frag-container">${fHtml}</div><button class="game-back-menu" onclick="fragObj.sel=[]; renderFragmentado()">↻ Limpiar Selección</button>` + obtenerManual();
       
       if(fragObj.sel.length === fragObj.arr.length && fragObj.arr.length > 0) {
         if(currentSentence === fragObj.real) { 
-            puntajeJuego++; 
+            puntajeJuego++; updatePuntajeGlobal(3); 
             historialRespuestas.push({pre: bancoJuego[ronda].titulo, res: "Correcto", cor: fragObj.real, exp: "Frase ensamblada perfectamente."});
             ronda++; alert("¡Correcto!"); nextFragmentado(); 
         } else { 
+            updatePuntajeGlobal(-1);
             historialRespuestas.push({pre: bancoJuego[ronda].titulo, res: "Incorrecto", cor: fragObj.real, exp: "El orden preciso importa."});
             alert("Orden incorrecto. Te mostraremos la correcta en los resultados."); 
             ronda++; nextFragmentado();
@@ -833,6 +1012,7 @@
     // --- NUEVO 7: BOMBARDEO CONTRARRELOJ ---
     let bombObj = { time: 60, score: 0, current: null };
     function startBombardeo() {
+      playMidiTheme('bombardeo');
       historialRespuestas = []; juegoActual = 'bombardeo'; puntajeJuego = 0; bombObj.time = 60; bombObj.score = 0;
       if(timerGlobal) clearInterval(timerGlobal);
       timerGlobal = setInterval(tickBombardeo, 1000); nextBombardeo();
@@ -848,11 +1028,11 @@
       renderBombardeo();
     }
     function renderBombardeo() {
-      let botones = bombObj.current.ops.map(o => `<button class="option-btn" style="padding:10px; font-size:0.9rem;" onclick="evaluarBombardeo('${escapeString(o)}')">${o}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Salir</button><div class="game-active-header"><span>⏱️ Bombardeo</span><span>Score: ${bombObj.score}</span></div><div class="timer-bar"><div class="timer-fill" id="bomb-bar" style="width:${(bombObj.time/60)*100}%"></div></div><div class="game-text-question" style="font-size:1rem; padding:15px;">${bombObj.current.q}</div><div class="options-stack">${botones}</div>` + obtenerManual();
+      let botones = bombObj.current.ops.map(o => `<button class="option-btn" style="padding:12px; font-size:0.95rem;" onclick="evaluarBombardeo('${escapeString(o)}')">${o}</button>`).join('');
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Salir</button><div class="game-active-header"><span>⏱️ Bombardeo</span><span>Score: ${bombObj.score}</span></div><div class="timer-bar"><div class="timer-fill" id="bomb-bar" style="width:${(bombObj.time/60)*100}%"></div></div><div class="game-text-question" style="font-size:1.1rem; padding:20px;">${bombObj.current.q}</div><div class="options-stack">${botones}</div>` + obtenerManual();
     }
     function evaluarBombardeo(sel) { 
-        if(sel === bombObj.current.c) bombObj.score++; 
+        if(sel === bombObj.current.c) { bombObj.score++; updatePuntajeGlobal(1); } else { updatePuntajeGlobal(-1); }
         historialRespuestas.push({pre: bombObj.current.q, res: sel, cor: bombObj.current.c, exp: sel === bombObj.current.c ? "¡Correcto!" : "Concepto erróneo."});
         nextBombardeo(); 
     }
@@ -860,13 +1040,14 @@
     // --- WORDLE CLÍNICO ---
     let wObj = { palabra: '', intentos: 0, max: 6, historial: [] };
     function startWordle() {
+      playMidiTheme('wordle');
       historialRespuestas = []; juegoActual = 'wordle'; puntajeJuego = 0; let cand = dbGlosario.filter(g => g.titulo.length >= 4 && g.titulo.length <= 7 && !g.titulo.includes(' '));
       if(!cand.length) cand = [{titulo: "TERAPIA"}]; wObj.palabra = normalizarP(cand[Math.floor(Math.random() * cand.length)].titulo).toUpperCase();
       wObj.intentos = 0; wObj.historial = []; renderWordleBoard();
     }
     function renderWordleBoard() {
-      let histHtml = wObj.historial.map(h => `<div style="display:flex;gap:5px;justify-content:center;margin-bottom:5px;">${h.split('').map((letra, i) => { let color = '#bdc3c7'; if(wObj.palabra[i] === letra) color = '#2ecc71'; else if(wObj.palabra.includes(letra)) color = '#f1c40f'; return `<span style="width:35px;height:35px;display:flex;align-items:center;justify-content:center;background:${color};color:white;font-weight:bold;border-radius:4px;">${letra}</span>`}).join('')}</div>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🟩 Wordle Clínico</span><span>Intentos: ${wObj.intentos}/6</span></div><p>Palabra de <b>${wObj.palabra.length} letras</b>.</p><div style="margin:20px 0;">${histHtml}</div><input type="text" id="w-input" maxlength="${wObj.palabra.length}" style="text-transform:uppercase;padding:10px;font-size:1.2rem;width:200px;text-align:center;"><br><button class="game-play-btn" onclick="checkWordle()">Comprobar</button>` + obtenerManual();
+      let histHtml = wObj.historial.map(h => `<div style="display:flex;gap:8px;justify-content:center;margin-bottom:8px;">${h.split('').map((letra, i) => { let color = '#cbd5e1'; if(wObj.palabra[i] === letra) color = '#2ecc71'; else if(wObj.palabra.includes(letra)) color = '#f1c40f'; return `<span style="width:45px;height:45px;display:flex;align-items:center;justify-content:center;background:${color};color:white;font-weight:900;font-size:1.4rem;border-radius:6px;box-shadow:inset 0 -3px 0 rgba(0,0,0,0.1);">${letra}</span>`}).join('')}</div>`).join('');
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🟩 Wordle Clínico</span><span>Intentos: ${wObj.intentos}/6</span></div><p style="font-size:1.1rem;">Palabra de <b>${wObj.palabra.length} letras</b>.</p><div style="margin:25px 0;">${histHtml}</div><input type="text" id="w-input" maxlength="${wObj.palabra.length}" style="text-transform:uppercase;padding:12px;font-size:1.4rem;width:250px;text-align:center;border:2px solid #9b59b6;border-radius:8px;font-weight:bold;"><br><button class="game-play-btn" onclick="checkWordle()">Comprobar Palabra</button>` + obtenerManual();
     }
     function checkWordle() {
       let el = document.getElementById('w-input');
@@ -876,10 +1057,11 @@
       wObj.historial.push(intento); wObj.intentos++;
       
       if(intento === wObj.palabra) { 
-          puntajeJuego = 10; 
+          puntajeJuego = 10; updatePuntajeGlobal(10);
           historialRespuestas.push({pre: "Wordle ("+wObj.palabra.length+" letras)", res: intento, cor: wObj.palabra, exp: "¡Adivinaste!"});
           return renderFinalResult(); 
       }
+      updatePuntajeGlobal(-1);
       if(wObj.intentos >= wObj.max) {
           historialRespuestas.push({pre: "Wordle ("+wObj.palabra.length+" letras)", res: intento, cor: wObj.palabra, exp: "Te quedaste sin intentos."});
           return renderFinalResult();
@@ -887,10 +1069,11 @@
       renderWordleBoard();
     }
 
-    // --- SOPA DE LETRAS REHECHA (10 Rondas + Timer) ---
+    // --- SOPA DE LETRAS REHECHA ---
     let slObj = { grid: [], word: '', coords: [], seleccionadas: [], round: 0, max: 10, time: 0 };
     
     function startSopa() {
+      playMidiTheme('sopa');
       historialRespuestas = []; juegoActual = 'sopa'; puntajeJuego = 0;
       slObj = { grid: [], word: '', coords: [], seleccionadas: [], round: 0, max: 10, time: 0 };
       
@@ -915,6 +1098,8 @@
         else if(slObj.time <= 110) puntajeJuego = 6;
         else if(slObj.time <= 140) puntajeJuego = 4;
         else puntajeJuego = 2;
+        
+        updatePuntajeGlobal(puntajeJuego);
 
         historialRespuestas.push({
           pre: "Sopa de Letras (10 palabras)", 
@@ -969,16 +1154,16 @@
     }
 
     function renderSopa() {
-      let hG = '<div style="display:grid;grid-template-columns:repeat(8,35px);gap:3px;justify-content:center;margin:20px auto;">';
+      let hG = '<div style="display:grid;grid-template-columns:repeat(8,40px);gap:4px;justify-content:center;margin:25px auto;">';
       for(let r=0; r<8; r++) {
         for(let c=0; c<8; c++) {
            let isS = slObj.seleccionadas.some(s => s.r === r && s.c === c); 
-           hG += `<div onclick="clickSopa(${r},${c})" style="width:35px;height:35px;display:flex;align-items:center;justify-content:center;background:${isS?'#9b59b6':'#fff'};color:${isS?'white':'black'};border:1px solid #ccc;cursor:pointer;font-weight:bold;border-radius:4px;">${slObj.grid[r][c]}</div>`;
+           hG += `<div onclick="clickSopa(${r},${c})" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:${isS?'#9b59b6':'#fff'};color:${isS?'white':'#333'};border:2px solid ${isS?'#8e44ad':'#cbd5e1'};cursor:pointer;font-weight:900;font-size:1.1rem;border-radius:6px;transition:0.1s;">${slObj.grid[r][c]}</div>`;
         }
       }
       hG += '</div>';
 
-      let btnTerminar = modoMaraton ? `<button class="game-play-btn" style="background:#e74c3c; margin-left:10px;" onclick="forceEndSopa()">Rendirse</button>` : '';
+      let btnTerminar = modoMaraton || modoFlash ? `<button class="game-play-btn" style="background:#e74c3c; margin-left:10px;" onclick="forceEndSopa()">Rendirse</button>` : '';
 
       elArcadeView.innerHTML = renderDashboardHTML() + `
         <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button>
@@ -986,9 +1171,9 @@
           <span>🔍 Sopa de Letras</span>
           <span>Ronda ${slObj.round + 1} / ${slObj.max} | ⏱️ <span id="sopa-time">${slObj.time}s</span></span>
         </div>
-        <p style="font-size:1.1rem;">Encuentra: <b style="color:#9b59b6; letter-spacing:2px;">${slObj.word}</b></p>
+        <p style="font-size:1.2rem;">Encuentra: <b style="color:#9b59b6; letter-spacing:2px; font-family:'Lora',serif;">${slObj.word}</b></p>
         ${hG}
-        <button class="game-play-btn" onclick="checkSopa()">Comprobar</button>
+        <button class="game-play-btn" onclick="checkSopa()">Verificar</button>
         ${btnTerminar}
       ` + obtenerManual();
     }
@@ -1010,10 +1195,12 @@
          });
          if(matchCount === slObj.coords.length) {
             slObj.round++;
+            updatePuntajeGlobal(1);
             nextSopa();
             return;
          }
       }
+      updatePuntajeGlobal(-1);
       slObj.seleccionadas = [];
       renderSopa();
     }
@@ -1032,6 +1219,7 @@
     const bloquesDuros = ["Trauma", "Resistencia", "Bloqueo", "Soberbia"];
     
     function startInvasores() {
+      playMidiTheme('invasores');
       historialRespuestas = []; juegoActual = 'invasores'; puntajeJuego = 0;
       invState = { 
         playing: true, score: 0, playerX: 250, playerW: 60, playerH: 40, 
@@ -1042,7 +1230,7 @@
       elArcadeView.innerHTML = renderDashboardHTML() + `
         <button class="game-back-menu" onclick="stopInvasores()">← Salir</button>
         <div class="game-active-header"><span>🚀 Invasores Terapéuticos</span><span id="inv-score">Nivel: 1 | Pts: 0 | Vidas: 3</span></div>
-        <p style="margin-bottom:10px;font-size:0.9rem;">Sobrevive el mayor tiempo posible. Los bloques morados requieren más empatía. ¡Atrapa las 🎁 para mejorar tu arma!</p>
+        <p style="margin-bottom:15px;font-size:0.95rem;">Sobrevive el mayor tiempo posible. Los bloques morados requieren más empatía. ¡Atrapa las 🎁 para mejorar tu arma!</p>
         <canvas id="space-canvas" class="canvas-game" width="600" height="350"></canvas>
         <div class="space-controls">
           <button class="btn-space" onmousedown="invState.keys.ArrowLeft=true" onmouseup="invState.keys.ArrowLeft=false" ontouchstart="invState.keys.ArrowLeft=true" ontouchend="invState.keys.ArrowLeft=false">⬅️ Izq</button>
@@ -1093,8 +1281,8 @@
         invState.level = 1 + Math.floor(invState.score / 15);
         invState.speedMod = 1 + ((invState.level - 1) * 0.15);
 
-        if(invState.keys['ArrowLeft'] && invState.playerX > 0) invState.playerX -= 5;
-        if(invState.keys['ArrowRight'] && invState.playerX < canvas.width - invState.playerW) invState.playerX += 5;
+        if(invState.keys['ArrowLeft'] && invState.playerX > 0) invState.playerX -= 6;
+        if(invState.keys['ArrowRight'] && invState.playerX < canvas.width - invState.playerW) invState.playerX += 6;
 
         invState.lastEnemy++;
         if(invState.lastEnemy > (90 / invState.speedMod)) {
@@ -1107,21 +1295,20 @@
             invState.lastEnemy = 0;
         }
 
-        ctx.fillStyle = '#1a1a2e'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#0f172a'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // DIBUJAR AL COUNSELOR SENTADO EN SILLÓN INDIVIDUAL
         let px = invState.playerX;
-        ctx.fillStyle = '#7f8c8d'; // Gris oscuro para sillón
-        ctx.fillRect(px + 10, 310, 40, 40); // Asiento
-        ctx.fillRect(px + 15, 290, 30, 20); // Respaldo
-        ctx.fillStyle = '#95a5a6'; // Apoyabrazos
+        ctx.fillStyle = '#475569'; 
+        ctx.fillRect(px + 10, 310, 40, 40); 
+        ctx.fillRect(px + 15, 290, 30, 20); 
+        ctx.fillStyle = '#64748b'; 
         ctx.fillRect(px + 2, 305, 12, 30); 
         ctx.fillRect(px + 46, 305, 12, 30);
-        // Tipito
+        
         ctx.fillStyle = invState.weaponType === 0 ? '#2ecc71' : (invState.weaponType === 1 ? '#3498db' : '#f1c40f');
-        ctx.beginPath(); ctx.arc(px + 30, 295, 8, 0, Math.PI*2); ctx.fill(); // Cabeza
-        ctx.fillRect(px + 22, 305, 16, 20); // Torso
-        ctx.fillStyle = 'white'; ctx.font = '9px Arial'; ctx.textAlign = 'center'; ctx.fillText("Tú", px + 30, 315);
+        ctx.beginPath(); ctx.arc(px + 30, 295, 8, 0, Math.PI*2); ctx.fill(); 
+        ctx.fillRect(px + 22, 305, 16, 20); 
+        ctx.fillStyle = 'white'; ctx.font = 'bold 9px Montserrat'; ctx.textAlign = 'center'; ctx.fillText("Tú", px + 30, 315);
 
         for(let i = invState.powerups.length - 1; i >= 0; i--) {
             let p = invState.powerups[i];
@@ -1133,6 +1320,7 @@
                 invState.weaponType = p.type; 
                 invState.weaponTimer = 400; 
                 invState.score += 2; 
+                updatePuntajeGlobal(2);
                 invState.powerups.splice(i, 1);
             } else if (p.y > canvas.height) {
                 invState.powerups.splice(i, 1);
@@ -1159,6 +1347,7 @@
                     invState.bullets.splice(j, 1); 
                     if(e.hp <= 0) {
                         invState.score += e.maxHp; 
+                        updatePuntajeGlobal(e.maxHp);
                         invState.enemies.splice(i, 1);
                         if(Math.random() < 0.15) invState.powerups.push({ x: e.x + e.w/2 - 10, y: e.y, w: 20, h: 20, type: Math.random() > 0.5 ? 1 : 2 });
                         hit = true; break;
@@ -1170,6 +1359,7 @@
 
             if(e.y > canvas.height) {
                 invState.lives--;
+                updatePuntajeGlobal(-2);
                 invState.enemies.splice(i, 1);
                 if(invState.lives <= 0) return endInvasores();
             } else {
@@ -1179,7 +1369,7 @@
                     ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.fillRect(e.x, e.y + e.h - 4, e.w, 4);
                     ctx.fillStyle = '#2ecc71'; ctx.fillRect(e.x, e.y + e.h - 4, e.w * (e.hp / e.maxHp), 4);
                 }
-                ctx.fillStyle = 'white'; ctx.font = '10px Arial';
+                ctx.fillStyle = 'white'; ctx.font = 'bold 10px Montserrat';
                 ctx.fillText(e.text, e.x + e.w/2, e.y + (e.maxHp>1?13:14));
             }
         }
@@ -1202,40 +1392,16 @@
     // --- SUPER COUNSELOR (Endless Runner) ---
     let runState = {};
     const runEnemies = ["Consejo no pedido", "Juicio de valor", "Interrupción", "Proyección"];
-    const runCoins = ["Escucha Activa", "Silencio"];
+    const runCoins = ["Escucha Activa", "Silencio", "Rapport"];
     
-    // Música Midi Terapéutica generada con Web Audio API
-    function playTune() {
-      if(!window.audioCtx || !runState.playing) return;
-      let t = window.audioCtx.currentTime;
-      let osc = window.audioCtx.createOscillator();
-      let gain = window.audioCtx.createGain();
-      osc.type = 'sine';
-      
-      const melody = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 440.00, 349.23];
-      let note = melody[Math.floor((runState.frames / 40) % melody.length)];
-      
-      osc.frequency.setValueAtTime(note, t);
-      gain.gain.setValueAtTime(0.04, t); 
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
-      
-      osc.connect(gain);
-      gain.connect(window.audioCtx.destination);
-      osc.start(t);
-      osc.stop(t + 0.6);
-    }
-
     function startRunner() {
+      playMidiTheme('runner');
       historialRespuestas = []; juegoActual = 'runner'; puntajeJuego = 0;
       
-      // Inicializar Audio
-      if(!window.audioCtx) window.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      if(window.audioCtx.state === 'suspended') window.audioCtx.resume();
-
       runState = {
         playing: true, score: 0, distance: 0,
         p: { x: 50, y: 250, w: 35, h: 35, vy: 0, jumps: 0, invincibility: 0 },
-        floorY: 290, gravity: 0.6, jumpForce: -10, speed: 5,
+        floorY: 290, gravity: 0.65, jumpForce: -11, speed: 5.5,
         obstacles: [], coins: [], powerups: [],
         bg: {
             clouds: Array(5).fill(0).map(()=>({x: Math.random()*600, y: 20+Math.random()*100, s: 20+Math.random()*30, v: 0.2+Math.random()*0.5})),
@@ -1249,10 +1415,10 @@
       elArcadeView.innerHTML = renderDashboardHTML() + `
         <button class="game-back-menu" onclick="stopRunner()">← Salir</button>
         <div class="game-active-header"><span>🍄 Super Counselor: Runner</span><span id="run-score">Distancia: 0m | Puntos: 0 | Vidas: 3</span></div>
-        <p style="margin-bottom:10px;font-size:0.9rem;">Toca la pantalla o presiona espacio para saltar. ¡Puedes hacer <b>Doble Salto</b>!</p>
+        <p style="margin-bottom:15px;font-size:0.95rem;">Toca la pantalla o presiona espacio para saltar. ¡Puedes hacer <b>Doble Salto</b>!</p>
         <canvas id="runner-canvas" class="canvas-game" width="600" height="350"></canvas>
         <div class="space-controls">
-          <button class="btn-space btn-space-shoot" style="background:#27ae60;" onmousedown="jumpRunner()" ontouchstart="jumpRunner(event)">⬆️ SALTAR</button>
+          <button class="btn-space btn-space-shoot" style="background:#27ae60; box-shadow:0 4px 0 #1e8449;" onmousedown="jumpRunner()" ontouchstart="jumpRunner(event)">⬆️ SALTAR</button>
         </div>
       ` + obtenerManual();
 
@@ -1267,6 +1433,18 @@
       if(runState.p.jumps < 2) {
         runState.p.vy = runState.jumpForce;
         runState.p.jumps++;
+        
+        // Sonidito de salto
+        if(audioCtx && audioCtx.state !== 'suspended') {
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.frequency.setValueAtTime(300 + (runState.p.jumps*100), audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(500 + (runState.p.jumps*100), audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        }
       }
     }
     
@@ -1285,8 +1463,6 @@
       
       runState.frames++;
       runState.distance += runState.speed * 0.01;
-      
-      if(runState.frames % 40 === 0) playTune();
 
       if(runState.frames % 500 === 0) runState.speed += 0.5;
       if(runState.p.invincibility > 0) runState.p.invincibility--;
@@ -1300,10 +1476,10 @@
         runState.p.jumps = 0;
       }
 
-      if(runState.frames % Math.max(60, Math.floor(120 - runState.speed * 5)) === 0) {
+      if(runState.frames % Math.max(50, Math.floor(120 - runState.speed * 5)) === 0) {
         if(Math.random() > 0.3) {
           runState.obstacles.push({
-            x: canvas.width, y: runState.floorY - 30, w: 30, h: 30,
+            x: canvas.width, y: runState.floorY - 35, w: 35, h: 35,
             text: runEnemies[Math.floor(Math.random() * runEnemies.length)]
           });
         }
@@ -1316,15 +1492,13 @@
         });
       }
 
-      if(runState.frames % 600 === 0) {
+      if(runState.frames % 700 === 0) {
         runState.powerups.push({ x: canvas.width, y: runState.floorY - 100, w: 25, h: 25 });
       }
 
-      // Cielo
       ctx.fillStyle = '#e0f7fa'; ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      // Nubes
-      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillStyle = 'rgba(255,255,255,0.8)';
       runState.bg.clouds.forEach(c => {
         c.x -= c.v;
         if(c.x < -c.s*2) { c.x = 600 + c.s; c.y = 20 + Math.random()*80; }
@@ -1335,7 +1509,6 @@
         ctx.fill();
       });
 
-      // Montañas (Parallax lento)
       ctx.fillStyle = '#b2bec3';
       runState.bg.mountains.forEach(m => {
         m.x -= runState.speed * 0.1;
@@ -1347,7 +1520,6 @@
         ctx.fill();
       });
 
-      // Pájaros
       ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2;
       runState.bg.birds.forEach(b => {
         b.x -= b.v + runState.speed * 0.05;
@@ -1360,11 +1532,9 @@
         ctx.stroke();
       });
 
-      // Piso
       ctx.fillStyle = '#795548'; ctx.fillRect(0, runState.floorY, canvas.width, canvas.height - runState.floorY);
-      ctx.fillStyle = '#8bc34a'; ctx.fillRect(0, runState.floorY, canvas.width, 10);
+      ctx.fillStyle = '#8bc34a'; ctx.fillRect(0, runState.floorY, canvas.width, 12);
 
-      // Flores
       ctx.font = '16px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       runState.bg.flowers.forEach(f => {
         f.x -= runState.speed;
@@ -1372,19 +1542,16 @@
         ctx.fillText(f.type, f.x, runState.floorY + 2);
       });
 
-      // Dibujar Persona corriendo como Emoji Mirando a la Derecha (Flipped)
       ctx.save();
       ctx.translate(runState.p.x + runState.p.w/2, runState.p.y + runState.p.h/2);
       
-      // Letrero "Tú" sin invertir
-      ctx.fillStyle = 'white'; ctx.font = '10px Arial'; ctx.fillText("Tú", 0, -22);
+      ctx.fillStyle = 'white'; ctx.font = 'bold 10px Montserrat'; ctx.fillText("Tú", 0, -22);
 
-      // Animación de correr
       if(runState.p.jumps === 0) {
         ctx.translate(0, Math.sin(runState.frames * 0.4) * 3);
         ctx.rotate(Math.cos(runState.frames * 0.4) * 0.1);
       }
-      ctx.scale(-1, 1); // Invertir horizontalmente
+      ctx.scale(-1, 1); 
       
       ctx.font = '35px Arial';
       if(runState.p.invincibility > 0 && Math.floor(runState.frames / 5) % 2 === 0) {
@@ -1393,7 +1560,6 @@
       ctx.fillText("🏃", 0, 0);
       ctx.restore();
       
-      // Monedas
       for(let i = runState.coins.length - 1; i >= 0; i--) {
         let c = runState.coins[i];
         c.x -= runState.speed;
@@ -1402,11 +1568,11 @@
         
         if(runState.p.x < c.x + c.w && runState.p.x + runState.p.w > c.x && runState.p.y < c.y + c.h && runState.p.y + runState.p.h > c.y) {
           runState.score += 5;
+          updatePuntajeGlobal(5);
           runState.coins.splice(i, 1);
         } else if(c.x + c.w < 0) runState.coins.splice(i, 1);
       }
 
-      // PowerUps (Insight)
       for(let i = runState.powerups.length - 1; i >= 0; i--) {
         let p = runState.powerups[i];
         p.x -= runState.speed;
@@ -1423,20 +1589,21 @@
         } else if(p.x + p.w < 0) runState.powerups.splice(i, 1);
       }
 
-      // Obstáculos
       for(let i = runState.obstacles.length - 1; i >= 0; i--) {
         let o = runState.obstacles[i];
         o.x -= runState.speed;
         
         ctx.fillStyle = '#c0392b'; ctx.fillRect(o.x, o.y, o.w, o.h);
-        ctx.fillStyle = 'black'; ctx.font = '9px Arial'; ctx.textAlign = 'center'; ctx.fillText(o.text, o.x + o.w/2, o.y - 5);
+        ctx.fillStyle = 'black'; ctx.font = 'bold 9px Montserrat'; ctx.textAlign = 'center'; ctx.fillText(o.text, o.x + o.w/2, o.y - 5);
 
         if(runState.p.x < o.x + o.w && runState.p.x + runState.p.w > o.x && runState.p.y < o.y + o.h && runState.p.y + runState.p.h > o.y) {
           if(runState.p.invincibility > 0) {
             runState.obstacles.splice(i, 1);
             runState.score += 2;
+            updatePuntajeGlobal(2);
           } else {
             runState.lives--;
+            updatePuntajeGlobal(-3);
             runState.obstacles.splice(i, 1);
             runState.p.invincibility = 60; 
             
@@ -1444,6 +1611,7 @@
           }
         } else if(o.x + o.w < 0) {
           runState.score += 1;
+          updatePuntajeGlobal(1);
           runState.obstacles.splice(i, 1);
         }
       }
@@ -1472,45 +1640,43 @@
       else if (puntajeJuego >= (scoreMaximo * 0.6)) { mensaje = "¡Excelente Trabajo! 🌟"; consejo = "Estás muy bien preparado/a y demuestras gran fluidez conceptual."; } 
       else if (puntajeJuego >= (scoreMaximo * 0.4)) { mensaje = "¡Buen Intento! 👍"; consejo = "Vas por muy buen camino. Repasa de manera focalizada."; } 
       else { mensaje = "¡A Seguir Estudiando! 📚"; consejo = "Utiliza el panel central para profundizar cada concepto."; }
-      
-      puntajeGlobalTotal += puntajeJuego;
 
-      let htmlRespuestas = `<div style="text-align:left; margin-top: 20px; max-height: 250px; overflow-y: auto; padding: 15px; background: white; border-radius: 8px; border: 1px solid #ddd;">
-        <h3 style="color:#9b59b6; margin-bottom:15px; font-size:1.1rem;">📝 Resumen de Respuestas:</h3>
+      let htmlRespuestas = `<div style="text-align:left; margin-top: 25px; max-height: 250px; overflow-y: auto; padding: 20px; background: white; border-radius: 10px; border: 1px solid #e2e8f0;">
+        <h3 style="color:#9b59b6; margin-bottom:15px; font-size:1.15rem; font-family:'Lora',serif;">📝 Resumen de Respuestas:</h3>
         ${historialRespuestas.length > 0 ? historialRespuestas.map(r => `
-            <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #eee; font-size: 0.9rem;">
-                <strong>Pregunta/Contexto:</strong> <span style="color:#34495e;">${r.pre}</span> <br>
+            <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #e2e8f0; font-size: 0.95rem;">
+                <strong>Contexto:</strong> <span style="color:#334155;">${r.pre}</span> <br>
                 <strong>Tú:</strong> <span style="color:${r.res === r.cor || ['Sí', 'Descubierta', 'Correcto', 'Emparejado', 'Empatía'].includes(r.res) || (typeof r.res === 'string' && (r.res.includes('metros') || r.res.includes('impactos') || r.res.includes('Nivel'))) ? '#2ecc71' : (r.res===r.cor ? '#2ecc71' : '#e74c3c')}">${r.res}</span> <br>
-                <strong>Correcto/Esperado:</strong> <span style="color:#2ecc71;">${r.cor}</span> <br>
-                <em style="font-size: 0.85rem; color: #7f8c8d; display:block; margin-top:4px;">💡 ${r.exp}</em>
+                <strong>Esperado:</strong> <span style="color:#2ecc71;">${r.cor}</span> <br>
+                <em style="font-size: 0.85rem; color: #64748b; display:block; margin-top:6px;">💡 ${r.exp}</em>
             </div>
-        `).join('') : '<p style="color:#7f8c8d; font-style:italic;">No se registraron detalles específicos.</p>'}
+        `).join('') : '<p style="color:#94a3b8; font-style:italic;">No se registraron detalles específicos.</p>'}
       </div>`;
 
       let btnAction = `<button class="game-play-btn" onclick="renderArcadeMenu()">↻ Volver al Menú Arcade</button>`;
       
-      if(modoMaraton) {
+      if(modoMaraton && !modoFlash) {
           puntajeMaraton += puntajeJuego;
           maxPuntajeMaraton += scoreMaximo;
           indiceMaraton++;
           if(indiceMaraton < MARATON_JUEGOS.length) {
-              btnAction = `<button class="game-play-btn" style="background:#2ecc71; width:100%;" onclick="MARATON_JUEGOS[${indiceMaraton}]()">Siguiente Juego ➔</button>
-                           <div style="margin-top:15px; font-weight:bold; color:#34495e; font-size:0.95rem;">Progreso: Juego ${indiceMaraton} de 16 | Score Acumulado: ${puntajeMaraton}</div>
-                           <button class="game-back-menu" style="margin-top:10px;" onclick="renderArcadeMenu()">Salir de la Maratón</button>`;
+              btnAction = `<button class="game-play-btn" style="background:#2ecc71; width:100%; font-size:1.2rem;" onclick="MARATON_JUEGOS[${indiceMaraton}]()">Siguiente Juego ➔</button>
+                           <div style="margin-top:20px; font-weight:700; color:#334155; font-size:1.05rem;">Progreso: Juego ${indiceMaraton} de 16 | Score Acumulado: ${puntajeMaraton}</div>
+                           <button class="game-back-menu" style="margin-top:15px;" onclick="renderArcadeMenu()">Salir de la Maratón</button>`;
           } else {
-              btnAction = `<button class="game-play-btn" style="background:#f1c40f; color:#333; width:100%;" onclick="finalizarMaraton()">🏆 Ver Resultado Final de Maratón</button>`;
+              btnAction = `<button class="game-play-btn" style="background:#f1c40f; color:#333; width:100%; font-size:1.2rem;" onclick="finalizarMaraton()">🏆 Ver Resultado Final de Maratón</button>`;
           }
       }
 
-      elArcadeView.innerHTML = renderDashboardHTML() + `<div class="result-box" style="max-width: 700px;"><h2>${mensaje}</h2><p>Tu puntaje en este juego es:</p><div class="result-score">${puntajeJuego} / ${scoreMaximo}</div><p style="font-style:italic;margin-bottom:15px;color:var(--text-main);">${consejo}</p>${htmlRespuestas}<br>${btnAction}</div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<div class="result-box"><h2>${mensaje}</h2><p style="font-size:1.1rem; margin-top:10px;">Tu puntaje en este juego es:</p><div class="result-score">${puntajeJuego} / ${scoreMaximo}</div><p style="font-style:italic;margin-bottom:15px;color:var(--text-main);">${consejo}</p>${htmlRespuestas}<br>${btnAction}</div>` + obtenerManual();
     }
 
     function finalizarMaraton() {
         modoMaraton = false;
         elArcadeView.innerHTML = renderDashboardHTML() + `<div class="result-box" style="max-width: 700px;">
-            <h2>🏆 ¡Maratón Completada! 🏆</h2>
+            <h2 style="font-family:'Lora',serif; font-size:2.5rem; color:#f39c12;">🏆 ¡Maratón Completada! 🏆</h2>
             <div class="result-score">${puntajeMaraton} / ${maxPuntajeMaraton}</div>
-            <p>¡Increíble esfuerzo! Has recorrido las 16 modalidades del Arcade.</p>
+            <p style="font-size:1.2rem; margin-bottom:20px;">¡Increíble esfuerzo! Has recorrido las 16 modalidades del Arcade.</p>
             <button class="game-play-btn" style="margin-top:20px;" onclick="renderArcadeMenu()">↻ Volver al Menú Arcade</button>
         </div>`;
     }
