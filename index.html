@@ -545,7 +545,7 @@
           <div class="arcade-card" onclick="startBombardeo()"><div class="arcade-icon">⏱️</div><div class="arcade-name">Bombardeo Contrarreloj</div><div class="arcade-desc">Adivina la mayor cantidad de conceptos en 60s.</div></div>
           
           <div class="arcade-card" onclick="startWordle()"><div class="arcade-icon">🟩</div><div class="arcade-name">Wordle Clínico</div><div class="arcade-desc">Adivina el concepto oculto en 6 intentos.</div></div>
-          <div class="arcade-card" onclick="startSopa()"><div class="arcade-icon">🔍</div><div class="arcade-name">Sopa de Letras</div><div class="arcade-desc">Encuentra los conceptos en la cuadrícula.</div></div>
+          <div class="arcade-card" onclick="startSopa()"><div class="arcade-icon">🔍</div><div class="arcade-name">Sopa de Letras</div><div class="arcade-desc">Encuentra los conceptos en 10 tableros rápidos.</div></div>
         </div>
       `;
     }
@@ -818,7 +818,7 @@
         nextBombardeo(); 
     }
 
-    // --- WORDLE Y SOPA EXISTENTES ---
+    // --- WORDLE CLÍNICO ---
     let wObj = { palabra: '', intentos: 0, max: 6, historial: [] };
     function startWordle() {
       historialRespuestas = []; juegoActual = 'wordle'; puntajeJuego = 0; let cand = dbGlosario.filter(g => g.titulo.length >= 4 && g.titulo.length <= 7 && !g.titulo.includes(' '));
@@ -848,49 +848,146 @@
       renderWordleBoard();
     }
 
-    let slObj = { grid: [], palabras: [], encontradas: [], size: 10, seleccionadas: [] };
+    // --- SOPA DE LETRAS REHECHA (10 Rondas + Timer) ---
+    let slObj = { grid: [], word: '', coords: [], seleccionadas: [], round: 0, max: 10, time: 0 };
+    
     function startSopa() {
-      historialRespuestas = []; juegoActual = 'sopa'; puntajeJuego = 0; let cand = mezclarArray(dbGlosario.filter(g => g.titulo.length >= 4 && g.titulo.length <= 8 && !g.titulo.includes(' '))).slice(0, 3);
-      if(cand.length === 0) cand = [{titulo: "AYUDA"}, {titulo: "AMOR"}, {titulo: "PAZ"}];
-      slObj.palabras = cand.map(c => normalizarP(c.titulo).toUpperCase()); slObj.encontradas = []; slObj.seleccionadas = []; slObj.grid = Array(10).fill(null).map(() => Array(10).fill(''));
-      slObj.palabras.forEach(palabra => {
-        let placed = false; let safety = 0; while(!placed && safety < 100) {
-          safety++; let isH = Math.random()>0.5; let r = Math.floor(Math.random()*10); let c = Math.floor(Math.random()*10);
-          if(isH && c+palabra.length<=10) { let can=true; for(let i=0;i<palabra.length;i++) if(slObj.grid[r][c+i]!=='' && slObj.grid[r][c+i]!==palabra[i]) can=false; if(can) { for(let i=0;i<palabra.length;i++) slObj.grid[r][c+i]=palabra[i]; placed=true; } }
-          else if(!isH && r+palabra.length<=10) { let can=true; for(let i=0;i<palabra.length;i++) if(slObj.grid[r+i][c]!=='' && slObj.grid[r+i][c]!==palabra[i]) can=false; if(can) { for(let i=0;i<palabra.length;i++) slObj.grid[r+i][c]=palabra[i]; placed=true; } }
+      historialRespuestas = []; juegoActual = 'sopa'; puntajeJuego = 0;
+      slObj = { grid: [], word: '', coords: [], seleccionadas: [], round: 0, max: 10, time: 0 };
+      
+      if(timerGlobal) clearInterval(timerGlobal);
+      timerGlobal = setInterval(() => {
+        if(juegoActual === 'sopa') {
+          slObj.time++;
+          let elTime = document.getElementById('sopa-time');
+          if(elTime) elTime.innerText = slObj.time + "s";
         }
-      });
+      }, 1000);
+      
+      nextSopa();
+    }
+
+    function nextSopa() {
+      if(slObj.round >= slObj.max) {
+        if(timerGlobal) clearInterval(timerGlobal);
+        
+        if(slObj.time <= 60) puntajeJuego = 10;
+        else if(slObj.time <= 85) puntajeJuego = 8;
+        else if(slObj.time <= 110) puntajeJuego = 6;
+        else if(slObj.time <= 140) puntajeJuego = 4;
+        else puntajeJuego = 2;
+
+        historialRespuestas.push({
+          pre: "Sopa de Letras (10 palabras)", 
+          res: slObj.time + " segundos", 
+          cor: "Rápido y preciso (< 60s para un 10)", 
+          exp: "Completaste las 10 rondas. El puntaje se basa en tu agilidad visual."
+        });
+        return renderFinalResult();
+      }
+
+      let cands = dbGlosario.filter(g => g.titulo.length >= 4 && g.titulo.length <= 8 && !g.titulo.includes(' '));
+      if(!cands.length) cands = [{titulo: "AYUDA"}, {titulo: "AMOR"}];
+      let cand = cands[Math.floor(Math.random() * cands.length)];
+      
+      slObj.word = normalizarP(cand.titulo).toUpperCase();
+      slObj.seleccionadas = [];
+      slObj.coords = [];
+      
+      let gridSize = 8; 
+      slObj.grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(''));
+      
+      let placed = false; let safety = 0;
+      while(!placed && safety < 100) {
+        safety++;
+        let dir = Math.floor(Math.random() * 3); 
+        let r = Math.floor(Math.random() * gridSize); 
+        let c = Math.floor(Math.random() * gridSize);
+        let can = true;
+        let tempCoords = [];
+
+        for(let i = 0; i < slObj.word.length; i++) {
+          let nr = r + (dir === 1 || dir === 2 ? i : 0);
+          let nc = c + (dir === 0 || dir === 2 ? i : 0);
+          if(nr >= gridSize || nc >= gridSize) { can = false; break; }
+          tempCoords.push({r: nr, c: nc});
+        }
+
+        if(can) {
+          tempCoords.forEach((pos, i) => { slObj.grid[pos.r][pos.c] = slObj.word[i]; });
+          slObj.coords = tempCoords;
+          placed = true;
+        }
+      }
+
       let letT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      for(let r=0;r<10;r++) for(let c=0;c<10;c++) if(slObj.grid[r][c]==='') slObj.grid[r][c]=letT.charAt(Math.floor(Math.random()*letT.length));
-      renderSopa();
-    }
-    function renderSopa() {
-      if(slObj.encontradas.length === slObj.palabras.length) { puntajeJuego = 10; return renderFinalResult(); }
-      let hG = '<div style="display:grid;grid-template-columns:repeat(10,30px);gap:3px;justify-content:center;margin:20px auto;">';
-      for(let r=0;r<10;r++) for(let c=0;c<10;c++) { let isS = slObj.seleccionadas.some(s=>s.r===r&&s.c===c); hG += `<div onclick="clickSopa(${r},${c})" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:${isS?'#9b59b6':'#fff'};color:${isS?'white':'black'};border:1px solid #ccc;cursor:pointer;font-weight:bold;border-radius:4px;">${slObj.grid[r][c]}</div>`; }
-      hG += '</div>';
-      
-      let btnTerminar = modoMaraton ? `<button class="game-play-btn" style="background:#e74c3c; margin-left:10px;" onclick="forceEndSopa()">Rendirse</button>` : '';
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔍 Sopa</span><span>${slObj.encontradas.length} / ${slObj.palabras.length}</span></div><p style="font-weight:bold;color:#9b59b6;">${slObj.palabras.map(p => slObj.encontradas.includes(p)?`<s>${p}</s>`:p).join(' | ')}</p>${hG}<button class="game-play-btn" onclick="checkSopa()">Comprobar</button>${btnTerminar}`;
-    }
-    function clickSopa(r, c) { let idx = slObj.seleccionadas.findIndex(s=>s.r===r&&s.c===c); if(idx>=0) slObj.seleccionadas.splice(idx,1); else slObj.seleccionadas.push({r,c}); renderSopa(); }
-    function checkSopa() {
-      let wf = slObj.seleccionadas.map(s => slObj.grid[s.r][s.c]).join(''); let wfr = wf.split('').reverse().join('');
-      if((slObj.palabras.includes(wf)&&!slObj.encontradas.includes(wf))) slObj.encontradas.push(wf);
-      else if((slObj.palabras.includes(wfr)&&!slObj.encontradas.includes(wfr))) slObj.encontradas.push(wfr);
-      slObj.seleccionadas = []; 
-      
-      if(slObj.encontradas.length === slObj.palabras.length) {
-          historialRespuestas.push({pre: "Sopa de Letras", res: slObj.encontradas.join(', '), cor: slObj.palabras.join(', '), exp: "Términos encontrados exitosamente."});
+      for(let r=0; r<gridSize; r++) {
+        for(let c=0; c<gridSize; c++) {
+          if(slObj.grid[r][c] === '') slObj.grid[r][c] = letT.charAt(Math.floor(Math.random() * letT.length));
+        }
       }
       renderSopa();
     }
+
+    function renderSopa() {
+      let hG = '<div style="display:grid;grid-template-columns:repeat(8,35px);gap:3px;justify-content:center;margin:20px auto;">';
+      for(let r=0; r<8; r++) {
+        for(let c=0; c<8; c++) {
+           let isS = slObj.seleccionadas.some(s => s.r === r && s.c === c); 
+           hG += `<div onclick="clickSopa(${r},${c})" style="width:35px;height:35px;display:flex;align-items:center;justify-content:center;background:${isS?'#9b59b6':'#fff'};color:${isS?'white':'black'};border:1px solid #ccc;cursor:pointer;font-weight:bold;border-radius:4px;">${slObj.grid[r][c]}</div>`;
+        }
+      }
+      hG += '</div>';
+
+      let btnTerminar = modoMaraton ? `<button class="game-play-btn" style="background:#e74c3c; margin-left:10px;" onclick="forceEndSopa()">Rendirse</button>` : '';
+
+      elArcadeView.innerHTML = renderDashboardHTML() + `
+        <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button>
+        <div class="game-active-header">
+          <span>🔍 Sopa de Letras</span>
+          <span>Ronda ${slObj.round + 1} / ${slObj.max} | ⏱️ <span id="sopa-time">${slObj.time}s</span></span>
+        </div>
+        <p style="font-size:1.1rem;">Encuentra: <b style="color:#9b59b6; letter-spacing:2px;">${slObj.word}</b></p>
+        ${hG}
+        <button class="game-play-btn" onclick="checkSopa()">Comprobar</button>
+        ${btnTerminar}
+      `;
+    }
+
+    function clickSopa(r, c) { 
+      let idx = slObj.seleccionadas.findIndex(s => s.r === r && s.c === c); 
+      if(idx >= 0) slObj.seleccionadas.splice(idx, 1); 
+      else slObj.seleccionadas.push({r, c}); 
+      renderSopa(); 
+    }
+
+    function checkSopa() {
+      if(slObj.seleccionadas.length === slObj.coords.length) {
+         let matchCount = 0;
+         slObj.seleccionadas.forEach(sel => {
+            if(slObj.coords.some(coord => coord.r === sel.r && coord.c === sel.c)) {
+               matchCount++;
+            }
+         });
+         if(matchCount === slObj.coords.length) {
+            slObj.round++;
+            nextSopa();
+            return;
+         }
+      }
+      slObj.seleccionadas = [];
+      renderSopa();
+    }
+
     function forceEndSopa() {
-      historialRespuestas.push({pre: "Sopa de Letras", res: slObj.encontradas.join(', ') || "Ninguna", cor: slObj.palabras.join(', '), exp: "Términos que faltaron encontrar."});
+      if(timerGlobal) clearInterval(timerGlobal);
+      puntajeJuego = 0;
+      historialRespuestas.push({pre: "Sopa de Letras", res: "Rendición (Ronda " + (slObj.round + 1) + ")", cor: "10 rondas completas", exp: "Abandonaste antes de terminar."});
       renderFinalResult();
     }
 
-    // --- NUEVO: INVASORES TERAPÉUTICOS (Space Invaders) ---
+
+    // --- INVASORES TERAPÉUTICOS (Space Invaders) ---
     let invState = {};
     const bloquesNormales = ["Juicio", "Prejuicio", "Crítica", "Censura"];
     const bloquesDuros = ["Trauma", "Resistencia", "Bloqueo", "Soberbia"];
@@ -1054,7 +1151,7 @@
         renderFinalResult();
     }
 
-    // --- NUEVO 16: SUPER COUNSELOR (Endless Runner) ---
+    // --- SUPER COUNSELOR (Endless Runner) ---
     let runState = {};
     const runEnemies = ["Consejo no pedido", "Juicio de valor", "Interrupción", "Proyección"];
     const runCoins = ["Escucha Activa", "Silencio"];
@@ -1109,27 +1206,21 @@
       runState.frames++;
       runState.distance += runState.speed * 0.01;
       
-      // Acelerar juego lentamente
       if(runState.frames % 500 === 0) runState.speed += 0.5;
 
-      // Invencibilidad
       if(runState.p.invincibility > 0) runState.p.invincibility--;
 
-      // Físicas del jugador
       runState.p.vy += runState.gravity;
       runState.p.y += runState.p.vy;
       
-      // Colisión con el piso
       if(runState.p.y + runState.p.h >= runState.floorY) {
         runState.p.y = runState.floorY - runState.p.h;
         runState.p.vy = 0;
         runState.p.jumps = 0;
       }
 
-      // Spawners
       if(runState.frames % Math.max(60, Math.floor(120 - runState.speed * 5)) === 0) {
         if(Math.random() > 0.3) {
-          // Generar obstáculo
           runState.obstacles.push({
             x: canvas.width, y: runState.floorY - 30, w: 30, h: 30,
             text: runEnemies[Math.floor(Math.random() * runEnemies.length)]
@@ -1138,7 +1229,6 @@
       }
       
       if(runState.frames % 90 === 0 && Math.random() > 0.4) {
-        // Generar Moneda (flotando a alturas aleatorias)
         runState.coins.push({
           x: canvas.width, y: runState.floorY - 50 - Math.random() * 80, w: 20, h: 20,
           text: runCoins[Math.floor(Math.random() * runCoins.length)]
@@ -1146,65 +1236,51 @@
       }
 
       if(runState.frames % 600 === 0) {
-        // Generar PowerUp (Estrella)
-        runState.powerups.push({
-          x: canvas.width, y: runState.floorY - 100, w: 25, h: 25
-        });
+        runState.powerups.push({ x: canvas.width, y: runState.floorY - 100, w: 25, h: 25 });
       }
 
-      // Limpiar Canvas
       ctx.fillStyle = '#e0f7fa'; ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      // Dibujar Piso
       ctx.fillStyle = '#795548'; ctx.fillRect(0, runState.floorY, canvas.width, canvas.height - runState.floorY);
       ctx.fillStyle = '#8bc34a'; ctx.fillRect(0, runState.floorY, canvas.width, 10);
 
-      // Dibujar Jugador
       if(runState.p.invincibility > 0 && Math.floor(runState.frames / 5) % 2 === 0) {
-        ctx.fillStyle = '#f1c40f'; // Brillo invencible
+        ctx.fillStyle = '#f1c40f'; 
       } else {
-        ctx.fillStyle = '#2980b9'; // Normal
+        ctx.fillStyle = '#2980b9'; 
       }
       ctx.fillRect(runState.p.x, runState.p.y, runState.p.w, runState.p.h);
       ctx.fillStyle = 'white'; ctx.font = '10px Arial'; ctx.textAlign = 'center';
       ctx.fillText("Tú", runState.p.x + runState.p.w/2, runState.p.y - 5);
-
-      // Lógica y dibujado de Elementos Moviéndose
       
-      // Monedas
       for(let i = runState.coins.length - 1; i >= 0; i--) {
         let c = runState.coins[i];
         c.x -= runState.speed;
         
         ctx.fillStyle = '#f39c12'; ctx.beginPath(); ctx.arc(c.x + c.w/2, c.y + c.h/2, c.w/2, 0, Math.PI*2); ctx.fill();
         
-        // Colisión
         if(runState.p.x < c.x + c.w && runState.p.x + runState.p.w > c.x && runState.p.y < c.y + c.h && runState.p.y + runState.p.h > c.y) {
           runState.score += 5;
           runState.coins.splice(i, 1);
         } else if(c.x + c.w < 0) runState.coins.splice(i, 1);
       }
 
-      // PowerUps (Insight)
       for(let i = runState.powerups.length - 1; i >= 0; i--) {
         let p = runState.powerups[i];
         p.x -= runState.speed;
         
         ctx.fillStyle = '#f1c40f';
-        // Dibujar estrella simple
         ctx.save(); ctx.translate(p.x + p.w/2, p.y + p.h/2);
         ctx.beginPath();
         for(let j=0; j<5; j++) { ctx.lineTo(Math.cos((18+j*72)*Math.PI/180)*12, -Math.sin((18+j*72)*Math.PI/180)*12); ctx.lineTo(Math.cos((54+j*72)*Math.PI/180)*5, -Math.sin((54+j*72)*Math.PI/180)*5); }
         ctx.closePath(); ctx.fill(); ctx.restore();
 
-        // Colisión
         if(runState.p.x < p.x + p.w && runState.p.x + runState.p.w > p.x && runState.p.y < p.y + p.h && runState.p.y + runState.p.h > p.y) {
-          runState.p.invincibility = 300; // 5 segundos
+          runState.p.invincibility = 300; 
           runState.powerups.splice(i, 1);
         } else if(p.x + p.w < 0) runState.powerups.splice(i, 1);
       }
 
-      // Obstáculos (Enemigos)
       for(let i = runState.obstacles.length - 1; i >= 0; i--) {
         let o = runState.obstacles[i];
         o.x -= runState.speed;
@@ -1212,22 +1288,18 @@
         ctx.fillStyle = '#c0392b'; ctx.fillRect(o.x, o.y, o.w, o.h);
         ctx.fillStyle = 'black'; ctx.font = '9px Arial'; ctx.fillText(o.text, o.x + o.w/2, o.y - 5);
 
-        // Colisión
         if(runState.p.x < o.x + o.w && runState.p.x + runState.p.w > o.x && runState.p.y < o.y + o.h && runState.p.y + runState.p.h > o.y) {
           if(runState.p.invincibility > 0) {
-            // Si es invencible, destruye el obstáculo
             runState.obstacles.splice(i, 1);
             runState.score += 2;
           } else {
-            // Choque normal
             runState.lives--;
             runState.obstacles.splice(i, 1);
-            runState.p.invincibility = 60; // frames de gracia tras recibir daño
+            runState.p.invincibility = 60; 
             
             if(runState.lives <= 0) return endRunner();
           }
         } else if(o.x + o.w < 0) {
-          // Esquivado correctamente
           runState.score += 1;
           runState.obstacles.splice(i, 1);
         }
@@ -1251,7 +1323,6 @@
     function renderFinalResult() {
       let mensaje = ""; let consejo = ""; let scoreMaximo = 10;
       
-      // Adaptar máximo si es invasores o runner
       if(juegoActual === 'invasores' || juegoActual === 'runner') scoreMaximo = 20;
 
       if (puntajeJuego >= (scoreMaximo * 0.9)) { mensaje = "¡Perfección Absoluta! 🏆"; consejo = "Tienes un dominio increíble e impecable del glosario."; } 
@@ -1259,7 +1330,6 @@
       else if (puntajeJuego >= (scoreMaximo * 0.4)) { mensaje = "¡Buen Intento! 👍"; consejo = "Vas por muy buen camino. Repasa de manera focalizada."; } 
       else { mensaje = "¡A Seguir Estudiando! 📚"; consejo = "Utiliza el panel central para profundizar cada concepto."; }
       
-      // Sumar al Global Permanente
       puntajeGlobalTotal += puntajeJuego;
 
       let htmlRespuestas = `<div style="text-align:left; margin-top: 20px; max-height: 250px; overflow-y: auto; padding: 15px; background: white; border-radius: 8px; border: 1px solid #ddd;">
