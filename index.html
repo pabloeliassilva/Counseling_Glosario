@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Glosario Counseling</title>
+  <title>🌸 Enciclopedia de Counseling 🌸</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Nunito+Sans:wght@400;600;800&display=swap');
     
     :root {
       --bg-app: #f5f6fa;
@@ -20,7 +20,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
     
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Nunito Sans', sans-serif;
       background-color: var(--bg-app);
       color: var(--text-main);
       height: 100vh;
@@ -30,21 +30,30 @@
     }
 
     header {
-      background: linear-gradient(135deg, var(--brand-color), #008a6e);
+      background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://commons.wikimedia.org/wiki/Special:FilePath/Villa_Yacanto_prairies.jpg?width=1200');
+      background-size: cover;
+      background-position: center 60%;
       color: white;
-      padding: 25px 20px;
+      padding: 30px 20px;
       display: flex;
       justify-content: center;
       align-items: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       z-index: 10;
+      flex-shrink: 0;
     }
     header h1 {
-      font-size: 2rem;
+      font-family: 'Lora', serif;
+      font-size: 2.2rem;
       font-weight: 900;
       letter-spacing: 1px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      color: var(--brand-color);
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 10px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       margin: 0;
+      text-align: center;
     }
 
     .app-container {
@@ -54,6 +63,38 @@
       padding: 15px;
       gap: 15px;
     }
+
+    footer {
+      background-color: var(--bg-panel);
+      border-top: 3px solid var(--brand-color);
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      flex-shrink: 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      z-index: 10;
+    }
+    .footer-contact {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .contact-info {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+    .contact-info strong { color: var(--brand-color); font-size: 1rem; font-family: 'Lora', serif; }
+    .btn-whatsapp {
+      background-color: #25D366; color: white; padding: 10px 18px; border-radius: 30px; text-decoration: none; font-weight: 800; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 6px rgba(37,211,102,0.3); transition: transform 0.2s;
+    }
+    .btn-whatsapp:hover { transform: scale(1.05); background-color: #128C7E; }
+    .footer-decor { font-size: 1.5rem; letter-spacing: 10px; color: var(--brand-color); opacity: 0.8;}
+    .footer-date { font-size: 0.75rem; color: var(--text-muted); font-style: italic; text-align: right; }
 
     .col {
       background: var(--bg-panel);
@@ -68,29 +109,27 @@
     .col-header {
       padding: 15px;
       border-bottom: 1px solid var(--border);
-      font-weight: 700;
+      font-weight: 800;
+      font-family: 'Lora', serif;
       background-color: var(--bg-panel);
+      font-size: 1.1rem;
     }
 
-    .col-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-    }
+    .col-content { flex: 1; overflow-y: auto; padding: 10px; }
 
     .col-categorias { width: 300px; flex-shrink: 0; }
     .cat-card {
       padding: 12px;
       border: 1px solid var(--border);
-      border-left: 5px solid var(--cat-color, var(--brand-color));
+      border-left: 6px solid var(--cat-color, var(--brand-color));
       border-radius: 6px;
       margin-bottom: 10px;
       cursor: pointer;
       transition: all 0.2s;
     }
     .cat-card:hover { background-color: var(--hover); }
-    .cat-card.active { border-left-width: 8px; background-color: var(--hover); box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
-    .cat-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; color: var(--text-main); }
+    .cat-card.active { border-left-width: 10px; background-color: var(--hover); box-shadow: 0 2px 6px rgba(0,0,0,0.05);}
+    .cat-title { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; color: var(--text-main); }
     .cat-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
 
     .cat-card-form { border-color: #3498db; border-style: dashed; border-left-style: solid; margin-top: 15px; background-color: #f0f8ff; }
@@ -108,7 +147,7 @@
     
     .conceptos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
     
-    .letter-divider { grid-column: 1 / -1; font-size: 1.5rem; font-weight: 900; color: var(--text-main); padding: 15px 0 5px 0; border-bottom: 2px solid var(--border); margin-top: 5px; }
+    .letter-divider { grid-column: 1 / -1; font-family: 'Lora', serif; font-size: 1.5rem; font-weight: 900; color: var(--text-main); padding: 15px 0 5px 0; border-bottom: 2px solid var(--border); margin-top: 5px; }
     .letter-divider:first-child { margin-top: 0; padding-top: 0; }
 
     .concept-card {
@@ -116,27 +155,27 @@
       border-top: 4px solid var(--cat-color, var(--brand-color)); border-radius: 6px;
       cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: transform 0.2s;
     }
-    .concept-card:hover { transform: translateY(-2px); }
+    .concept-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.08); }
     .concept-card.active { outline: 2px solid var(--cat-color, var(--brand-color)); }
     
     .color-dot { width: 12px; height: 12px; border-radius: 50%; background-color: var(--cat-color, var(--brand-color)); margin-bottom: 8px; display: inline-block; }
-    .concept-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; }
+    .concept-title { font-weight: 800; font-size: 1.05rem; margin-bottom: 8px; }
     .concept-summary { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;}
 
     .col-tarjeta { width: 450px; flex-shrink: 0; border-top: 4px solid var(--cat-color, var(--brand-color)); }
     .detail-container { padding: 20px; }
-    .detail-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; color: var(--text-main); }
-    .detail-summary { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; font-weight: 500;}
+    .detail-title { font-family: 'Lora', serif; font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; color: var(--text-main); }
+    .detail-summary { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; font-weight: 600; color: #34495e;}
     
     .btn-google {
       display: inline-flex; align-items: center; justify-content: center; background-color: #f1f3f4;
       color: #3c4043; border: 1px solid #dadce0; padding: 10px 18px; border-radius: 20px;
-      text-decoration: none; font-weight: 500; font-size: 0.9rem; margin-bottom: 25px;
+      text-decoration: none; font-weight: 700; font-size: 0.9rem; margin-bottom: 25px; transition: background 0.2s;
     }
     .btn-google:hover { background-color: #e8eaed; }
 
-    .section-title { font-size: 0.85rem; text-transform: uppercase; color: var(--cat-color, var(--brand-color)); margin: 20px 0 10px; text-align: center; border-bottom: 1px solid var(--border); font-weight: 700; }
-    .detail-text { font-size: 0.95rem; line-height: 1.6; color: #34495e; margin-bottom: 20px; }
+    .section-title { font-size: 0.85rem; text-transform: uppercase; color: var(--cat-color, var(--brand-color)); margin: 20px 0 10px; text-align: center; border-bottom: 1px solid var(--border); font-weight: 800; letter-spacing: 1px;}
+    .detail-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-main); margin-bottom: 20px; }
     .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); font-style: italic; }
 
     .col-form, .col-game { display: none; flex: 1; border-top: 4px solid; background: var(--bg-panel); overflow-y: auto; }
@@ -154,17 +193,15 @@
       margin-bottom: 25px; box-shadow: 0 6px 12px rgba(155,89,182,0.2);
       flex-wrap: wrap; gap: 10px; border: 2px solid #e1bee7;
     }
-    .dashboard-counselor {
-      display: flex; align-items: center; gap: 15px; flex: 1; min-width: 250px;
-    }
+    .dashboard-counselor { display: flex; align-items: center; gap: 15px; flex: 1; min-width: 250px; }
     .counselor-avatar { font-size: 2.2rem; }
-    .counselor-msg { font-style: italic; font-size: 1rem; font-weight: 500; line-height: 1.3; transition: opacity 0.4s ease;}
+    .counselor-msg { font-style: italic; font-size: 1rem; font-weight: 600; line-height: 1.3; transition: opacity 0.5s ease;}
     .dashboard-score {
       background: white; color: #8e44ad; padding: 8px 18px; border-radius: 25px;
       font-weight: 900; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;
     }
 
-    .arcade-title { color: #9b59b6; font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; }
+    .arcade-title { font-family: 'Lora', serif; color: #9b59b6; font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; }
     .arcade-subtitle { color: var(--text-muted); margin-bottom: 30px; font-size: 1.05rem; }
     
     .arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; margin-bottom: 20px; }
@@ -175,13 +212,13 @@
     }
     .arcade-card:hover { transform: translateY(-3px); border-color: #9b59b6; box-shadow: 0 6px 12px rgba(155,89,182,0.15); }
     .arcade-icon { font-size: 2.5rem; margin-bottom: 12px; }
-    .arcade-name { font-weight: 700; font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px; }
+    .arcade-name { font-weight: 800; font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px; }
     .arcade-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; flex: 1; }
 
     /* COMPONENTES DE JUEGO */
-    .game-active-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 25px; color: #9b59b6; width: 100%; padding-bottom: 10px; border-bottom: 2px solid #f4e1fa; }
-    .game-play-btn { background: #9b59b6; color: white; border: none; padding: 12px 25px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; font-weight: bold; margin-top: 15px; }
-    .game-back-menu { background: none; border: 1px solid #9b59b6; color: #9b59b6; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: background 0.2s; }
+    .game-active-header { display: flex; justify-content: space-between; font-weight: 800; margin-bottom: 25px; color: #9b59b6; width: 100%; padding-bottom: 10px; border-bottom: 2px solid #f4e1fa; }
+    .game-play-btn { background: #9b59b6; color: white; border: none; padding: 12px 25px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; font-weight: 800; margin-top: 15px; }
+    .game-back-menu { background: none; border: 1px solid #9b59b6; color: #9b59b6; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 800; margin-bottom: 20px; transition: background 0.2s; }
     .game-back-menu:hover { background: #fcf4ff; }
 
     .flashcard-box { width: 100%; max-width: 450px; height: 280px; perspective: 1000px; margin: 0 auto 30px auto; cursor: pointer; }
@@ -189,46 +226,46 @@
     .flashcard-box.flipped .flashcard-inner { transform: rotateY(180deg); }
     .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 3px solid #9b59b6; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
     .flashcard-front { background: #fdf8ff; color: var(--text-main); }
-    .flashcard-front h2 { font-size: 1.8rem; font-weight: 900; }
+    .flashcard-front h2 { font-family: 'Lora', serif; font-size: 1.8rem; font-weight: 900; }
     .flashcard-back { background: white; transform: rotateY(180deg); overflow-y: auto; text-align: left; justify-content: flex-start; }
     .flashcard-actions { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
-    .btn-action-fc { border: none; padding: 12px 20px; border-radius: 25px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; gap: 8px; }
+    .btn-action-fc { border: none; padding: 12px 20px; border-radius: 25px; font-weight: 800; cursor: pointer; color: white; display: flex; align-items: center; gap: 8px; }
     .btn-fc-wrong { background: #e74c3c; } .btn-fc-correct { background: #2ecc71; }
 
-    .game-text-question { font-size: 1.2rem; font-weight: 500; margin-bottom: 25px; line-height: 1.5; text-align: left; background: #fdfdfd; padding: 20px; border-left: 5px solid #9b59b6; border-radius: 4px; }
+    .game-text-question { font-size: 1.2rem; font-weight: 600; margin-bottom: 25px; line-height: 1.5; text-align: left; background: #fdfdfd; padding: 20px; border-left: 5px solid #9b59b6; border-radius: 4px; }
     .options-stack { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto; }
-    .option-btn { background: white; border: 2px solid #bdc3c7; padding: 15px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 500; text-align: left; }
+    .option-btn { background: white; border: 2px solid #bdc3c7; padding: 15px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 600; text-align: left; }
     .option-btn:hover { border-color: #9b59b6; background: #fef9ff; }
     .option-btn.correct { background: #2ecc71 !important; color: white !important; border-color: #27ae60 !important; }
     .option-btn.wrong { background: #e74c3c !important; color: white !important; border-color: #c0392b !important; }
 
     .match-container { display: flex; gap: 20px; width: 100%; max-width: 700px; margin: 0 auto; text-align: left; }
     .match-col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-    .match-item { background: white; border: 2px solid #bdc3c7; padding: 12px 15px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; font-weight: 500; min-height: 70px; display: flex; align-items: center; transition: all 0.2s; }
+    .match-item { background: white; border: 2px solid #bdc3c7; padding: 12px 15px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; font-weight: 600; min-height: 70px; display: flex; align-items: center; transition: all 0.2s; }
     .match-item:hover { border-color: #9b59b6; }
     .match-item.selected { border-color: #9b59b6; background: #f3e5f5; box-shadow: 0 0 8px rgba(155,89,182,0.3); }
     .match-item.matched { background: #e8f5e9; border-color: #2ecc71; color: #27ae60; cursor: default; opacity: 0.6; }
 
     .result-box { background: #faf6fc; border: 2px dashed #9b59b6; padding: 40px 20px; border-radius: 12px; max-width: 550px; margin: 0 auto; }
-    .result-score { font-size: 4rem; font-weight: 900; color: #9b59b6; margin: 15px 0; }
+    .result-score { font-size: 4rem; font-weight: 900; color: #9b59b6; margin: 15px 0; font-family: 'Lora', serif; }
 
     /* ESTILOS ESPECÍFICOS NUEVOS JUEGOS */
     .swipe-container { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
-    .btn-swipe { flex: 1; padding: 20px; font-size: 1.2rem; font-weight: bold; border-radius: 12px; border: none; cursor: pointer; color: white; transition: transform 0.1s; }
+    .btn-swipe { flex: 1; padding: 20px; font-size: 1.2rem; font-weight: 800; border-radius: 12px; border: none; cursor: pointer; color: white; transition: transform 0.1s; }
     .btn-swipe:active { transform: scale(0.95); }
     .bg-red { background-color: #e74c3c; } .bg-green { background-color: #2ecc71; }
 
     .box-container { display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap;}
-    .drop-box { flex: 1; min-width: 150px; border: 3px dashed #bdc3c7; border-radius: 12px; padding: 20px 10px; font-weight: bold; cursor: pointer; background: #f8f9fa; transition: all 0.2s;}
+    .drop-box { flex: 1; min-width: 150px; border: 3px dashed #bdc3c7; border-radius: 12px; padding: 20px 10px; font-weight: 800; cursor: pointer; background: #f8f9fa; transition: all 0.2s;}
     .drop-box:hover { border-color: #9b59b6; background: #f4e1fa; }
 
     .frag-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; min-height: 80px; padding: 15px; border: 2px dashed #bdc3c7; border-radius: 8px;}
-    .frag-word { background: #3498db; color: white; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; user-select: none; }
+    .frag-word { background: #3498db; color: white; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 800; user-select: none; }
     .frag-word.used { background: #ecf0f1; color: #bdc3c7; cursor: default; }
 
     .cross-row { display: flex; gap: 5px; justify-content: center; margin-bottom: 15px; align-items: center; }
-    .cross-clue { font-size: 0.85rem; width: 250px; text-align: right; padding-right: 15px; color: #34495e; line-height: 1.2; }
-    .cross-input { letter-spacing: 5px; font-family: monospace; font-size: 1.2rem; padding: 8px; border: 2px solid #bdc3c7; border-radius: 4px; width: 200px; text-transform: uppercase; text-align: center; }
+    .cross-clue { font-size: 0.85rem; width: 250px; text-align: right; padding-right: 15px; color: #34495e; line-height: 1.2; font-weight: 600;}
+    .cross-input { letter-spacing: 5px; font-family: monospace; font-size: 1.2rem; font-weight: bold; padding: 8px; border: 2px solid #bdc3c7; border-radius: 4px; width: 200px; text-transform: uppercase; text-align: center; }
 
     .timer-bar { height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
     .timer-fill { height: 100%; background: #e74c3c; width: 100%; transition: width 1s linear; }
@@ -239,21 +276,31 @@
     #runner-canvas { background: #e0f7fa; }
     
     .space-controls { display: flex; justify-content: center; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-    .btn-space { padding: 15px 25px; font-size: 1.2rem; font-weight: bold; background: #9b59b6; color: white; border: none; border-radius: 8px; cursor: pointer; touch-action: manipulation; }
+    .btn-space { padding: 15px 25px; font-size: 1.2rem; font-weight: 800; background: #9b59b6; color: white; border: none; border-radius: 8px; cursor: pointer; touch-action: manipulation; }
     .btn-space:active { background: #8e44ad; transform: scale(0.95); }
     .btn-space-shoot { background: #e74c3c; width: 100%; max-width: 250px; }
+
+    /* RANDOM FLASH OVERLAY */
+    #flash-timer-overlay {
+      position: absolute; top: 15px; right: 20px; background: #e74c3c; color: white; padding: 5px 20px; border-radius: 20px; font-weight: 900; font-size: 1.5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 1000; display: none; animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
 
     .app-container.show-form .col-conceptos, .app-container.show-form .col-tarjeta { display: none !important; }
     .app-container.show-form .col-form { display: flex; }
     .app-container.show-game .col-conceptos, .app-container.show-game .col-tarjeta { display: none !important; }
     .app-container.show-game .col-game { display: flex; }
 
-    .btn-mobile-close { display: none; background-color: var(--bg-app); color: var(--text-main); border: 1px solid var(--border); padding: 12px 20px; margin: 15px 15px 0 15px; border-radius: 6px; font-weight: 700; cursor: pointer; text-align: left; }
+    .btn-mobile-close { display: none; background-color: var(--bg-app); color: var(--text-main); border: 1px solid var(--border); padding: 12px 20px; margin: 15px 15px 0 15px; border-radius: 6px; font-weight: 800; cursor: pointer; text-align: left; }
     .btn-mobile-close::before { content: "← "; }
 
     @media (max-width: 1024px) {
       header h1 { font-size: 1.5rem; }
       .app-container { flex-direction: column; padding: 10px; gap: 10px; overflow: hidden; }
+      footer { flex-direction: column; text-align: center; justify-content: center; }
+      .footer-contact { justify-content: center; }
+      .footer-decor { display: none; }
+      .footer-date { text-align: center; margin-top: 10px; }
       .col-categorias { width: 100%; height: auto; flex-shrink: 0; border: none; box-shadow: none; background: transparent; }
       .col-categorias .col-header { display: none; }
       .col-categorias .col-content { display: flex; flex-direction: row; overflow-x: auto; padding: 5px; gap: 8px; -ms-overflow-style: none; scrollbar-width: none;  }
@@ -261,7 +308,7 @@
       .cat-card { min-width: max-content; margin-bottom: 0; padding: 8px 16px; border-radius: 20px; border: 2px solid var(--cat-color, var(--brand-color)); background-color: var(--bg-panel); border-left: 2px solid var(--cat-color, var(--brand-color));}
       .cat-card.active { background-color: var(--cat-color); color: #fff; }
       .cat-card.active .cat-title { color: #fff; }
-      .cat-card.active .cat-desc { color: rgba(255,255,255,0.8); display: none; }
+      .cat-card.active .cat-desc { display: none; }
       .cat-card-form, .cat-card-game { margin-top: 0; }
       .cat-desc { display: none; } 
       .col-conceptos { padding-right: 0; }
@@ -283,7 +330,7 @@
 <body>
 
   <header>
-    <h1>🌸 Glosario de Counseling</h1>
+    <h1>🌸 Enciclopedia de Counseling 🌸</h1>
   </header>
 
   <div class="app-container" id="main-app-container">
@@ -311,10 +358,27 @@
 
     <section class="col col-game" id="col-game-container">
       <button class="btn-mobile-close" onclick="selectCategory('all')" style="position:absolute; top:15px; left:15px; z-index: 100;">Salir</button>
+      <div id="flash-timer-overlay">⏱️ <span id="flash-timer-display">60s</span></div>
       <div class="game-wrapper" id="arcade-main-view"></div>
     </section>
 
   </div>
+
+  <footer>
+    <div class="footer-contact">
+      <div class="contact-info">
+         <strong>Lilian Beatriz Romano</strong><br>
+         Counselor y Licenciada en Ciencias de la Educación<br>
+         📍 Del Campillo 1478. Bialet Massé. Córdoba. 📱 CEL: 3541 38-5904
+      </div>
+      <a href="https://wa.me/5493541385904?text=Hola%20Lilian,%20me%20gustar%C3%ADa%20hacer%20una%20consulta%20sobre%20Counseling." target="_blank" class="btn-whatsapp">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12.031 2C6.495 2 2 6.494 2 12.034c0 1.761.446 3.483 1.298 5.01L2 22l5.12-1.309a10.024 10.024 0 004.911 1.28h.004c5.535 0 10.034-4.494 10.034-10.035C22.064 6.495 17.566 2 12.031 2zm0 18.23a8.288 8.288 0 01-4.225-1.144l-.303-.18-3.136.822.836-3.056-.197-.314A8.283 8.283 0 013.738 12.03c0-4.57 3.719-8.289 8.293-8.289 4.574 0 8.293 3.719 8.293 8.29.001 4.57-3.719 8.289-8.293 8.289zm4.551-6.223c-.249-.125-1.475-.728-1.705-.811-.229-.083-.396-.125-.562.125-.167.249-.646.811-.792.977-.145.166-.291.187-.541.062-.25-.125-1.052-.387-2.004-1.238-.74-.663-1.24-1.482-1.385-1.732-.146-.25-.015-.385.11-.51.112-.112.25-.291.375-.437.125-.146.166-.249.25-.415.083-.167.042-.312-.021-.437-.062-.125-.562-1.353-.77-1.854-.203-.487-.41-.421-.562-.428-.145-.006-.312-.006-.479-.006a.91.91 0 00-.666.312c-.229.25-.875.854-.875 2.081 0 1.228.896 2.414 1.02 2.58.125.166 1.758 2.684 4.261 3.765 2.502 1.082 2.502.729 2.96.687.458-.042 1.475-.603 1.684-1.186.208-.583.208-1.083.146-1.187-.062-.104-.229-.166-.479-.291z"/></svg>
+        Contactar al Counselor
+      </a>
+    </div>
+    <div class="footer-decor">🌸🌿🌸</div>
+    <div class="footer-date">Última actualización: 10 jun 2026, 12:12 a. m.</div>
+  </footer>
 
   <script>
     const dbCategorias = [{"id":1,"nombre":"Actitudes del profesional","descripcion":"Disposición empática, auténtica y libre de juicios para crear un espacio seguro.","color":"#00B894"},{"id":2,"nombre":"El proceso del consultante","descripcion":"Las vivencias, descubrimientos y la evolución emocional de quien busca ayuda.","color":"#E88D8D"},{"id":3,"nombre":"Filosofía humanista","descripcion":"Bases teóricas que confían en el potencial innato de la persona para desarrollarse.","color":"#F2B672"},{"id":4,"nombre":"Herramientas prácticas","descripcion":"Técnicas de comunicación utilizadas para guiar, ordenar y clarificar la sesión.","color":"#84A9C0"},{"id":5,"nombre":"La relación de ayuda","descripcion":"El vínculo de confianza y trabajo en equipo entre el counselor y el consultante.","color":"#B38CB0"},{"id":6,"nombre":"Límites y protección","descripcion":"El encuadre ético y de privacidad que garantiza la seguridad y transparencia del proceso.","color":"#A2B887"},{"id":7,"nombre":"Temas de consulta y crisis","descripcion":"Situaciones vitales, transiciones o dificultades específicas que motivan el acompañamiento.","color":"#C78B9D"},{"id":9,"nombre":"Links","descripcion":"Vinculos a sitios Web","color":"#8C87BA"}];
@@ -364,6 +428,7 @@
     const elDetailTarjeta = document.getElementById('detail-tarjeta');
     const colTarjetaContainer = document.getElementById('col-tarjeta-container');
     const elArcadeView = document.getElementById('arcade-main-view');
+    const elFlashOverlay = document.getElementById('flash-timer-overlay');
 
     let timerGlobal = null; 
     let loopInvasores = null;
@@ -376,6 +441,12 @@
     let indiceMaraton = 0;
     let puntajeMaraton = 0;
     let maxPuntajeMaraton = 0;
+    
+    // --- RANDOM FLASH ---
+    let modoRandomFlash = false;
+    let flashTimer = 0;
+    let flashInterval = null;
+
     const MARATON_JUEGOS = [
       () => startFlashcards(), () => startTrivia(1), () => startTrivia(2),
       () => startMatching(), () => startHangman(), () => startSimulador(),
@@ -384,11 +455,71 @@
       () => startWordle(), () => startSopa(), () => startInvasores(), () => startRunner()
     ];
 
-    // --- MENSAJES DEL TABLERO GLOBAL (15 seg) ---
-    function obtenerMensajeCounselor() {
-      return frasesCounselor[Math.floor(Math.random() * frasesCounselor.length)];
+    // --- MÚSICA MIDI (Web Audio API) ---
+    let audioCtx = null;
+    let musicInterval = null;
+    let musicTick = 0;
+
+    const GAME_MELODIES = {
+        'flashcards': { notes: [261.63, 329.63, 392.00, 329.63], speed: 600, type: 'sine' },
+        'trivia_1': { notes: [293.66, 349.23, 440.00, 349.23], speed: 500, type: 'triangle' },
+        'trivia_2': { notes: [329.63, 392.00, 493.88, 392.00], speed: 500, type: 'triangle' },
+        'matching': { notes: [261.63, 392.00, 523.25, 392.00], speed: 400, type: 'sine' },
+        'hangman': { notes: [220.00, 261.63, 329.63], speed: 800, type: 'square' },
+        'simulador': { notes: [349.23, 440.00, 523.25, 440.00], speed: 700, type: 'sine' },
+        'empatia': { notes: [392.00, 493.88, 587.33, 493.88], speed: 300, type: 'sine' },
+        'corrientes': { notes: [261.63, 349.23, 440.00], speed: 600, type: 'triangle' },
+        'autores': { notes: [329.63, 440.00, 523.25], speed: 600, type: 'sine' },
+        'crucigrama': { notes: [261.63, 293.66, 329.63, 349.23], speed: 500, type: 'square' },
+        'fragmentado': { notes: [392.00, 349.23, 329.63, 293.66], speed: 500, type: 'triangle' },
+        'bombardeo': { notes: [440.00, 493.88, 523.25, 587.33], speed: 200, type: 'square' },
+        'wordle': { notes: [261.63, 392.00, 261.63, 392.00], speed: 700, type: 'sine' },
+        'sopa': { notes: [349.23, 392.00, 440.00, 523.25], speed: 400, type: 'triangle' },
+        'invasores': { notes: [196.00, 220.00, 246.94, 261.63], speed: 250, type: 'square' },
+        'runner': { notes: [261.63, 329.63, 392.00, 523.25, 659.25], speed: 200, type: 'triangle' }
+    };
+
+    function startMidiMusic(gameId) {
+        stopMidiMusic();
+        if(!audioCtx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if(AudioContext) audioCtx = new AudioContext();
+        }
+        if(!audioCtx) return;
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+
+        let melody = GAME_MELODIES[gameId] || { notes: [261.63, 329.63, 392.00], speed: 500, type: 'sine' };
+        musicTick = 0;
+
+        musicInterval = setInterval(() => {
+            let t = audioCtx.currentTime;
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            
+            osc.type = melody.type;
+            let note = melody.notes[musicTick % melody.notes.length];
+            
+            osc.frequency.setValueAtTime(note, t);
+            gain.gain.setValueAtTime(0.015, t); 
+            gain.gain.exponentialRampToValueAtTime(0.001, t + (melody.speed/1000) * 0.8);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t);
+            osc.stop(t + (melody.speed/1000));
+            
+            musicTick++;
+        }, melody.speed);
     }
 
+    function stopMidiMusic() {
+        if(musicInterval) {
+            clearInterval(musicInterval);
+            musicInterval = null;
+        }
+    }
+
+    // --- MENSAJES DEL TABLERO GLOBAL (15 seg) ---
     setInterval(() => {
       const msgs = document.querySelectorAll('.counselor-msg');
       msgs.forEach(msg => {
@@ -396,7 +527,7 @@
         setTimeout(() => {
           msg.innerText = '"' + obtenerMensajeCounselor() + '"';
           msg.style.opacity = 1;
-        }, 400);
+        }, 500);
       });
     }, 15000);
 
@@ -441,7 +572,7 @@
     function renderCategorias() {
       const cardTodas = `<div class="cat-card ${activeCategoryId === 'all' ? 'active' : ''}" style="--cat-color: var(--brand-color)" onclick="selectCategory('all')"><div class="cat-title">Todas las categorías</div><div class="cat-desc">Ver todos los ítems alfabéticamente</div></div>`;
       const cardsCategorias = dbCategorias.map(cat => `<div class="cat-card ${activeCategoryId == cat.id ? 'active' : ''}" style="--cat-color: ${cat.color}" onclick="selectCategory('${cat.id}')"><div class="cat-title">${cat.nombre}</div><div class="cat-desc">${cat.descripcion}</div></div>`).join('');
-      const cardForm = `<div class="cat-card cat-card-form ${activeCategoryId === 'form' ? 'active' : ''}" style="--cat-color: #3498db" onclick="openSection('form')"><div class="cat-title">📝 Contactar al Counselor</div><div class="cat-desc">Propone nuevos términos</div></div>`;
+      const cardForm = `<div class="cat-card cat-card-form ${activeCategoryId === 'form' ? 'active' : ''}" style="--cat-color: #3498db" onclick="openSection('form')"><div class="cat-title">📝 Contactar al Counselor</div><div class="cat-desc">Haz tus consultas directas</div></div>`;
       const cardGame = `<div class="cat-card cat-card-game ${activeCategoryId === 'game' ? 'active' : ''}" style="--cat-color: #9b59b6" onclick="openSection('game')"><div class="cat-title">🎮 COUNSELOR PLAY</div><div class="cat-desc">16 modalidades interactivas</div></div>`;
       elListCategorias.innerHTML = cardTodas + cardsCategorias + cardForm + cardGame;
     }
@@ -490,6 +621,8 @@
       if(timerGlobal) clearInterval(timerGlobal);
       if(loopInvasores) cancelAnimationFrame(loopInvasores);
       if(loopRunner) cancelAnimationFrame(loopRunner);
+      stopMidiMusic();
+      detenerRandomFlash();
       elAppContainer.classList.remove('show-form'); elAppContainer.classList.remove('show-game');
       activeCategoryId = id; activeConceptId = null;
       if(elGridConceptos.parentElement) elGridConceptos.parentElement.scrollTop = 0; 
@@ -500,6 +633,8 @@
       if(timerGlobal) clearInterval(timerGlobal);
       if(loopInvasores) cancelAnimationFrame(loopInvasores);
       if(loopRunner) cancelAnimationFrame(loopRunner);
+      stopMidiMusic();
+      detenerRandomFlash();
       activeCategoryId = type; activeConceptId = null;
       elAppContainer.classList.remove('show-form'); elAppContainer.classList.remove('show-game');
       elAppContainer.classList.add('show-' + type);
@@ -531,17 +666,58 @@
     const listaTitulosGlobal = dbGlosario.map(g => g.titulo);
 
     function startMaraton() {
-      modoMaraton = true;
-      indiceMaraton = 0;
-      puntajeMaraton = 0;
-      maxPuntajeMaraton = 0;
+      modoMaraton = true; modoRandomFlash = false;
+      indiceMaraton = 0; puntajeMaraton = 0; maxPuntajeMaraton = 0;
       MARATON_JUEGOS[0]();
+    }
+
+    function startRandomFlash() {
+      modoMaraton = false;
+      modoRandomFlash = true;
+      flashTimer = 60;
+      puntajeJuego = 0;
+      historialRespuestas = [];
+      elFlashOverlay.style.display = 'block';
+      elFlashOverlay.innerHTML = '⏱️ <span id="flash-timer-display">60s</span>';
+      
+      if(flashInterval) clearInterval(flashInterval);
+      flashInterval = setInterval(() => {
+         flashTimer--;
+         let d = document.getElementById('flash-timer-display');
+         if(d) d.innerText = flashTimer + "s";
+         if(flashTimer <= 0) {
+            clearInterval(flashInterval);
+            forceEndRandomFlash();
+         }
+      }, 1000);
+
+      let randomGameIndex = Math.floor(Math.random() * MARATON_JUEGOS.length);
+      MARATON_JUEGOS[randomGameIndex](); 
+    }
+
+    function forceEndRandomFlash() {
+      if(loopInvasores) cancelAnimationFrame(loopInvasores);
+      if(loopRunner) cancelAnimationFrame(loopRunner);
+      if(timerGlobal) clearInterval(timerGlobal);
+      stopMidiMusic();
+      elFlashOverlay.style.display = 'none';
+      invState.playing = false; runState.playing = false;
+      historialRespuestas.push({pre: "Desafío Random Flash", res: "Tiempo Agotado", cor: "Completar la tarea", exp: "El tiempo de 60 segundos llegó a su fin."});
+      renderFinalResult();
+    }
+
+    function detenerRandomFlash() {
+      modoRandomFlash = false;
+      if(flashInterval) clearInterval(flashInterval);
+      elFlashOverlay.style.display = 'none';
     }
 
     function renderArcadeMenu() {
       if(timerGlobal) clearInterval(timerGlobal);
       if(loopInvasores) cancelAnimationFrame(loopInvasores);
       if(loopRunner) cancelAnimationFrame(loopRunner);
+      stopMidiMusic();
+      detenerRandomFlash();
       modoMaraton = false;
       juegoActual = '';
       
@@ -550,10 +726,16 @@
         <p class="arcade-subtitle">Elige una modalidad para repasar interactivamente</p>
         
         <div class="arcade-grid">
-          <div class="arcade-card" style="grid-column: 1 / -1; border-color: #f1c40f; background: #fffdf0;" onclick="startMaraton()">
+          <div class="arcade-card" style="grid-column: 1 / 2; border-color: #f1c40f; background: #fffdf0;" onclick="startMaraton()">
             <div class="arcade-icon">🏃‍♂️</div>
-            <div class="arcade-name">Maratón de Counseling (16 Juegos)</div>
-            <div class="arcade-desc">Modo continuo: Juega todas las modalidades de corrido y suma tu puntaje global.</div>
+            <div class="arcade-name">Maratón de Counseling</div>
+            <div class="arcade-desc">Modo continuo: Juega las 16 modalidades y suma tu puntaje.</div>
+          </div>
+          
+          <div class="arcade-card" style="grid-column: 2 / -1; border-color: #e67e22; background: #fdf2e9;" onclick="startRandomFlash()">
+            <div class="arcade-icon">⚡</div>
+            <div class="arcade-name">DESAFÍO RANDOM FLASH</div>
+            <div class="arcade-desc">Ronda rápida de 60 segundos. Un minijuego al azar. ¡Pon a prueba tu agilidad!</div>
           </div>
           
           <div class="arcade-card" style="border-color: #2980b9; background: #eaf2f8;" onclick="startRunner()">
@@ -590,7 +772,7 @@
     }
 
     // --- 1. FLASHCARDS ---
-    function startFlashcards() { historialRespuestas = []; juegoActual = 'flashcards'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbGlosario).slice(0, 10); renderFlashcardRonda(); }
+    function startFlashcards() { if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'flashcards'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbGlosario).slice(0, 10); startMidiMusic(juegoActual); renderFlashcardRonda(); }
     function renderFlashcardRonda() {
       if(ronda >= 10 || ronda >= bancoJuego.length) return renderFinalResult();
       let item = bancoJuego[ronda];
@@ -604,7 +786,7 @@
 
     // --- 2. TRIVIAS ---
     function startTrivia(tipo) {
-      historialRespuestas = []; juegoActual = 'trivia_' + tipo; ronda = 0; puntajeJuego = 0; bancoJuego = [];
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'trivia_' + tipo; ronda = 0; puntajeJuego = 0; bancoJuego = [];
       let poolValidos = dbGlosario.filter(g => g.resumen && g.resumen.length > 5);
       let mezclados = mezclarArray(poolValidos).slice(0, 10);
       mezclados.forEach(g => {
@@ -615,6 +797,7 @@
           bancoJuego.push({ pregunta: "El concepto <b>" + g.titulo + "</b> se define como:<br><br><i>'" + def + "'</i>", correcta: esV ? "Verdadero" : "Falso", opciones: ["Verdadero", "Falso"] });
         }
       });
+      startMidiMusic(juegoActual);
       renderTriviaRonda();
     }
     function renderTriviaRonda() {
@@ -636,10 +819,12 @@
     // --- MATCHING ---
     let itemsSeleccionadosMatching = { concepto: null, definicion: null };
     function startMatching() {
-      historialRespuestas = []; juegoActual = 'matching'; ronda = 0; puntajeJuego = 0;
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'matching'; ronda = 0; puntajeJuego = 0;
       let pool = mezclarArray(dbGlosario.filter(g => g.resumen)).slice(0, 5);
       bancoJuego = { conceptos: mezclarArray(pool.map(g => ({ id: String(g.id), texto: g.titulo }))), definiciones: mezclarArray(pool.map(g => ({ id: String(g.id), texto: g.resumen.substring(0, 95) + '...' }))), matchedIds: [] };
-      itemsSeleccionadosMatching = { concepto: null, definicion: null }; renderMatchingBoard();
+      itemsSeleccionadosMatching = { concepto: null, definicion: null }; 
+      startMidiMusic(juegoActual);
+      renderMatchingBoard();
     }
     function renderMatchingBoard() {
       if(bancoJuego.matchedIds.length === 5) { 
@@ -664,7 +849,11 @@
     }
 
     // --- AHORCADO ---
-    function startHangman() { historialRespuestas = []; juegoActual = 'hangman'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbGlosario.filter(g => g.titulo.length > 3 && g.titulo.length < 25)).slice(0, 3); startHangmanWord(); }
+    function startHangman() { 
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'hangman'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbGlosario.filter(g => g.titulo.length > 3 && g.titulo.length < 25)).slice(0, 3); 
+      startMidiMusic(juegoActual);
+      startHangmanWord(); 
+    }
     let hangWordObj = {};
     function startHangmanWord() {
       if(ronda >= 3) return renderFinalResult();
@@ -674,7 +863,7 @@
     }
     function renderHangmanBoard() {
       let tHtml = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split('').map(l => `<button class="hang-letter ${hangWordObj.usadas.includes(l)?'used':''}" ${hangWordObj.usadas.includes(l)?'disabled':`onclick="guessHangmanLetter('${l}')"`}>${l}</button>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔤 Ahorcado</span><span>Palabra ${ronda+1}/3 | Vidas: ${hangWordObj.vidas}</span></div><div class="game-text-question"><b>Pista:</b> "${hangWordObj.pista}"</div><div style="font-size:2rem; letter-spacing:5px; margin:20px 0; word-break: break-all;">${hangWordObj.oculta}</div><div style="display:flex; flex-wrap:wrap; gap:5px; justify-content:center; max-width:400px; margin:0 auto;">${tHtml}</div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🔤 Ahorcado</span><span>Palabra ${ronda+1}/3 | Vidas: ${hangWordObj.vidas}</span></div><div class="game-text-question"><b>Pista:</b> "${hangWordObj.pista}"</div><div style="font-size:2rem; letter-spacing:5px; margin:20px 0; word-break: break-all; font-weight: bold; color: #9b59b6;">${hangWordObj.oculta}</div><div style="display:flex; flex-wrap:wrap; gap:5px; justify-content:center; max-width:400px; margin:0 auto;">${tHtml}</div>` + obtenerManual();
     }
     function guessHangmanLetter(l) {
       hangWordObj.usadas.push(l); let lN = normalizarP(l);
@@ -697,7 +886,11 @@
     }
 
     // --- NUEVO 1: SIMULADOR DE DIÁLOGO ---
-    function startSimulador() { historialRespuestas = []; juegoActual = 'simulador'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraCasos).slice(0, 3); renderSimulador(); }
+    function startSimulador() { 
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'simulador'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraCasos).slice(0, 3); 
+      startMidiMusic(juegoActual);
+      renderSimulador(); 
+    }
     function renderSimulador() {
       if(ronda >= bancoJuego.length) { puntajeJuego = Math.round((puntajeJuego/3)*10); return renderFinalResult(); }
       let p = bancoJuego[ronda];
@@ -714,7 +907,11 @@
     }
 
     // --- NUEVO 2: EMPATÍA O SIMPATÍA ---
-    function startEmpatia() { historialRespuestas = []; juegoActual = 'empatia'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraEmpatia).slice(0, 5); renderEmpatia(); }
+    function startEmpatia() { 
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'empatia'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraEmpatia).slice(0, 5); 
+      startMidiMusic(juegoActual);
+      renderEmpatia(); 
+    }
     function renderEmpatia() {
       if(ronda >= bancoJuego.length) { puntajeJuego = puntajeJuego * 2; return renderFinalResult(); }
       let p = bancoJuego[ronda];
@@ -728,18 +925,19 @@
 
     // --- NUEVO 3: CAJAS DE CORRIENTES ---
     function startCorrientes() {
-      historialRespuestas = []; juegoActual = 'corrientes'; ronda = 0; puntajeJuego = 0;
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'corrientes'; ronda = 0; puntajeJuego = 0;
       let catsUtiles = dbCategorias.filter(c => c.nombre.length > 3).slice(0, 3);
       if(catsUtiles.length < 2) return alert("Faltan categorías en la base de datos.");
       let conceptos = mezclarArray(dbGlosario.filter(g => catsUtiles.some(c => c.id == g.categoriaId))).slice(0, 5);
       bancoJuego = { cats: catsUtiles, conceptos: conceptos };
+      startMidiMusic(juegoActual);
       renderCorrientes();
     }
     function renderCorrientes() {
       if(ronda >= bancoJuego.conceptos.length) { puntajeJuego = puntajeJuego * 2; return renderFinalResult(); }
       let c = bancoJuego.conceptos[ronda];
       let cajas = bancoJuego.cats.map(cat => `<div class="drop-box" onclick="evaluarCorriente(${cat.id}, ${c.categoriaId})">${cat.nombre}</div>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🗂️ Cajas de Corrientes</span><span>Concepto ${ronda + 1} / 5</span></div><h2 style="font-size:2.5rem; margin:30px 0; color:#34495e;">${c.titulo}</h2><p style="color:var(--text-muted);">¿A qué enfoque/categoría pertenece?</p><div class="box-container">${cajas}</div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🗂️ Cajas de Corrientes</span><span>Concepto ${ronda + 1} / 5</span></div><h2 style="font-size:2.5rem; margin:30px 0; color:#34495e; font-family: 'Lora', serif;">${c.titulo}</h2><p style="color:var(--text-muted);">¿A qué enfoque/categoría pertenece?</p><div class="box-container">${cajas}</div>` + obtenerManual();
     }
     function evaluarCorriente(selId, corrId) {
       let catSel = bancoJuego.cats.find(c=>c.id==selId).nombre;
@@ -750,7 +948,11 @@
     }
 
     // --- NUEVO 4: ¿QUIÉN LO DIJO? ---
-    function startAutores() { historialRespuestas = []; juegoActual = 'autores'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraAutores).slice(0, 4); renderAutores(); }
+    function startAutores() { 
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'autores'; ronda = 0; puntajeJuego = 0; bancoJuego = mezclarArray(dbExtraAutores).slice(0, 4); 
+      startMidiMusic(juegoActual);
+      renderAutores(); 
+    }
     function renderAutores() {
       if(ronda >= bancoJuego.length) { puntajeJuego = Math.round((puntajeJuego/4)*10); return renderFinalResult(); }
       let p = bancoJuego[ronda];
@@ -771,9 +973,10 @@
     // --- NUEVO 5: CRUCIGRAMA LINEAL ---
     let cruciObj = [];
     function startCrucigrama() {
-      historialRespuestas = []; juegoActual = 'crucigrama'; puntajeJuego = 0;
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'crucigrama'; puntajeJuego = 0;
       let validos = mezclarArray(dbGlosario.filter(g => g.titulo.length > 3 && g.titulo.length < 12 && !g.titulo.includes(' '))).slice(0, 5);
       cruciObj = validos.map(g => ({ t: g.titulo, res: g.resumen.substring(0,80)+"...", val: '' }));
+      startMidiMusic(juegoActual);
       renderCrucigrama();
     }
     function renderCrucigrama() {
@@ -797,8 +1000,9 @@
     // --- NUEVO 6: CONCEPTO FRAGMENTADO ---
     let fragObj = { real: "", arr: [], sel: [] };
     function startFragmentado() {
-      historialRespuestas = []; juegoActual = 'fragmentado'; ronda = 0; puntajeJuego = 0;
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'fragmentado'; ronda = 0; puntajeJuego = 0;
       bancoJuego = mezclarArray(dbGlosario.filter(g => g.resumen.length > 20 && g.resumen.length < 100)).slice(0, 3);
+      startMidiMusic(juegoActual);
       nextFragmentado();
     }
     function nextFragmentado() {
@@ -814,7 +1018,7 @@
         return `<div class="frag-word ${isUsed?'used':''}" ${isUsed?'':`onclick="clickFrag(${i})"`}>${w}</div>`;
       }).join('');
       let currentSentence = fragObj.sel.map(idx => fragObj.arr[idx]).join(' ');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🧩 Fragmentado</span><span>Frase ${ronda + 1} / 3</span></div><h3 style="color:#9b59b6; margin-bottom:10px;">${bancoJuego[ronda].titulo}</h3><div style="min-height:50px; font-size:1.1rem; font-style:italic; margin:20px 0;">${currentSentence}</div><div class="frag-container">${fHtml}</div><button class="game-back-menu" onclick="fragObj.sel=[]; renderFragmentado()">↻ Limpiar</button>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🧩 Fragmentado</span><span>Frase ${ronda + 1} / 3</span></div><h3 style="color:#9b59b6; margin-bottom:10px; font-family: 'Lora', serif;">${bancoJuego[ronda].titulo}</h3><div style="min-height:50px; font-size:1.1rem; font-style:italic; margin:20px 0;">${currentSentence}</div><div class="frag-container">${fHtml}</div><button class="game-back-menu" onclick="fragObj.sel=[]; renderFragmentado()">↻ Limpiar</button>` + obtenerManual();
       
       if(fragObj.sel.length === fragObj.arr.length && fragObj.arr.length > 0) {
         if(currentSentence === fragObj.real) { 
@@ -833,8 +1037,9 @@
     // --- NUEVO 7: BOMBARDEO CONTRARRELOJ ---
     let bombObj = { time: 60, score: 0, current: null };
     function startBombardeo() {
-      historialRespuestas = []; juegoActual = 'bombardeo'; puntajeJuego = 0; bombObj.time = 60; bombObj.score = 0;
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'bombardeo'; puntajeJuego = 0; bombObj.time = 60; bombObj.score = 0;
       if(timerGlobal) clearInterval(timerGlobal);
+      startMidiMusic(juegoActual);
       timerGlobal = setInterval(tickBombardeo, 1000); nextBombardeo();
     }
     function tickBombardeo() {
@@ -860,13 +1065,15 @@
     // --- WORDLE CLÍNICO ---
     let wObj = { palabra: '', intentos: 0, max: 6, historial: [] };
     function startWordle() {
-      historialRespuestas = []; juegoActual = 'wordle'; puntajeJuego = 0; let cand = dbGlosario.filter(g => g.titulo.length >= 4 && g.titulo.length <= 7 && !g.titulo.includes(' '));
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'wordle'; puntajeJuego = 0; let cand = dbGlosario.filter(g => g.titulo.length >= 4 && g.titulo.length <= 7 && !g.titulo.includes(' '));
       if(!cand.length) cand = [{titulo: "TERAPIA"}]; wObj.palabra = normalizarP(cand[Math.floor(Math.random() * cand.length)].titulo).toUpperCase();
-      wObj.intentos = 0; wObj.historial = []; renderWordleBoard();
+      wObj.intentos = 0; wObj.historial = []; 
+      startMidiMusic(juegoActual);
+      renderWordleBoard();
     }
     function renderWordleBoard() {
       let histHtml = wObj.historial.map(h => `<div style="display:flex;gap:5px;justify-content:center;margin-bottom:5px;">${h.split('').map((letra, i) => { let color = '#bdc3c7'; if(wObj.palabra[i] === letra) color = '#2ecc71'; else if(wObj.palabra.includes(letra)) color = '#f1c40f'; return `<span style="width:35px;height:35px;display:flex;align-items:center;justify-content:center;background:${color};color:white;font-weight:bold;border-radius:4px;">${letra}</span>`}).join('')}</div>`).join('');
-      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🟩 Wordle Clínico</span><span>Intentos: ${wObj.intentos}/6</span></div><p>Palabra de <b>${wObj.palabra.length} letras</b>.</p><div style="margin:20px 0;">${histHtml}</div><input type="text" id="w-input" maxlength="${wObj.palabra.length}" style="text-transform:uppercase;padding:10px;font-size:1.2rem;width:200px;text-align:center;"><br><button class="game-play-btn" onclick="checkWordle()">Comprobar</button>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🟩 Wordle Clínico</span><span>Intentos: ${wObj.intentos}/6</span></div><p>Palabra de <b>${wObj.palabra.length} letras</b>.</p><div style="margin:20px 0;">${histHtml}</div><input type="text" id="w-input" maxlength="${wObj.palabra.length}" style="text-transform:uppercase;padding:10px;font-size:1.2rem;font-weight:bold;width:200px;text-align:center;"><br><button class="game-play-btn" onclick="checkWordle()">Comprobar</button>` + obtenerManual();
     }
     function checkWordle() {
       let el = document.getElementById('w-input');
@@ -891,10 +1098,12 @@
     let slObj = { grid: [], word: '', coords: [], seleccionadas: [], round: 0, max: 10, time: 0 };
     
     function startSopa() {
-      historialRespuestas = []; juegoActual = 'sopa'; puntajeJuego = 0;
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'sopa'; puntajeJuego = 0;
       slObj = { grid: [], word: '', coords: [], seleccionadas: [], round: 0, max: 10, time: 0 };
       
       if(timerGlobal) clearInterval(timerGlobal);
+      startMidiMusic(juegoActual);
+
       timerGlobal = setInterval(() => {
         if(juegoActual === 'sopa') {
           slObj.time++;
@@ -978,7 +1187,7 @@
       }
       hG += '</div>';
 
-      let btnTerminar = modoMaraton ? `<button class="game-play-btn" style="background:#e74c3c; margin-left:10px;" onclick="forceEndSopa()">Rendirse</button>` : '';
+      let btnTerminar = (modoMaraton || modoRandomFlash) ? `<button class="game-play-btn" style="background:#e74c3c; margin-left:10px;" onclick="forceEndSopa()">Rendirse</button>` : '';
 
       elArcadeView.innerHTML = renderDashboardHTML() + `
         <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button>
@@ -986,7 +1195,7 @@
           <span>🔍 Sopa de Letras</span>
           <span>Ronda ${slObj.round + 1} / ${slObj.max} | ⏱️ <span id="sopa-time">${slObj.time}s</span></span>
         </div>
-        <p style="font-size:1.1rem;">Encuentra: <b style="color:#9b59b6; letter-spacing:2px;">${slObj.word}</b></p>
+        <p style="font-size:1.1rem;">Encuentra: <b style="color:#9b59b6; letter-spacing:2px; font-family:'Lora',serif;">${slObj.word}</b></p>
         ${hG}
         <button class="game-play-btn" onclick="checkSopa()">Comprobar</button>
         ${btnTerminar}
@@ -1032,7 +1241,7 @@
     const bloquesDuros = ["Trauma", "Resistencia", "Bloqueo", "Soberbia"];
     
     function startInvasores() {
-      historialRespuestas = []; juegoActual = 'invasores'; puntajeJuego = 0;
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'invasores'; puntajeJuego = 0;
       invState = { 
         playing: true, score: 0, playerX: 250, playerW: 60, playerH: 40, 
         bullets: [], enemies: [], powerups: [], lastEnemy: 0, keys: {}, 
@@ -1042,7 +1251,6 @@
       elArcadeView.innerHTML = renderDashboardHTML() + `
         <button class="game-back-menu" onclick="stopInvasores()">← Salir</button>
         <div class="game-active-header"><span>🚀 Invasores Terapéuticos</span><span id="inv-score">Nivel: 1 | Pts: 0 | Vidas: 3</span></div>
-        <p style="margin-bottom:10px;font-size:0.9rem;">Sobrevive el mayor tiempo posible. Los bloques morados requieren más empatía. ¡Atrapa las 🎁 para mejorar tu arma!</p>
         <canvas id="space-canvas" class="canvas-game" width="600" height="350"></canvas>
         <div class="space-controls">
           <button class="btn-space" onmousedown="invState.keys.ArrowLeft=true" onmouseup="invState.keys.ArrowLeft=false" ontouchstart="invState.keys.ArrowLeft=true" ontouchend="invState.keys.ArrowLeft=false">⬅️ Izq</button>
@@ -1053,6 +1261,7 @@
 
       document.addEventListener('keydown', invKeyDown);
       document.addEventListener('keyup', invKeyUp);
+      startMidiMusic(juegoActual);
       loopInvasores = requestAnimationFrame(updateInvasores);
     }
     
@@ -1203,35 +1412,10 @@
     let runState = {};
     const runEnemies = ["Consejo no pedido", "Juicio de valor", "Interrupción", "Proyección"];
     const runCoins = ["Escucha Activa", "Silencio"];
-    
-    // Música Midi Terapéutica generada con Web Audio API
-    function playTune() {
-      if(!window.audioCtx || !runState.playing) return;
-      let t = window.audioCtx.currentTime;
-      let osc = window.audioCtx.createOscillator();
-      let gain = window.audioCtx.createGain();
-      osc.type = 'sine';
-      
-      const melody = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 440.00, 349.23];
-      let note = melody[Math.floor((runState.frames / 40) % melody.length)];
-      
-      osc.frequency.setValueAtTime(note, t);
-      gain.gain.setValueAtTime(0.04, t); 
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
-      
-      osc.connect(gain);
-      gain.connect(window.audioCtx.destination);
-      osc.start(t);
-      osc.stop(t + 0.6);
-    }
 
     function startRunner() {
-      historialRespuestas = []; juegoActual = 'runner'; puntajeJuego = 0;
+      if(!modoRandomFlash) historialRespuestas = []; juegoActual = 'runner'; puntajeJuego = 0;
       
-      // Inicializar Audio
-      if(!window.audioCtx) window.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      if(window.audioCtx.state === 'suspended') window.audioCtx.resume();
-
       runState = {
         playing: true, score: 0, distance: 0,
         p: { x: 50, y: 250, w: 35, h: 35, vy: 0, jumps: 0, invincibility: 0 },
@@ -1249,7 +1433,6 @@
       elArcadeView.innerHTML = renderDashboardHTML() + `
         <button class="game-back-menu" onclick="stopRunner()">← Salir</button>
         <div class="game-active-header"><span>🍄 Super Counselor: Runner</span><span id="run-score">Distancia: 0m | Puntos: 0 | Vidas: 3</span></div>
-        <p style="margin-bottom:10px;font-size:0.9rem;">Toca la pantalla o presiona espacio para saltar. ¡Puedes hacer <b>Doble Salto</b>!</p>
         <canvas id="runner-canvas" class="canvas-game" width="600" height="350"></canvas>
         <div class="space-controls">
           <button class="btn-space btn-space-shoot" style="background:#27ae60;" onmousedown="jumpRunner()" ontouchstart="jumpRunner(event)">⬆️ SALTAR</button>
@@ -1257,6 +1440,7 @@
       ` + obtenerManual();
 
       document.addEventListener('keydown', runKeyDown);
+      startMidiMusic(juegoActual);
       loopRunner = requestAnimationFrame(updateRunner);
     }
 
@@ -1286,8 +1470,6 @@
       runState.frames++;
       runState.distance += runState.speed * 0.01;
       
-      if(runState.frames % 40 === 0) playTune();
-
       if(runState.frames % 500 === 0) runState.speed += 0.5;
       if(runState.p.invincibility > 0) runState.p.invincibility--;
 
@@ -1372,19 +1554,16 @@
         ctx.fillText(f.type, f.x, runState.floorY + 2);
       });
 
-      // Dibujar Persona corriendo como Emoji Mirando a la Derecha (Flipped)
+      // Dibujar Persona corriendo
       ctx.save();
       ctx.translate(runState.p.x + runState.p.w/2, runState.p.y + runState.p.h/2);
-      
-      // Letrero "Tú" sin invertir
-      ctx.fillStyle = 'white'; ctx.font = '10px Arial'; ctx.fillText("Tú", 0, -22);
+      ctx.fillStyle = 'black'; ctx.font = '10px Arial'; ctx.fillText("Tú", 0, -22);
 
-      // Animación de correr
       if(runState.p.jumps === 0) {
         ctx.translate(0, Math.sin(runState.frames * 0.4) * 3);
         ctx.rotate(Math.cos(runState.frames * 0.4) * 0.1);
       }
-      ctx.scale(-1, 1); // Invertir horizontalmente
+      ctx.scale(-1, 1); 
       
       ctx.font = '35px Arial';
       if(runState.p.invincibility > 0 && Math.floor(runState.frames / 5) % 2 === 0) {
@@ -1464,6 +1643,12 @@
 
     // --- RESULTADOS Y MARATÓN ---
     function renderFinalResult() {
+      stopMidiMusic();
+      if(modoRandomFlash) {
+         if(flashInterval) clearInterval(flashInterval);
+         elFlashOverlay.style.display = 'none';
+      }
+
       let mensaje = ""; let consejo = ""; let scoreMaximo = 10;
       
       if(juegoActual === 'invasores' || juegoActual === 'runner') scoreMaximo = 20;
@@ -1476,7 +1661,7 @@
       puntajeGlobalTotal += puntajeJuego;
 
       let htmlRespuestas = `<div style="text-align:left; margin-top: 20px; max-height: 250px; overflow-y: auto; padding: 15px; background: white; border-radius: 8px; border: 1px solid #ddd;">
-        <h3 style="color:#9b59b6; margin-bottom:15px; font-size:1.1rem;">📝 Resumen de Respuestas:</h3>
+        <h3 style="color:#9b59b6; margin-bottom:15px; font-size:1.1rem; font-family:'Lora',serif;">📝 Resumen de Respuestas:</h3>
         ${historialRespuestas.length > 0 ? historialRespuestas.map(r => `
             <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #eee; font-size: 0.9rem;">
                 <strong>Pregunta/Contexto:</strong> <span style="color:#34495e;">${r.pre}</span> <br>
@@ -1489,7 +1674,10 @@
 
       let btnAction = `<button class="game-play-btn" onclick="renderArcadeMenu()">↻ Volver al Menú Arcade</button>`;
       
-      if(modoMaraton) {
+      if(modoRandomFlash) {
+          btnAction = `<button class="game-play-btn" style="background:#e67e22; width:100%;" onclick="startRandomFlash()">⚡ Jugar Otro Random Flash</button>
+                       <button class="game-back-menu" style="margin-top:10px;" onclick="renderArcadeMenu()">Salir al Menú Principal</button>`;
+      } else if(modoMaraton) {
           puntajeMaraton += puntajeJuego;
           maxPuntajeMaraton += scoreMaximo;
           indiceMaraton++;
@@ -1502,15 +1690,15 @@
           }
       }
 
-      elArcadeView.innerHTML = renderDashboardHTML() + `<div class="result-box" style="max-width: 700px;"><h2>${mensaje}</h2><p>Tu puntaje en este juego es:</p><div class="result-score">${puntajeJuego} / ${scoreMaximo}</div><p style="font-style:italic;margin-bottom:15px;color:var(--text-main);">${consejo}</p>${htmlRespuestas}<br>${btnAction}</div>` + obtenerManual();
+      elArcadeView.innerHTML = renderDashboardHTML() + `<div class="result-box" style="max-width: 700px;"><h2>${mensaje}</h2><p>Tu puntaje en este juego es:</p><div class="result-score">${puntajeJuego} / ${scoreMaximo}</div><p style="font-style:italic;margin-bottom:15px;color:var(--text-main);">${consejo}</p>${htmlRespuestas}<br>${btnAction}</div>`;
     }
 
     function finalizarMaraton() {
         modoMaraton = false;
         elArcadeView.innerHTML = renderDashboardHTML() + `<div class="result-box" style="max-width: 700px;">
-            <h2>🏆 ¡Maratón Completada! 🏆</h2>
+            <h2 style="font-family:'Lora',serif;">🏆 ¡Maratón Completada! 🏆</h2>
             <div class="result-score">${puntajeMaraton} / ${maxPuntajeMaraton}</div>
-            <p>¡Increíble esfuerzo! Has recorrido las 16 modalidades del Arcade.</p>
+            <p>¡Increíble esfuerzo! Has recorrido las 16 modalidades del COUNSELOR PLAY.</p>
             <button class="game-play-btn" style="margin-top:20px;" onclick="renderArcadeMenu()">↻ Volver al Menú Arcade</button>
         </div>`;
     }
