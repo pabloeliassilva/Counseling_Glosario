@@ -431,7 +431,7 @@
             bombardeo: "Selecciona las respuestas correctas lo más rápido posible. El juego termina cuando el temporizador llega a cero.",
             wordle: "Adivina el concepto. Si la letra está en su posición correcta se pintará de verde; si existe pero en otro lugar, de amarillo.",
             sopa: "Selecciona las letras del tablero para formar el concepto indicado. Tienes 10 rondas para resolver todo lo más rápido que puedas.",
-            invasores: "Usa Flechas o Botones Izq/Der para mover el sillón. Dispara Empatía (Espacio) para eliminar los bloqueos que caen. Atrapa los regalos 🎁 para mejorar tus habilidades.",
+            invasores: "Usa Flechas o Botones Izq/Der para moverte. Dispara Empatía (Espacio/Botón) para eliminar los bloqueos que caen. Atrapa los regalos 🎁 para mejorar tus habilidades.",
             runner: "La carrera de la Alianza Terapéutica. Toca la pantalla o presiona Espacio/Arriba para saltar (y doble salto). Esquiva bloqueos y atrapa la escucha activa."
         };
         if(!manuals[juegoActual]) return "";
@@ -1204,13 +1204,45 @@
     const runEnemies = ["Consejo no pedido", "Juicio de valor", "Interrupción", "Proyección"];
     const runCoins = ["Escucha Activa", "Silencio"];
     
+    // Música Midi Terapéutica generada con Web Audio API
+    function playTune() {
+      if(!window.audioCtx || !runState.playing) return;
+      let t = window.audioCtx.currentTime;
+      let osc = window.audioCtx.createOscillator();
+      let gain = window.audioCtx.createGain();
+      osc.type = 'sine';
+      
+      const melody = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 440.00, 349.23];
+      let note = melody[Math.floor((runState.frames / 40) % melody.length)];
+      
+      osc.frequency.setValueAtTime(note, t);
+      gain.gain.setValueAtTime(0.04, t); 
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+      
+      osc.connect(gain);
+      gain.connect(window.audioCtx.destination);
+      osc.start(t);
+      osc.stop(t + 0.6);
+    }
+
     function startRunner() {
       historialRespuestas = []; juegoActual = 'runner'; puntajeJuego = 0;
+      
+      // Inicializar Audio
+      if(!window.audioCtx) window.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if(window.audioCtx.state === 'suspended') window.audioCtx.resume();
+
       runState = {
         playing: true, score: 0, distance: 0,
         p: { x: 50, y: 250, w: 35, h: 35, vy: 0, jumps: 0, invincibility: 0 },
         floorY: 290, gravity: 0.6, jumpForce: -10, speed: 5,
         obstacles: [], coins: [], powerups: [],
+        bg: {
+            clouds: Array(5).fill(0).map(()=>({x: Math.random()*600, y: 20+Math.random()*100, s: 20+Math.random()*30, v: 0.2+Math.random()*0.5})),
+            mountains: Array(3).fill(0).map((_,i)=>({x: i*300 - 50, w: 200+Math.random()*100, h: 100+Math.random()*100})),
+            birds: Array(3).fill(0).map(()=>({x: Math.random()*600, y: 30+Math.random()*80, v: 1+Math.random()*1, offset: Math.random()*100})),
+            flowers: Array(10).fill(0).map(()=>({x: Math.random()*600, type: ['🌷','🌻','🌼','🍄'][Math.floor(Math.random()*4)]}))
+        },
         frames: 0, lives: 3
       };
 
@@ -1254,8 +1286,9 @@
       runState.frames++;
       runState.distance += runState.speed * 0.01;
       
-      if(runState.frames % 500 === 0) runState.speed += 0.5;
+      if(runState.frames % 40 === 0) playTune();
 
+      if(runState.frames % 500 === 0) runState.speed += 0.5;
       if(runState.p.invincibility > 0) runState.p.invincibility--;
 
       runState.p.vy += runState.gravity;
@@ -1287,23 +1320,80 @@
         runState.powerups.push({ x: canvas.width, y: runState.floorY - 100, w: 25, h: 25 });
       }
 
+      // Cielo
       ctx.fillStyle = '#e0f7fa'; ctx.fillRect(0, 0, canvas.width, canvas.height);
       
+      // Nubes
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      runState.bg.clouds.forEach(c => {
+        c.x -= c.v;
+        if(c.x < -c.s*2) { c.x = 600 + c.s; c.y = 20 + Math.random()*80; }
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.s, 0, Math.PI*2);
+        ctx.arc(c.x + c.s*0.8, c.y - c.s*0.3, c.s*0.8, 0, Math.PI*2);
+        ctx.arc(c.x + c.s*1.6, c.y, c.s*0.9, 0, Math.PI*2);
+        ctx.fill();
+      });
+
+      // Montañas (Parallax lento)
+      ctx.fillStyle = '#b2bec3';
+      runState.bg.mountains.forEach(m => {
+        m.x -= runState.speed * 0.1;
+        if(m.x + m.w < -100) { m.x = 600 + Math.random()*100; m.w = 150 + Math.random()*150; m.h = 80 + Math.random()*100; }
+        ctx.beginPath();
+        ctx.moveTo(m.x, runState.floorY);
+        ctx.lineTo(m.x + m.w/2, runState.floorY - m.h);
+        ctx.lineTo(m.x + m.w, runState.floorY);
+        ctx.fill();
+      });
+
+      // Pájaros
+      ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2;
+      runState.bg.birds.forEach(b => {
+        b.x -= b.v + runState.speed * 0.05;
+        if(b.x < -20) { b.x = 600 + Math.random()*100; b.y = 20 + Math.random()*80; }
+        let flap = Math.sin((runState.frames + b.offset) * 0.15) * 6;
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.quadraticCurveTo(b.x + 5, b.y - 5 - flap, b.x + 10, b.y);
+        ctx.quadraticCurveTo(b.x + 15, b.y - 5 - flap, b.x + 20, b.y);
+        ctx.stroke();
+      });
+
+      // Piso
       ctx.fillStyle = '#795548'; ctx.fillRect(0, runState.floorY, canvas.width, canvas.height - runState.floorY);
       ctx.fillStyle = '#8bc34a'; ctx.fillRect(0, runState.floorY, canvas.width, 10);
 
-      // Dibujar Persona corriendo como Emoji
-      ctx.font = '35px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      if(runState.p.invincibility > 0 && Math.floor(runState.frames / 5) % 2 === 0) {
-        ctx.filter = 'drop-shadow(0px 0px 8px #f1c40f)';
-        ctx.fillText("🏃", runState.p.x + runState.p.w/2, runState.p.y - 2);
-        ctx.filter = 'none';
-      } else {
-        ctx.fillText("🏃", runState.p.x + runState.p.w/2, runState.p.y - 2);
-      }
+      // Flores
+      ctx.font = '16px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      runState.bg.flowers.forEach(f => {
+        f.x -= runState.speed;
+        if(f.x < -20) { f.x = 600 + Math.random()*50; f.type = ['🌷','🌻','🌼','🍄'][Math.floor(Math.random()*4)]; }
+        ctx.fillText(f.type, f.x, runState.floorY + 2);
+      });
+
+      // Dibujar Persona corriendo como Emoji Mirando a la Derecha (Flipped)
+      ctx.save();
+      ctx.translate(runState.p.x + runState.p.w/2, runState.p.y + runState.p.h/2);
       
+      // Letrero "Tú" sin invertir
+      ctx.fillStyle = 'white'; ctx.font = '10px Arial'; ctx.fillText("Tú", 0, -22);
+
+      // Animación de correr
+      if(runState.p.jumps === 0) {
+        ctx.translate(0, Math.sin(runState.frames * 0.4) * 3);
+        ctx.rotate(Math.cos(runState.frames * 0.4) * 0.1);
+      }
+      ctx.scale(-1, 1); // Invertir horizontalmente
+      
+      ctx.font = '35px Arial';
+      if(runState.p.invincibility > 0 && Math.floor(runState.frames / 5) % 2 === 0) {
+        ctx.shadowColor = '#f1c40f'; ctx.shadowBlur = 15;
+      }
+      ctx.fillText("🏃", 0, 0);
+      ctx.restore();
+      
+      // Monedas
       for(let i = runState.coins.length - 1; i >= 0; i--) {
         let c = runState.coins[i];
         c.x -= runState.speed;
@@ -1316,6 +1406,7 @@
         } else if(c.x + c.w < 0) runState.coins.splice(i, 1);
       }
 
+      // PowerUps (Insight)
       for(let i = runState.powerups.length - 1; i >= 0; i--) {
         let p = runState.powerups[i];
         p.x -= runState.speed;
@@ -1332,12 +1423,13 @@
         } else if(p.x + p.w < 0) runState.powerups.splice(i, 1);
       }
 
+      // Obstáculos
       for(let i = runState.obstacles.length - 1; i >= 0; i--) {
         let o = runState.obstacles[i];
         o.x -= runState.speed;
         
         ctx.fillStyle = '#c0392b'; ctx.fillRect(o.x, o.y, o.w, o.h);
-        ctx.fillStyle = 'black'; ctx.font = '9px Arial'; ctx.fillText(o.text, o.x + o.w/2, o.y - 5);
+        ctx.fillStyle = 'black'; ctx.font = '9px Arial'; ctx.textAlign = 'center'; ctx.fillText(o.text, o.x + o.w/2, o.y - 5);
 
         if(runState.p.x < o.x + o.w && runState.p.x + runState.p.w > o.x && runState.p.y < o.y + o.h && runState.p.y + runState.p.h > o.y) {
           if(runState.p.invincibility > 0) {
@@ -1410,7 +1502,7 @@
           }
       }
 
-      elArcadeView.innerHTML = renderDashboardHTML() + `<div class="result-box" style="max-width: 700px;"><h2>${mensaje}</h2><p>Tu puntaje en este juego es:</p><div class="result-score">${puntajeJuego} / ${scoreMaximo}</div><p style="font-style:italic;margin-bottom:15px;color:var(--text-main);">${consejo}</p>${htmlRespuestas}<br>${btnAction}</div>`;
+      elArcadeView.innerHTML = renderDashboardHTML() + `<div class="result-box" style="max-width: 700px;"><h2>${mensaje}</h2><p>Tu puntaje en este juego es:</p><div class="result-score">${puntajeJuego} / ${scoreMaximo}</div><p style="font-style:italic;margin-bottom:15px;color:var(--text-main);">${consejo}</p>${htmlRespuestas}<br>${btnAction}</div>` + obtenerManual();
     }
 
     function finalizarMaraton() {
