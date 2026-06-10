@@ -148,11 +148,11 @@
     .col-form iframe { width: 100%; height: 100%; border: none; }
 
     /* ESTILOS DEL ARCADE / MENÚ DE JUEGOS */
-    .game-wrapper { max-width: 750px; width: 100%; padding: 10px; text-align: center; margin: 0 auto; }
+    .game-wrapper { max-width: 850px; width: 100%; padding: 10px; text-align: center; margin: 0 auto; }
     .arcade-title { color: #9b59b6; font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; }
     .arcade-subtitle { color: var(--text-muted); margin-bottom: 30px; font-size: 1.05rem; }
     
-    .arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; margin-bottom: 20px; }
+    .arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; margin-bottom: 20px; }
     .arcade-card {
       background: white; border: 2px solid #e1bee7; border-radius: 12px; padding: 20px; cursor: pointer;
       transition: all 0.2s; display: flex; flex-direction: column; align-items: center; text-align: center;
@@ -323,7 +323,7 @@
       const cardGame = `
         <div class="cat-card cat-card-game ${activeCategoryId === 'game' ? 'active' : ''}" style="--cat-color: #9b59b6" onclick="openSection('game')">
           <div class="cat-title">🎮 Arcade de Juegos</div>
-          <div class="cat-desc">5 modalidades interactivas</div>
+          <div class="cat-desc">8 modalidades interactivas</div>
         </div>
       `;
 
@@ -440,6 +440,12 @@
 
     function closeMobileDetail() { colTarjetaContainer.classList.remove('mobile-open'); }
 
+    // Utilidades Globales para Juegos
+    function normalizarP(str) {
+      if(!str) return '';
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
 
     // ==============================================================
     // MOTOR DE JUEGOS Y CONTROLADORES (ARCADE)
@@ -452,7 +458,6 @@
 
     // Estructuras y listas auxiliares fijas
     const listaTitulosGlobal = dbGlosario.map(g => g.titulo);
-    const autoresComunes = ["Carl Rogers", "Fritz Perls", "Viktor Frankl", "Sigmund Freud", "Irvin Yalom", "Aaron Beck", "Albert Ellis", "Marsha Linehan", "Rollo May", "Carl Jung", "Abraham Maslow"];
 
     function renderArcadeMenu() {
       elArcadeView.innerHTML = `
@@ -463,37 +468,55 @@
           <div class="arcade-card" onclick="startFlashcards()">
             <div class="arcade-icon">🃏</div>
             <div class="arcade-name">Tarjetas de Memoria</div>
-            <div class="arcade-desc">Lee el concepto, recuerda su significado y gira la tarjeta en 3D para verificar.</div>
+            <div class="arcade-desc">Lee el concepto, recuerda su significado y gira la tarjeta.</div>
           </div>
           
           <div class="arcade-card" onclick="startTrivia(1)">
             <div class="arcade-icon">❓</div>
             <div class="arcade-name">Trivia de Definiciones</div>
-            <div class="arcade-desc">El juego te enuncia un resumen o definición y debes adivinar el concepto correcto entre 4 opciones.</div>
+            <div class="arcade-desc">Adivina el concepto correcto entre 4 opciones dadas.</div>
           </div>
 
           <div class="arcade-card" onclick="startTrivia(2)">
             <div class="arcade-icon">⏳</div>
             <div class="arcade-name">Verdadero o Falso</div>
-            <div class="arcade-desc">¿El concepto y la definición mostrada coinciden? Responde rápidamente antes de que se acabe el tiempo.</div>
+            <div class="arcade-desc">¿El concepto y la definición mostrada coinciden?</div>
           </div>
 
           <div class="arcade-card" onclick="startMatching()">
             <div class="arcade-icon">🔗</div>
-            <div class="arcade-name">Emparejamiento (Match)</div>
-            <div class="arcade-desc">Conecta 5 conceptos con sus correspondientes resúmenes en el menor tiempo posible.</div>
+            <div class="arcade-name">Emparejamiento</div>
+            <div class="arcade-desc">Conecta 5 conceptos con sus correspondientes resúmenes.</div>
           </div>
 
           <div class="arcade-card" onclick="startHangman()">
             <div class="arcade-icon">🔤</div>
             <div class="arcade-name">El Ahorcado</div>
-            <div class="arcade-desc">Adivina la palabra oculta del concepto leyendo su definición antes de agotar tus vidas.</div>
+            <div class="arcade-desc">Adivina la palabra oculta del concepto leyendo su definición.</div>
           </div>
 
           <div class="arcade-card" onclick="startTrivia(3)">
             <div class="arcade-icon">🗣️</div>
-            <div class="arcade-name">El Consultorio (Casos)</div>
-            <div class="arcade-desc">Analiza una situación real de aplicación clínica y deduce qué concepto o técnica aplica.</div>
+            <div class="arcade-name">El Consultorio</div>
+            <div class="arcade-desc">Analiza un caso clínico y deduce qué concepto aplica.</div>
+          </div>
+          
+          <div class="arcade-card" onclick="startWordle()">
+            <div class="arcade-icon">🟩</div>
+            <div class="arcade-name">Wordle Clínico</div>
+            <div class="arcade-desc">Adivina el concepto oculto en 6 intentos con pistas de colores.</div>
+          </div>
+          
+          <div class="arcade-card" onclick="startSopa()">
+            <div class="arcade-icon">🔍</div>
+            <div class="arcade-name">Sopa de Letras</div>
+            <div class="arcade-desc">Encuentra los conceptos escondidos en la cuadrícula.</div>
+          </div>
+          
+          <div class="arcade-card" onclick="startTuttiFrutti()">
+            <div class="arcade-icon">🍎</div>
+            <div class="arcade-name">Tutti Frutti</div>
+            <div class="arcade-desc">Escribe un concepto válido que comience con la letra dada.</div>
           </div>
         </div>
       `;
@@ -549,7 +572,7 @@
       renderFlashcardRonda();
     }
 
-    // --- 2. JUEGO: TRIVIAS (DEFINICIÓN, VERDADERO/FALSO Y CASOS CLINICOS) ---
+    // --- 2. JUEGO: TRIVIAS ---
     function startTrivia(tipo) {
       juegoActual = 'trivia_' + tipo; ronda = 0; puntajeJuego = 0; bancoJuego = [];
       
@@ -559,13 +582,13 @@
       let mezclados = mezclarArray(poolValidos).slice(0, 10);
       
       mezclados.forEach(g => {
-        if(tipo === 1) { // Definiciones
+        if(tipo === 1) { 
           bancoJuego.push({
             pregunta: "¿Qué concepto se define de la siguiente manera?<br><br><i>'" + g.resumen + "'</i>",
             correcta: g.titulo,
             opciones: obtenerOpcionesCuatro(g.titulo, listaTitulosGlobal)
           });
-        } else if(tipo === 2) { // Verdadero o Falso
+        } else if(tipo === 2) { 
           let esVerdadero = Math.random() > 0.5;
           let definicionMostrada = g.resumen;
           if(!esVerdadero) {
@@ -577,7 +600,7 @@
             correcta: esVerdadero ? "Verdadero" : "Falso",
             opciones: ["Verdadero", "Falso"]
           });
-        } else if(tipo === 3) { // Casos Clínicos
+        } else if(tipo === 3) { 
           let sitLimpia = g.aplicacion.replace(/<[^>]*>?/gm, '').substring(0, 220) + "...";
           bancoJuego.push({
             pregunta: "Analiza el siguiente caso/situación clínica:<br><br><i>'" + sitLimpia + "'</i><br><br>¿Qué herramienta o abordaje del Counseling se está aplicando?",
@@ -620,7 +643,7 @@
       setTimeout(() => { ronda++; renderTriviaRonda(); }, 1600);
     }
 
-    // --- 3. JUEGO: MATCHING / EMPAREJAMIENTO ---
+    // --- 3. JUEGO: MATCHING / EMPAREJAMIENTO (ARREGLADO) ---
     function startMatching() {
       juegoActual = 'matching'; ronda = 0; puntajeJuego = 0;
       let pool = mezclarArray(dbGlosario.filter(g => g.resumen)).slice(0, 5);
@@ -639,20 +662,23 @@
     }
     function renderMatchingBoard() {
       if(bancoJuego.matchedIds.length === bancoJuego.totalMatches) {
-        puntajeJuego = 10; // Max puntaje al completarlo
+        puntajeJuego = 10; 
         renderFinalResult(); return;
       }
 
+      // Convertimos a String las comparaciones para arreglar el bug
       let cHtml = bancoJuego.conceptos.map(c => {
-        let isMatched = bancoJuego.matchedIds.includes(c.id);
-        let isSelected = itemsSeleccionadosMatching.concepto === c.id;
-        return `<div class="match-item ${isMatched?'matched':''} ${isSelected?'selected':''}" ${isMatched?'':`onclick="selectMatchItem('concepto', '${c.id}')"`}>${c.texto}</div>`;
+        let idStr = String(c.id);
+        let isMatched = bancoJuego.matchedIds.includes(idStr);
+        let isSelected = itemsSeleccionadosMatching.concepto === idStr;
+        return `<div class="match-item ${isMatched?'matched':''} ${isSelected?'selected':''}" ${isMatched?'':`onclick="selectMatchItem('concepto', '${idStr}')"`}>${c.texto}</div>`;
       }).join('');
 
       let dHtml = bancoJuego.definiciones.map(d => {
-        let isMatched = bancoJuego.matchedIds.includes(d.id);
-        let isSelected = itemsSeleccionadosMatching.definicion === d.id;
-        return `<div class="match-item ${isMatched?'matched':''} ${isSelected?'selected':''}" ${isMatched?'':`onclick="selectMatchItem('definicion', '${d.id}')"`}>${d.texto}</div>`;
+        let idStr = String(d.id);
+        let isMatched = bancoJuego.matchedIds.includes(idStr);
+        let isSelected = itemsSeleccionadosMatching.definicion === idStr;
+        return `<div class="match-item ${isMatched?'matched':''} ${isSelected?'selected':''}" ${isMatched?'':`onclick="selectMatchItem('definicion', '${idStr}')"`}>${d.texto}</div>`;
       }).join('');
 
       elArcadeView.innerHTML = `
@@ -669,11 +695,11 @@
       `;
     }
     function selectMatchItem(columna, id) {
-      itemsSeleccionadosMatching[columna] = id;
+      itemsSeleccionadosMatching[columna] = String(id);
       
       if(itemsSeleccionadosMatching.concepto && itemsSeleccionadosMatching.definicion) {
         if(itemsSeleccionadosMatching.concepto === itemsSeleccionadosMatching.definicion) {
-          bancoJuego.matchedIds.push(itemsSeleccionadosMatching.concepto);
+          bancoJuego.matchedIds.push(String(itemsSeleccionadosMatching.concepto));
         }
         itemsSeleccionadosMatching = { concepto: null, definicion: null };
       }
@@ -683,33 +709,22 @@
     // --- 4. JUEGO: EL AHORCADO ---
     function startHangman() {
       juegoActual = 'hangman'; ronda = 0; puntajeJuego = 0;
-      // Filtrar palabras que tengan una longitud prudente y sin caracteres muy raros
       let validos = dbGlosario.filter(g => g.titulo.length > 3 && g.titulo.length < 25);
-      bancoJuego = mezclarArray(validos).slice(0, 3); // 3 rondas en el ahorcado para no hacerlo eterno
+      bancoJuego = mezclarArray(validos).slice(0, 3);
       startHangmanWord();
     }
     let hangWordObj = { real: '', oculta: '', vidas: 6, usadas: [] };
     function startHangmanWord() {
-      if(ronda >= 3 || ronda >= bancoJuego.length) {
-        renderFinalResult(); return;
-      }
+      if(ronda >= 3 || ronda >= bancoJuego.length) { renderFinalResult(); return; }
       let concepto = bancoJuego[ronda];
       let palabraReal = concepto.titulo.toUpperCase();
-      
       let palabraOculta = '';
       for(let i=0; i<palabraReal.length; i++) {
         let ch = palabraReal.charAt(i);
         if(/[A-ZÁÉÍÓÚÜÑ]/.test(ch)) palabraOculta += '_';
-        else palabraOculta += ch; // Preservar espacios y paréntesis
+        else palabraOculta += ch;
       }
-
-      hangWordObj = {
-        real: palabraReal,
-        oculta: palabraOculta,
-        vidas: 6,
-        usadas: [],
-        pista: concepto.resumen
-      };
+      hangWordObj = { real: palabraReal, oculta: palabraOculta, vidas: 6, usadas: [], pista: concepto.resumen };
       renderHangmanBoard();
     }
     function renderHangmanBoard() {
@@ -718,7 +733,6 @@
         let usada = hangWordObj.usadas.includes(l);
         return `<button class="hang-letter ${usada?'used':''}" ${usada?'disabled':`onclick="guessHangmanLetter('${l}')"`}>${l}</button>`;
       }).join('');
-
       elArcadeView.innerHTML = `
         <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button>
         <div class="game-active-header">
@@ -732,29 +746,18 @@
     }
     function guessHangmanLetter(letra) {
       hangWordObj.usadas.push(letra);
-      
-      // Función para remover acentos para comparación simple
-      const normalizar = (str) => str.normalize("NFD").replace(/[̀-ͯ]/g, "");
-      let letraNorm = normalizar(letra);
-
-      if(normalizar(hangWordObj.real).includes(letraNorm)) {
-        // Revelar letras
+      let letraNorm = normalizarP(letra);
+      if(normalizarP(hangWordObj.real).includes(letraNorm)) {
         let nuevaOculta = '';
         for(let i=0; i<hangWordObj.real.length; i++) {
           let charReal = hangWordObj.real.charAt(i);
-          if(normalizar(charReal) === letraNorm) {
-            nuevaOculta += charReal;
-          } else {
-            nuevaOculta += hangWordObj.oculta.charAt(i);
-          }
+          if(normalizarP(charReal) === letraNorm) nuevaOculta += charReal;
+          else nuevaOculta += hangWordObj.oculta.charAt(i);
         }
         hangWordObj.oculta = nuevaOculta;
-        
-        // ¿Ganó la palabra?
         if(!hangWordObj.oculta.includes('_')) {
-          puntajeJuego += 3; // suma 3 puntos por palabra resuelta
-          ronda++;
-          elArcadeView.innerHTML = '<div class="result-box"><h2>¡Excelente! Word Completada 🎉</h2><p>Cargando siguiente...</p></div>';
+          puntajeJuego += 3; ronda++;
+          elArcadeView.innerHTML = '<div class="result-box"><h2>¡Excelente! Palabra Completada 🎉</h2><p>Cargando siguiente...</p></div>';
           setTimeout(startHangmanWord, 1500);
           return;
         }
@@ -768,6 +771,178 @@
         }
       }
       renderHangmanBoard();
+    }
+
+    // --- 5. NUEVO JUEGO: WORDLE CLÍNICO ---
+    let wObj = { palabra: '', intentos: 0, max: 6, historial: [] };
+    function startWordle() {
+      juegoActual = 'wordle'; puntajeJuego = 0;
+      let candidatas = dbGlosario.filter(g => g.titulo.length >= 4 && g.titulo.length <= 7 && !g.titulo.includes(' '));
+      if(!candidatas.length) candidatas = [{titulo: "TERAPIA"}]; // Fallback
+      wObj.palabra = normalizarP(candidatas[Math.floor(Math.random() * candidatas.length)].titulo).toUpperCase();
+      wObj.intentos = 0; wObj.historial = [];
+      renderWordleBoard();
+    }
+    function renderWordleBoard() {
+      if(wObj.intentos >= wObj.max) { renderFinalResult(); return; }
+      
+      let histHtml = wObj.historial.map(h => `<div style="display:flex;gap:5px;justify-content:center;margin-bottom:5px;">${
+        h.split('').map((letra, i) => {
+          let color = '#bdc3c7'; // gris
+          if(wObj.palabra[i] === letra) color = '#2ecc71'; // verde
+          else if(wObj.palabra.includes(letra)) color = '#f1c40f'; // amarillo
+          return `<span style="width:35px;height:35px;display:flex;align-items:center;justify-content:center;background:${color};color:white;font-weight:bold;border-radius:4px;font-size:1.1rem;">${letra}</span>`
+        }).join('')
+      }</div>`).join('');
+      
+      elArcadeView.innerHTML = `
+        <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button>
+        <div class="game-active-header">
+          <span>🟩 Wordle Clínico</span>
+          <span>Intentos: ${wObj.intentos}/6</span>
+        </div>
+        <p style="margin-bottom:20px;color:var(--text-muted);">Adivina el concepto de <b>${wObj.palabra.length} letras</b>.</p>
+        <div style="margin:20px 0;">${histHtml}</div>
+        <input type="text" id="w-input" maxlength="${wObj.palabra.length}" placeholder="Escribe aquí" style="text-transform:uppercase;padding:12px;font-size:1.2rem;width:200px;text-align:center;border:2px solid #bdc3c7;border-radius:6px;margin-bottom:15px;" />
+        <br>
+        <button class="game-play-btn" onclick="checkWordle()">Comprobar</button>
+      `;
+    }
+    function checkWordle() {
+      let intento = normalizarP(document.getElementById('w-input').value).toUpperCase();
+      if(intento.length !== wObj.palabra.length) return alert("La palabra debe tener exactamente " + wObj.palabra.length + " letras.");
+      wObj.historial.push(intento);
+      wObj.intentos++;
+      if(intento === wObj.palabra) { puntajeJuego = 10; return renderFinalResult(); }
+      renderWordleBoard();
+    }
+
+    // --- 6. NUEVO JUEGO: SOPA DE LETRAS ---
+    let slObj = { grid: [], palabras: [], encontradas: [], size: 10, seleccionadas: [] };
+    function startSopa() {
+      juegoActual = 'sopa'; puntajeJuego = 0;
+      let cand = dbGlosario.filter(g => g.titulo.length >= 4 && g.titulo.length <= 8 && !g.titulo.includes(' '));
+      if(cand.length < 3) cand = [{titulo:"EMPATIA"}, {titulo:"RAPPORT"}, {titulo:"VALIDEZ"}];
+      cand = mezclarArray(cand).slice(0, 3);
+      slObj.palabras = cand.map(c => normalizarP(c.titulo).toUpperCase());
+      slObj.encontradas = []; slObj.seleccionadas = [];
+      
+      slObj.grid = Array(slObj.size).fill(null).map(() => Array(slObj.size).fill(''));
+      
+      slObj.palabras.forEach(palabra => {
+        let placed = false;
+        while(!placed) {
+          let isHoriz = Math.random() > 0.5;
+          let row = Math.floor(Math.random() * slObj.size);
+          let col = Math.floor(Math.random() * slObj.size);
+          if(isHoriz && col + palabra.length <= slObj.size) {
+            let canPlace = true;
+            for(let i=0; i<palabra.length; i++) if(slObj.grid[row][col+i] !== '' && slObj.grid[row][col+i] !== palabra[i]) canPlace = false;
+            if(canPlace) {
+              for(let i=0; i<palabra.length; i++) slObj.grid[row][col+i] = palabra[i];
+              placed = true;
+            }
+          } else if(!isHoriz && row + palabra.length <= slObj.size) {
+            let canPlace = true;
+            for(let i=0; i<palabra.length; i++) if(slObj.grid[row+i][col] !== '' && slObj.grid[row+i][col] !== palabra[i]) canPlace = false;
+            if(canPlace) {
+              for(let i=0; i<palabra.length; i++) slObj.grid[row+i][col] = palabra[i];
+              placed = true;
+            }
+          }
+        }
+      });
+      let letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      for(let r=0; r<slObj.size; r++) {
+        for(let c=0; c<slObj.size; c++) {
+          if(slObj.grid[r][c] === '') slObj.grid[r][c] = letras.charAt(Math.floor(Math.random() * letras.length));
+        }
+      }
+      renderSopa();
+    }
+    function renderSopa() {
+      if(slObj.encontradas.length === slObj.palabras.length) { puntajeJuego = 10; renderFinalResult(); return; }
+      let htmlGrid = '<div style="display:grid;grid-template-columns:repeat(10, 30px);gap:3px;justify-content:center;margin:20px auto;">';
+      for(let r=0; r<slObj.size; r++) {
+        for(let c=0; c<slObj.size; c++) {
+          let isSel = slObj.seleccionadas.some(s => s.r === r && s.c === c);
+          htmlGrid += `<div onclick="clickSopa(${r},${c})" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:${isSel?'#9b59b6':'#fff'};color:${isSel?'white':'black'};border:1px solid #ccc;cursor:pointer;font-weight:bold;border-radius:4px;">${slObj.grid[r][c]}</div>`;
+        }
+      }
+      htmlGrid += '</div>';
+      
+      elArcadeView.innerHTML = `
+        <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button>
+        <div class="game-active-header">
+          <span>🔍 Sopa de Letras</span>
+          <span>${slObj.encontradas.length} / ${slObj.palabras.length}</span>
+        </div>
+        <p style="color:var(--text-muted);">Encuentra y selecciona las letras de estas palabras en orden:</p>
+        <p style="font-weight:bold;margin:10px 0;color:#9b59b6;">${slObj.palabras.map(p => slObj.encontradas.includes(p) ? `<s>${p}</s>` : p).join(' | ')}</p>
+        ${htmlGrid}
+        <div style="margin-top:15px;display:flex;gap:10px;justify-content:center;">
+          <button class="game-play-btn" onclick="checkSopa()">Comprobar</button>
+          <button class="game-back-menu" style="margin-bottom:0;" onclick="slObj.seleccionadas=[]; renderSopa()">Limpiar</button>
+        </div>
+      `;
+    }
+    function clickSopa(r, c) {
+      let idx = slObj.seleccionadas.findIndex(s => s.r === r && s.c === c);
+      if(idx >= 0) slObj.seleccionadas.splice(idx, 1);
+      else slObj.seleccionadas.push({r,c});
+      renderSopa();
+    }
+    function checkSopa() {
+      let wordFormed = slObj.seleccionadas.map(s => slObj.grid[s.r][s.c]).join('');
+      let wordFormedRev = wordFormed.split('').reverse().join('');
+      if(slObj.palabras.includes(wordFormed) && !slObj.encontradas.includes(wordFormed)) {
+        slObj.encontradas.push(wordFormed);
+      } else if(slObj.palabras.includes(wordFormedRev) && !slObj.encontradas.includes(wordFormedRev)) {
+        slObj.encontradas.push(wordFormedRev);
+      } else {
+        alert('Esa combinación de letras no forma una palabra buscada o ya fue encontrada.');
+      }
+      slObj.seleccionadas = []; 
+      renderSopa();
+    }
+
+    // --- 7. NUEVO JUEGO: TUTTI FRUTTI ---
+    let tfObj = { letra: '', jugadas: 0, max: 5 };
+    function startTuttiFrutti() {
+      juegoActual = 'tuttifrutti'; puntajeJuego = 0; tfObj.jugadas = 0;
+      nextTuttiFrutti();
+    }
+    function nextTuttiFrutti() {
+      if(tfObj.jugadas >= tfObj.max) { renderFinalResult(); return; }
+      let letras = [...new Set(dbGlosario.map(g => g.titulo.charAt(0).toUpperCase()))].filter(l => /[A-Z]/.test(l));
+      tfObj.letra = letras[Math.floor(Math.random() * letras.length)];
+      
+      elArcadeView.innerHTML = `
+        <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button>
+        <div class="game-active-header">
+          <span>🍎 Tutti Frutti del Counselor</span>
+          <span>Ronda ${tfObj.jugadas + 1} / 5</span>
+        </div>
+        <p style="font-size:1.1rem;margin-bottom:20px;">Escribe un concepto de tu glosario que comience con la letra:</p>
+        <div style="font-size:4rem;font-weight:900;color:#9b59b6;margin-bottom:20px;">${tfObj.letra}</div>
+        <input type="text" id="tf-input" placeholder="Ingresa un concepto..." style="padding:12px;font-size:1.1rem;width:250px;text-align:center;border:2px solid #bdc3c7;border-radius:6px;margin-bottom:20px;" />
+        <br>
+        <button class="game-play-btn" onclick="checkTuttiFrutti()">Comprobar</button>
+      `;
+    }
+    function checkTuttiFrutti() {
+      let val = normalizarP(document.getElementById('tf-input').value).toLowerCase();
+      let lTarget = normalizarP(tfObj.letra).toLowerCase();
+      
+      let existe = dbGlosario.some(g => normalizarP(g.titulo).toLowerCase() === val && val.startsWith(lTarget));
+      if(existe) { 
+        puntajeJuego += 2; // Suma de a 2 puntos por ronda para llegar a 10
+        alert('¡Excelente! Concepto válido ✅'); 
+      } else { 
+        alert('Incorrecto ❌. El concepto no está registrado o no empieza con la letra dada.'); 
+      }
+      tfObj.jugadas++; 
+      nextTuttiFrutti();
     }
 
 
