@@ -142,29 +142,74 @@
     .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); font-style: italic; }
 
     /* SECCIONES OCULTAS (Form y Juego) */
-    .col-form, .col-game { display: none; flex: 1; border-top: 4px solid; background: var(--bg-panel); }
+    .col-form, .col-game { display: none; flex: 1; border-top: 4px solid; background: var(--bg-panel); overflow-y: auto; }
     .col-form { border-color: #3498db; }
-    .col-game { border-color: #9b59b6; align-items: center; justify-content: center; }
+    .col-game { border-color: #9b59b6; flex-direction: column; align-items: center; padding: 20px; }
     .col-form iframe { width: 100%; height: 100%; border: none; }
 
-    /* Estilos del Juego */
-    .game-wrapper { max-width: 600px; width: 100%; padding: 20px; text-align: center; }
-    .game-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 20px; color: #9b59b6; }
-    .game-question { font-size: 1.3rem; margin-bottom: 30px; color: var(--text-main); line-height: 1.5; }
-    .game-question i { color: #555; }
-    .game-options { display: flex; flex-direction: column; gap: 10px; }
-    .game-btn {
-      background: white; border: 2px solid #bdc3c7; padding: 15px; border-radius: 8px; font-size: 1rem;
-      cursor: pointer; transition: all 0.2s; font-weight: 500; color: var(--text-main);
-    }
-    .game-btn:hover { border-color: #9b59b6; background: #f9f0fc; }
-    .game-btn.correct { background: #2ecc71 !important; color: white !important; border-color: #27ae60 !important; }
-    .game-btn.wrong { background: #e74c3c !important; color: white !important; border-color: #c0392b !important; }
+    /* ESTILOS DEL ARCADE / MENÚ DE JUEGOS */
+    .game-wrapper { max-width: 750px; width: 100%; padding: 10px; text-align: center; margin: 0 auto; }
+    .arcade-title { color: #9b59b6; font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; }
+    .arcade-subtitle { color: var(--text-muted); margin-bottom: 30px; font-size: 1.05rem; }
     
-    .game-card-result { background: #f8f9fa; border: 2px solid #9b59b6; padding: 30px; border-radius: 12px; }
-    .game-card-result h2 { font-size: 2.5rem; color: #9b59b6; margin-bottom: 10px; }
-    .game-card-result p { font-size: 1.2rem; margin-bottom: 20px; }
-    .btn-jugar { background: #9b59b6; color: white; border: none; padding: 15px 30px; font-size: 1.2rem; border-radius: 30px; cursor: pointer; font-weight: bold; }
+    .arcade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; width: 100%; margin-bottom: 20px; }
+    .arcade-card {
+      background: white; border: 2px solid #e1bee7; border-radius: 12px; padding: 20px; cursor: pointer;
+      transition: all 0.2s; display: flex; flex-direction: column; align-items: center; text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .arcade-card:hover { transform: translateY(-3px); border-color: #9b59b6; box-shadow: 0 6px 12px rgba(155,89,182,0.15); }
+    .arcade-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .arcade-name { font-weight: 700; font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px; }
+    .arcade-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; flex: 1; }
+
+    /* PANTALLAS DE JUEGOS ACTIVOS */
+    .game-active-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 25px; color: #9b59b6; width: 100%; padding-bottom: 10px; border-bottom: 2px solid #f4e1fa; }
+    .game-play-btn { background: #9b59b6; color: white; border: none; padding: 12px 25px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+    .game-back-menu { background: none; border: 1px solid #9b59b6; color: #9b59b6; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: background 0.2s; }
+    .game-back-menu:hover { background: #fcf4ff; }
+
+    /* DINÁMICA 1: FLASHCARDS */
+    .flashcard-box { width: 100%; max-width: 450px; height: 280px; perspective: 1000px; margin: 0 auto 30px auto; cursor: pointer; }
+    .flashcard-inner { width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s; position: relative; }
+    .flashcard-box.flipped .flashcard-inner { transform: rotateY(180deg); }
+    .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 3px solid #9b59b6; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
+    .flashcard-front { background: #fdf8ff; color: var(--text-main); }
+    .flashcard-front h2 { font-size: 1.8rem; font-weight: 900; }
+    .flashcard-front span { font-size: 0.85rem; color: #9b59b6; margin-top: 15px; background: #f3e5f5; padding: 4px 10px; border-radius: 10px; }
+    .flashcard-back { background: white; transform: rotateY(180deg); overflow-y: auto; text-align: left; justify-content: flex-start; }
+    .flashcard-back p { font-size: 0.95rem; line-height: 1.5; color: #34495e; }
+    .flashcard-actions { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+    .btn-action-fc { border: none; padding: 12px 20px; border-radius: 25px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; gap: 8px; }
+    .btn-fc-wrong { background: #e74c3c; }
+    .btn-fc-correct { background: #2ecc71; }
+
+    /* DINÁMICA 2: MULTIPLE CHOICE Y VERDADERO/FALSO */
+    .game-text-question { font-size: 1.3rem; font-weight: 500; margin-bottom: 25px; line-height: 1.5; text-align: left; background: #fdfdfd; padding: 20px; border-left: 5px solid #9b59b6; border-radius: 4px; }
+    .options-stack { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 550px; margin: 0 auto; }
+    .option-btn { background: white; border: 2px solid #bdc3c7; padding: 15px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 500; text-align: left; }
+    .option-btn:hover { border-color: #9b59b6; background: #fef9ff; }
+    .option-btn.correct { background: #2ecc71 !important; color: white !important; border-color: #27ae60 !important; }
+    .option-btn.wrong { background: #e74c3c !important; color: white !important; border-color: #c0392b !important; }
+
+    /* DINÁMICA 3: MATCHING / EMPAREJAMIENTO */
+    .match-container { display: flex; gap: 20px; width: 100%; max-width: 650px; margin: 0 auto; text-align: left; }
+    .match-col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .match-item { background: white; border: 2px solid #bdc3c7; padding: 12px 15px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; font-weight: 500; min-height: 70px; display: flex; align-items: center; transition: all 0.2s; }
+    .match-item:hover { border-color: #9b59b6; }
+    .match-item.selected { border-color: #9b59b6; background: #f3e5f5; box-shadow: 0 0 8px rgba(155,89,182,0.3); }
+    .match-item.matched { background: #e8f5e9; border-color: #2ecc71; color: #27ae60; cursor: default; opacity: 0.6; }
+
+    /* DINÁMICA 4: AHORCADO */
+    .hangman-word { font-size: 1.8rem; font-weight: 700; letter-spacing: 5px; margin: 25px 0; font-family: monospace; color: #2c3e50; word-break: break-word; }
+    .hangman-keyboard { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 500px; margin: 0 auto; }
+    .hang-letter { background: white; border: 1px solid #bdc3c7; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.95rem; }
+    .hang-letter:hover { border-color: #9b59b6; background: #faf5fc; }
+    .hang-letter.used { background: #e0e0e0; border-color: #ccc; color: #999; cursor: not-allowed; }
+
+    /* PANTALLAS DE RESULTADOS */
+    .result-box { background: #faf6fc; border: 2px dashed #9b59b6; padding: 40px 20px; border-radius: 12px; max-width: 550px; margin: 0 auto; }
+    .result-score { font-size: 4rem; font-weight: 900; color: #9b59b6; margin: 15px 0; }
 
     /* Lógica de Visibilidad CSS */
     .app-container.show-form .col-conceptos, .app-container.show-form .col-tarjeta { display: none !important; }
@@ -197,6 +242,7 @@
       .col-tarjeta { display: none; }
       .col-tarjeta.mobile-open { display: flex; }
       .btn-mobile-close { display: block; }
+      .match-container { flex-direction: column; }
     }
   </style>
 </head>
@@ -230,14 +276,9 @@
     </section>
 
     <section class="col col-game" id="col-game-container">
-      <button class="btn-mobile-close" onclick="selectCategory('all')" style="position:absolute; top:0; left:0;">Salir del juego</button>
-      <div class="game-wrapper" id="game-view">
-        <div class="game-card-result">
-          <h2>🎮 Repaso Interactivo</h2>
-          <p>Pon a prueba tus conocimientos sobre Counseling con 10 preguntas aleatorias.</p>
-          <button class="btn-jugar" onclick="startGame()">▶ Comenzar Juego</button>
-        </div>
-      </div>
+      <button class="btn-mobile-close" onclick="selectCategory('all')" style="position:absolute; top:15px; left:15px; z-index: 100;">Salir</button>
+      <div class="game-wrapper" id="arcade-main-view">
+         </div>
     </section>
 
   </div>
@@ -254,6 +295,7 @@
     const elGridConceptos = document.getElementById('grid-conceptos');
     const elDetailTarjeta = document.getElementById('detail-tarjeta');
     const colTarjetaContainer = document.getElementById('col-tarjeta-container');
+    const elArcadeView = document.getElementById('arcade-main-view');
 
     // 1. Renderizar Categorías
     function renderCategorias() {
@@ -280,8 +322,8 @@
 
       const cardGame = `
         <div class="cat-card cat-card-game ${activeCategoryId === 'game' ? 'active' : ''}" style="--cat-color: #9b59b6" onclick="openSection('game')">
-          <div class="cat-title">🎮 Jugar y Repasar</div>
-          <div class="cat-desc">Desafío de 10 rondas</div>
+          <div class="cat-title">🎮 Arcade de Juegos</div>
+          <div class="cat-desc">5 modalidades interactivas</div>
         </div>
       `;
 
@@ -364,7 +406,7 @@
       `;
     }
 
-    // --- LÓGICA DE NAVEGACIÓN ---
+    // NAVEGACIÓN SPA
     function selectCategory(id) {
       elAppContainer.classList.remove('show-form');
       elAppContainer.classList.remove('show-game');
@@ -381,6 +423,7 @@
       elAppContainer.classList.remove('show-game');
       elAppContainer.classList.add('show-' + type);
       renderCategorias();
+      if (type === 'game') renderArcadeMenu();
     }
 
     function selectConcept(id) {
@@ -395,176 +438,371 @@
       colTarjetaContainer.classList.add('mobile-open'); 
     }
 
-    function closeMobileDetail() {
-      colTarjetaContainer.classList.remove('mobile-open');
+    function closeMobileDetail() { colTarjetaContainer.classList.remove('mobile-open'); }
+
+
+    // ==============================================================
+    // MOTOR DE JUEGOS Y CONTROLADORES (ARCADE)
+    // ==============================================================
+    let juegoActual = '';
+    let ronda = 0;
+    let puntajeJuego = 0;
+    let bancoJuego = [];
+    let itemsSeleccionadosMatching = { concepto: null, definicion: null };
+
+    // Estructuras y listas auxiliares fijas
+    const listaTitulosGlobal = dbGlosario.map(g => g.titulo);
+    const autoresComunes = ["Carl Rogers", "Fritz Perls", "Viktor Frankl", "Sigmund Freud", "Irvin Yalom", "Aaron Beck", "Albert Ellis", "Marsha Linehan", "Rollo May", "Carl Jung", "Abraham Maslow"];
+
+    function renderArcadeMenu() {
+      elArcadeView.innerHTML = `
+        <h2 class="arcade-title">🕹️ Arcade del Counselor</h2>
+        <p class="arcade-subtitle">Elige una modalidad para repasar interactivamente la base de datos</p>
+        
+        <div class="arcade-grid">
+          <div class="arcade-card" onclick="startFlashcards()">
+            <div class="arcade-icon">🃏</div>
+            <div class="arcade-name">Tarjetas de Memoria</div>
+            <div class="arcade-desc">Lee el concepto, recuerda su significado y gira la tarjeta en 3D para verificar.</div>
+          </div>
+          
+          <div class="arcade-card" onclick="startTrivia(1)">
+            <div class="arcade-icon">❓</div>
+            <div class="arcade-name">Trivia de Definiciones</div>
+            <div class="arcade-desc">El juego te enuncia un resumen o definición y debes adivinar el concepto correcto entre 4 opciones.</div>
+          </div>
+
+          <div class="arcade-card" onclick="startTrivia(2)">
+            <div class="arcade-icon">⏳</div>
+            <div class="arcade-name">Verdadero o Falso</div>
+            <div class="arcade-desc">¿El concepto y la definición mostrada coinciden? Responde rápidamente antes de que se acabe el tiempo.</div>
+          </div>
+
+          <div class="arcade-card" onclick="startMatching()">
+            <div class="arcade-icon">🔗</div>
+            <div class="arcade-name">Emparejamiento (Match)</div>
+            <div class="arcade-desc">Conecta 5 conceptos con sus correspondientes resúmenes en el menor tiempo posible.</div>
+          </div>
+
+          <div class="arcade-card" onclick="startHangman()">
+            <div class="arcade-icon">🔤</div>
+            <div class="arcade-name">El Ahorcado</div>
+            <div class="arcade-desc">Adivina la palabra oculta del concepto leyendo su definición antes de agotar tus vidas.</div>
+          </div>
+
+          <div class="arcade-card" onclick="startTrivia(3)">
+            <div class="arcade-icon">🗣️</div>
+            <div class="arcade-name">El Consultorio (Casos)</div>
+            <div class="arcade-desc">Analiza una situación real de aplicación clínica y deduce qué concepto o técnica aplica.</div>
+          </div>
+        </div>
+      `;
     }
 
+    function mezclarArray(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+    function obtenerOpcionesCuatro(correcta, pool) {
+      let s = new Set([correcta]);
+      while(s.size < 4) {
+        let r = pool[Math.floor(Math.random() * pool.length)];
+        if(r) s.add(r);
+      }
+      return Array.from(s).sort(() => Math.random() - 0.5);
+    }
+    function escapeString(str) { return str.replace(/'/g, "\'").replace(/"/g, '&quot;'); }
 
-    // --- LÓGICA DEL JUEGO ---
-    let bancoPreguntas = [];
-    let preguntasJuego = [];
-    let rondaActual = 0;
-    let puntaje = 0;
-    const TOTAL_RONDAS = 10;
-    const elGameView = document.getElementById('game-view');
+    // --- 1. JUEGO: FLASHCARDS ---
+    function startFlashcards() {
+      juegoActual = 'flashcards'; ronda = 0; puntajeJuego = 0;
+      bancoJuego = mezclarArray(dbGlosario).slice(0, 10);
+      renderFlashcardRonda();
+    }
+    function renderFlashcardRonda() {
+      if(ronda >= 10 || ronda >= bancoJuego.length) { renderFinalResult(); return; }
+      let item = bancoJuego[ronda];
+      elArcadeView.innerHTML = `
+        <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button>
+        <div class="game-active-header">
+          <span>🃏 Tarjetas de Memoria</span>
+          <span>Tarjeta ${ronda + 1} / 10</span>
+        </div>
+        <div class="flashcard-box" id="fcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-face flashcard-front">
+              <h2>${item.titulo}</h2>
+              <span>👆 Toca para girar</span>
+            </div>
+            <div class="flashcard-face flashcard-back">
+              <p><b>Definición:</b><br>${item.resumen}</p>
+              ${item.tipo ? `<p style="margin-top:10px; font-size:0.8rem; color:#9b59b6;">Tipo: ${item.tipo}</p>` : ''}
+            </div>
+          </div>
+        </div>
+        <div class="flashcard-actions">
+          <button class="btn-action-fc btn-fc-wrong" onclick="nextFlashcard(false)">🔴 No la sabía</button>
+          <button class="btn-action-fc btn-fc-correct" onclick="nextFlashcard(true)">🟢 ¡Me la sabía!</button>
+        </div>
+      `;
+    }
+    function nextFlashcard(supo) {
+      if(supo) puntajeJuego++;
+      ronda++;
+      renderFlashcardRonda();
+    }
 
-    // Generador Dinámico de la Base de Datos (>100 preguntas)
-    function inicializarBancoPreguntas() {
-      bancoPreguntas = [];
-      const todosLosTitulos = dbGlosario.map(g => g.titulo);
-      const autoresComunes = ["Carl Rogers", "Fritz Perls", "Viktor Frankl", "Sigmund Freud", "Irvin Yalom", "Aaron Beck", "Albert Ellis", "Marsha Linehan", "Rollo May", "Carl Jung", "Abraham Maslow", "B.F. Skinner"];
+    // --- 2. JUEGO: TRIVIAS (DEFINICIÓN, VERDADERO/FALSO Y CASOS CLINICOS) ---
+    function startTrivia(tipo) {
+      juegoActual = 'trivia_' + tipo; ronda = 0; puntajeJuego = 0; bancoJuego = [];
+      
+      let poolValidos = dbGlosario.filter(g => g.resumen && g.resumen.length > 5);
+      if(tipo === 3) poolValidos = dbGlosario.filter(g => g.aplicacion && g.aplicacion.length > 10);
 
-      // Generar dinámicamente usando el CSV del usuario
-      dbGlosario.forEach(g => {
-        // TIPO 1: Concepto vs Definición
-        if (g.resumen && g.resumen.length > 10) {
-          bancoPreguntas.push({
+      let mezclados = mezclarArray(poolValidos).slice(0, 10);
+      
+      mezclados.forEach(g => {
+        if(tipo === 1) { // Definiciones
+          bancoJuego.push({
             pregunta: "¿Qué concepto se define de la siguiente manera?<br><br><i>'" + g.resumen + "'</i>",
-            respuesta: g.titulo,
-            opciones: generarOpcionesFalsas(g.titulo, todosLosTitulos)
+            correcta: g.titulo,
+            opciones: obtenerOpcionesCuatro(g.titulo, listaTitulosGlobal)
           });
-        }
-        
-        // TIPO 2: Situacional
-        if (g.aplicacion && g.aplicacion.length > 15) {
-          // Remover HTML y acortar un poco para el juego
-          let sit = g.aplicacion.replace(/<[^>]*>?/gm, '').substring(0, 200) + "...";
-          bancoPreguntas.push({
-            pregunta: "En la siguiente situación:<br><br><i>'" + sit + "'</i><br><br>¿Qué herramienta o concepto se aplica?",
-            respuesta: g.titulo,
-            opciones: generarOpcionesFalsas(g.titulo, todosLosTitulos)
-          });
-        }
-
-        // TIPO 3: Autor
-        if (g.desarrollo) {
-          let match = g.desarrollo.match(/Bibliografía:s*([^(.,<]+)/i);
-          if (match && match[1].trim().length > 3) {
-            let autorReal = match[1].trim();
-            bancoPreguntas.push({
-              pregunta: "¿Qué autor o bibliografía principal se asocia con <b>" + g.titulo + "</b>?",
-              respuesta: autorReal,
-              opciones: generarOpcionesFalsas(autorReal, autoresComunes)
-            });
+        } else if(tipo === 2) { // Verdadero o Falso
+          let esVerdadero = Math.random() > 0.5;
+          let definicionMostrada = g.resumen;
+          if(!esVerdadero) {
+            let alternativo = dbGlosario.find(a => a.id != g.id && a.resumen);
+            if(alternativo) definicionMostrada = alternativo.resumen;
           }
+          bancoJuego.push({
+            pregunta: "El concepto <b>" + g.titulo + "</b> se define como:<br><br><i>'" + definicionMostrada + "'</i>",
+            correcta: esVerdadero ? "Verdadero" : "Falso",
+            opciones: ["Verdadero", "Falso"]
+          });
+        } else if(tipo === 3) { // Casos Clínicos
+          let sitLimpia = g.aplicacion.replace(/<[^>]*>?/gm, '').substring(0, 220) + "...";
+          bancoJuego.push({
+            pregunta: "Analiza el siguiente caso/situación clínica:<br><br><i>'" + sitLimpia + "'</i><br><br>¿Qué herramienta o abordaje del Counseling se está aplicando?",
+            correcta: g.titulo,
+            opciones: obtenerOpcionesCuatro(g.titulo, listaTitulosGlobal)
+          });
         }
       });
-
-      // Añadir base de datos extra (Hardcodeada) para robustez
-      const dbExtra = [
-        { pregunta: "¿Quién es considerado el padre del Enfoque Centrado en la Persona?", respuesta: "Carl Rogers", opciones: ["Carl Rogers", "Fritz Perls", "Viktor Frankl", "Sigmund Freud"] },
-        { pregunta: "¿Qué enfoque psicoterapéutico fue fundado por Viktor Frankl?", respuesta: "Logoterapia", opciones: ["Logoterapia", "Gestalt", "Terapia Cognitivo-Conductual", "Psicoanálisis"] },
-        { pregunta: "Según la Terapia Gestalt, ¿cómo se llama al darse cuenta del aquí y ahora?", respuesta: "Awareness", opciones: ["Awareness", "Insight", "Catarsis", "Sublimación"] },
-        { pregunta: "¿Cuál de estos NO es uno de los pilares de la actitud de un Counselor Rogeriano?", respuesta: "Directividad", opciones: ["Directividad", "Empatía", "Aceptación Incondicional", "Congruencia"] },
-        { pregunta: "¿Qué autor desarrolló la Terapia Racional Emotiva Conductual (TREC)?", respuesta: "Albert Ellis", opciones: ["Albert Ellis", "Aaron Beck", "Carl Rogers", "Irvin Yalom"] },
-        { pregunta: "Si un consultante proyecta en el terapeuta sentimientos que tenía hacia sus padres, esto se denomina...", respuesta: "Transferencia", opciones: ["Transferencia", "Contratransferencia", "Proyección", "Introyección"] },
-        { pregunta: "¿Quién desarrolló la Terapia Dialéctico Conductual (DBT)?", respuesta: "Marsha Linehan", opciones: ["Marsha Linehan", "Francine Shapiro", "Virginia Satir", "Melanie Klein"] },
-        { pregunta: "¿A qué autor se le atribuye la pirámide de las jerarquías de las necesidades humanas?", respuesta: "Abraham Maslow", opciones: ["Abraham Maslow", "Carl Jung", "Alfred Adler", "Gordon Allport"] },
-        { pregunta: "¿Qué terapia se centra en la desensibilización y reprocesamiento por movimientos oculares?", respuesta: "EMDR", opciones: ["EMDR", "DBT", "ACT", "TCC"] },
-        { pregunta: "¿Quién introdujo el concepto de 'Inconsciente Colectivo' y 'Arquetipos'?", respuesta: "Carl Jung", opciones: ["Carl Jung", "Sigmund Freud", "Jacques Lacan", "Anna Freud"] }
-      ];
-      bancoPreguntas = bancoPreguntas.concat(dbExtra);
+      renderTriviaRonda();
     }
-
-    function generarOpcionesFalsas(correcta, arrayPosibles) {
-      let opciones = new Set();
-      opciones.add(correcta);
-      while(opciones.size < 4) {
-        let rand = arrayPosibles[Math.floor(Math.random() * arrayPosibles.length)];
-        if(rand) opciones.add(rand);
-      }
-      return Array.from(opciones).sort(() => Math.random() - 0.5); // Mezclar
-    }
-
-    function startGame() {
-      if (bancoPreguntas.length === 0) inicializarBancoPreguntas();
+    function renderTriviaRonda() {
+      if(ronda >= 10 || ronda >= bancoJuego.length) { renderFinalResult(); return; }
+      let p = bancoJuego[ronda];
+      let tituloJuego = juegoActual === 'trivia_1' ? '❓ Trivia de Definiciones' : (juegoActual === 'trivia_2' ? '⏳ Verdadero o Falso' : '🗣️ El Consultorio (Casos)');
       
-      // Seleccionar 10 preguntas random
-      let copiaBanco = [...bancoPreguntas].sort(() => Math.random() - 0.5);
-      preguntasJuego = copiaBanco.slice(0, TOTAL_RONDAS);
-      
-      rondaActual = 0;
-      puntaje = 0;
-      renderRonda();
-    }
-
-    function renderRonda() {
-      if (rondaActual >= TOTAL_RONDAS) {
-        endGame();
-        return;
-      }
-
-      let p = preguntasJuego[rondaActual];
-      let botonesHtml = p.opciones.map(op => `
-        <button class="game-btn" onclick="checkAnswer(this, '${escapeHtml(op)}', '${escapeHtml(p.respuesta)}')">${op}</button>
+      let botones = p.opciones.map(o => `
+        <button class="option-btn" onclick="evaluarRespuestaTrivia(this, '${escapeString(o)}', '${escapeString(p.correcta)}')">${o}</button>
       `).join('');
 
-      elGameView.innerHTML = `
-        <div class="game-header">
-          <span>Ronda ${rondaActual + 1} / ${TOTAL_RONDAS}</span>
-          <span>Puntaje: ${puntaje}</span>
+      elArcadeView.innerHTML = `
+        <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button>
+        <div class="game-active-header">
+          <span>${tituloJuego}</span>
+          <span>Ronda ${ronda + 1} / 10</span>
         </div>
-        <div class="game-question">${p.pregunta}</div>
-        <div class="game-options">${botonesHtml}</div>
+        <div class="game-text-question">${p.pregunta}</div>
+        <div class="options-stack">${botones}</div>
       `;
     }
+    function evaluarRespuestaTrivia(btn, seleccion, correcta) {
+      const todos = elArcadeView.querySelectorAll('.option-btn');
+      todos.forEach(b => b.disabled = true);
 
-    function escapeHtml(text) {
-      return text.replace(/'/g, "\'").replace(/"/g, '&quot;');
+      if(seleccion === correcta) {
+        btn.classList.add('correct'); puntajeJuego++;
+      } else {
+        btn.classList.add('wrong');
+        todos.forEach(b => { if(b.innerText === correcta) b.classList.add('correct'); });
+      }
+      setTimeout(() => { ronda++; renderTriviaRonda(); }, 1600);
     }
 
-    function checkAnswer(btnElement, seleccion, correcta) {
-      // Deshabilitar todos los botones para evitar doble clic
-      const botones = elGameView.querySelectorAll('.game-btn');
-      botones.forEach(b => b.disabled = true);
-
-      if (seleccion === correcta) {
-        btnElement.classList.add('correct');
-        puntaje++;
-      } else {
-        btnElement.classList.add('wrong');
-        // Pintar el correcto de verde
-        botones.forEach(b => {
-          if (b.innerText === correcta || b.innerText.includes(correcta)) b.classList.add('correct');
-        });
+    // --- 3. JUEGO: MATCHING / EMPAREJAMIENTO ---
+    function startMatching() {
+      juegoActual = 'matching'; ronda = 0; puntajeJuego = 0;
+      let pool = mezclarArray(dbGlosario.filter(g => g.resumen)).slice(0, 5);
+      
+      let conceptosCol = pool.map(g => ({ id: g.id, texto: g.titulo }));
+      let definicCol = pool.map(g => ({ id: g.id, texto: g.resumen.substring(0, 95) + '...' }));
+      
+      bancoJuego = {
+        conceptos: mezclarArray(conceptosCol),
+        definiciones: mezclarArray(definicCol),
+        totalMatches: 5,
+        matchedIds: []
+      };
+      itemsSeleccionadosMatching = { concepto: null, definicion: null };
+      renderMatchingBoard();
+    }
+    function renderMatchingBoard() {
+      if(bancoJuego.matchedIds.length === bancoJuego.totalMatches) {
+        puntajeJuego = 10; // Max puntaje al completarlo
+        renderFinalResult(); return;
       }
 
-      setTimeout(() => {
-        rondaActual++;
-        renderRonda();
-      }, 1500);
+      let cHtml = bancoJuego.conceptos.map(c => {
+        let isMatched = bancoJuego.matchedIds.includes(c.id);
+        let isSelected = itemsSeleccionadosMatching.concepto === c.id;
+        return `<div class="match-item ${isMatched?'matched':''} ${isSelected?'selected':''}" ${isMatched?'':`onclick="selectMatchItem('concepto', '${c.id}')"`}>${c.texto}</div>`;
+      }).join('');
+
+      let dHtml = bancoJuego.definiciones.map(d => {
+        let isMatched = bancoJuego.matchedIds.includes(d.id);
+        let isSelected = itemsSeleccionadosMatching.definicion === d.id;
+        return `<div class="match-item ${isMatched?'matched':''} ${isSelected?'selected':''}" ${isMatched?'':`onclick="selectMatchItem('definicion', '${d.id}')"`}>${d.texto}</div>`;
+      }).join('');
+
+      elArcadeView.innerHTML = `
+        <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button>
+        <div class="game-active-header">
+          <span>🔗 Emparejamiento (Match!)</span>
+          <span>Completados: ${bancoJuego.matchedIds.length} / 5</span>
+        </div>
+        <p style="margin-bottom:20px; color:var(--text-muted);">Selecciona un concepto de la izquierda y enlázalo con su definición de la derecha.</p>
+        <div class="match-container">
+          <div class="match-col"><h3>Conceptos</h3>${cHtml}</div>
+          <div class="match-col"><h3>Definiciones</h3>${dHtml}</div>
+        </div>
+      `;
+    }
+    function selectMatchItem(columna, id) {
+      itemsSeleccionadosMatching[columna] = id;
+      
+      if(itemsSeleccionadosMatching.concepto && itemsSeleccionadosMatching.definicion) {
+        if(itemsSeleccionadosMatching.concepto === itemsSeleccionadosMatching.definicion) {
+          bancoJuego.matchedIds.push(itemsSeleccionadosMatching.concepto);
+        }
+        itemsSeleccionadosMatching = { concepto: null, definicion: null };
+      }
+      renderMatchingBoard();
     }
 
-    function endGame() {
+    // --- 4. JUEGO: EL AHORCADO ---
+    function startHangman() {
+      juegoActual = 'hangman'; ronda = 0; puntajeJuego = 0;
+      // Filtrar palabras que tengan una longitud prudente y sin caracteres muy raros
+      let validos = dbGlosario.filter(g => g.titulo.length > 3 && g.titulo.length < 25);
+      bancoJuego = mezclarArray(validos).slice(0, 3); // 3 rondas en el ahorcado para no hacerlo eterno
+      startHangmanWord();
+    }
+    let hangWordObj = { real: '', oculta: '', vidas: 6, usadas: [] };
+    function startHangmanWord() {
+      if(ronda >= 3 || ronda >= bancoJuego.length) {
+        renderFinalResult(); return;
+      }
+      let concepto = bancoJuego[ronda];
+      let palabraReal = concepto.titulo.toUpperCase();
+      
+      let palabraOculta = '';
+      for(let i=0; i<palabraReal.length; i++) {
+        let ch = palabraReal.charAt(i);
+        if(/[A-ZÁÉÍÓÚÜÑ]/.test(ch)) palabraOculta += '_';
+        else palabraOculta += ch; // Preservar espacios y paréntesis
+      }
+
+      hangWordObj = {
+        real: palabraReal,
+        oculta: palabraOculta,
+        vidas: 6,
+        usadas: [],
+        pista: concepto.resumen
+      };
+      renderHangmanBoard();
+    }
+    function renderHangmanBoard() {
+      let letrasTeclado = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split('');
+      let tecladoHtml = letrasTeclado.map(l => {
+        let usada = hangWordObj.usadas.includes(l);
+        return `<button class="hang-letter ${usada?'used':''}" ${usada?'disabled':`onclick="guessHangmanLetter('${l}')"`}>${l}</button>`;
+      }).join('');
+
+      elArcadeView.innerHTML = `
+        <button class="game-back-menu" onclick="renderArcadeMenu()">← Volver al Menú</button>
+        <div class="game-active-header">
+          <span>🔤 El Ahorcado del Counselor</span>
+          <span>Palabra ${ronda + 1} / 3 | Vidas: ${hangWordObj.vidas} ❤️</span>
+        </div>
+        <div class="game-text-question" style="border-left-color:#e67e22;"><b>Pista (Definición):</b><br><i>"${hangWordObj.pista}"</i></div>
+        <div class="hangman-word">${hangWordObj.oculta.split('').join(' ')}</div>
+        <div class="hangman-keyboard">${tecladoHtml}</div>
+      `;
+    }
+    function guessHangmanLetter(letra) {
+      hangWordObj.usadas.push(letra);
+      
+      // Función para remover acentos para comparación simple
+      const normalizar = (str) => str.normalize("NFD").replace(/[̀-ͯ]/g, "");
+      let letraNorm = normalizar(letra);
+
+      if(normalizar(hangWordObj.real).includes(letraNorm)) {
+        // Revelar letras
+        let nuevaOculta = '';
+        for(let i=0; i<hangWordObj.real.length; i++) {
+          let charReal = hangWordObj.real.charAt(i);
+          if(normalizar(charReal) === letraNorm) {
+            nuevaOculta += charReal;
+          } else {
+            nuevaOculta += hangWordObj.oculta.charAt(i);
+          }
+        }
+        hangWordObj.oculta = nuevaOculta;
+        
+        // ¿Ganó la palabra?
+        if(!hangWordObj.oculta.includes('_')) {
+          puntajeJuego += 3; // suma 3 puntos por palabra resuelta
+          ronda++;
+          elArcadeView.innerHTML = '<div class="result-box"><h2>¡Excelente! Word Completada 🎉</h2><p>Cargando siguiente...</p></div>';
+          setTimeout(startHangmanWord, 1500);
+          return;
+        }
+      } else {
+        hangWordObj.vidas--;
+        if(hangWordObj.vidas <= 0) {
+          ronda++;
+          elArcadeView.innerHTML = `<div class="result-box" style="border-color:#e74c3c;"><h2>Palabra No Revelada 😢</h2><p>La respuesta era: <b>${hangWordObj.real}</b></p><p>Cargando siguiente...</p></div>`;
+          setTimeout(startHangmanWord, 2000);
+          return;
+        }
+      }
+      renderHangmanBoard();
+    }
+
+
+    // --- RENDIMIENTO FINAL Y CONSEJOS PEDAGÓGICOS ---
+    function renderFinalResult() {
       let mensaje = "";
       let consejo = "";
-      
-      if (puntaje === TOTAL_RONDAS) {
+      let scoreMaximo = juegoActual === 'hangman' ? 9 : 10;
+
+      if (puntajeJuego === scoreMaximo) {
         mensaje = "¡Perfección Absoluta! 🏆";
-        consejo = "Tienes un dominio increíble del glosario. ¡Sigue así!";
-      } else if (puntaje >= 7) {
+        consejo = "Tienes un dominio increíble e impecable del glosario. ¡Tus competencias de asimilación teórica están al máximo nivel!";
+      } else if (puntajeJuego >= (scoreMaximo * 0.7)) {
         mensaje = "¡Excelente Trabajo! 🌟";
-        consejo = "Estás muy bien preparado/a. Revisa los pequeños detalles y serás invencible.";
-      } else if (puntaje >= 4) {
+        consejo = "Estás muy bien preparado/a y demuestras gran fluidez conceptual. Revisa los pequeños detalles leyendo la columna de desarrollo para alcanzar la excelencia.";
+      } else if (puntajeJuego >= (scoreMaximo * 0.4)) {
         mensaje = "¡Buen Intento! 👍";
-        consejo = "Vas por buen camino, pero te recomiendo leer un poco más la columna de desarrollo de los conceptos.";
+        consejo = "Vas por muy buen camino. Te sugiero repasar de manera focalizada los resúmenes y categorías para consolidar el marco terapéutico.";
       } else {
         mensaje = "¡A Seguir Estudiando! 📚";
-        consejo = "El counseling requiere práctica y lectura. ¡Usa el glosario a diario y verás cómo mejoras!";
+        consejo = "El Counseling requiere asimilación constante. Utiliza la columna del panel central y busca los términos en Google con un clic para profundizar cada concepto.";
       }
 
-      elGameView.innerHTML = `
-        <div class="game-card-result">
+      elArcadeView.innerHTML = `
+        <div class="result-box">
           <h2>${mensaje}</h2>
           <p>Tu puntaje final es:</p>
-          <h1 style="font-size: 4rem; color: #9b59b6; margin: 10px 0;">${puntaje} / ${TOTAL_RONDAS}</h1>
-          <p style="font-style: italic; margin-bottom: 30px;">${consejo}</p>
-          <button class="btn-jugar" onclick="startGame()">↻ Jugar de Nuevo</button>
+          <div class="result-score">${puntajeJuego} / ${scoreMaximo}</div>
+          <p style="font-style: italic; margin-bottom: 25px; color: var(--text-main); line-height:1.5;">${consejo}</p>
+          <button class="game-play-btn" onclick="renderArcadeMenu()">↻ Volver al Menú Arcade</button>
         </div>
       `;
     }
 
-    // Inicializar App
+    // Inicialización del SPA
     selectCategory('all');
 
   </script>
