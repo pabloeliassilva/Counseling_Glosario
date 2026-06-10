@@ -877,21 +877,23 @@
       renderFinalResult();
     }
 
-    // --- NUEVO: INVASORES TERAPÉUTICOS (Space Invaders) ---
+// --- NUEVO: INVASORES TERAPÉUTICOS (Space Invaders) ---
     let invState = {};
-    const bloques = ["Juicio", "Prejuicio", "Soberbia", "Simpatía", "Censura", "Crítica"];
+    const bloquesNormales = ["Juicio", "Prejuicio", "Crítica", "Censura"];
+    const bloquesDuros = ["Trauma", "Resistencia", "Bloqueo", "Soberbia"];
     
     function startInvasores() {
       historialRespuestas = []; juegoActual = 'invasores'; puntajeJuego = 0;
       invState = { 
         playing: true, score: 0, playerX: 250, playerW: 80, playerH: 20, 
-        bullets: [], enemies: [], lastEnemy: 0, keys: {}, lives: 3, speedMod: 1
+        bullets: [], enemies: [], powerups: [], lastEnemy: 0, keys: {}, 
+        lives: 3, speedMod: 1, level: 1, weaponType: 0, weaponTimer: 0
       };
       
       elArcadeView.innerHTML = renderDashboardHTML() + `
         <button class="game-back-menu" onclick="stopInvasores()">← Salir</button>
-        <div class="game-active-header"><span>🚀 Invasores Terapéuticos</span><span id="inv-score">Puntos: 0 | Vidas: 3</span></div>
-        <p style="margin-bottom:10px;font-size:0.9rem;">Destruye los bloqueos disparando 'Empatía'. Evita que lleguen a la base.</p>
+        <div class="game-active-header"><span>🚀 Invasores Terapéuticos</span><span id="inv-score">Nivel: 1 | Pts: 0 | Vidas: 3</span></div>
+        <p style="margin-bottom:10px;font-size:0.9rem;">Sobrevive el mayor tiempo posible. Los bloques morados requieren más empatía. ¡Atrapa las 🎁 para mejorar tu arma!</p>
         <canvas id="space-canvas" width="600" height="350"></canvas>
         <div class="space-controls">
           <button class="btn-space" onmousedown="invState.keys.ArrowLeft=true" onmouseup="invState.keys.ArrowLeft=false" ontouchstart="invState.keys.ArrowLeft=true" ontouchend="invState.keys.ArrowLeft=false">⬅️ Izq</button>
@@ -907,10 +909,20 @@
     
     function invKeyDown(e) { invState.keys[e.code] = true; if(e.code === 'Space') shootInv(); }
     function invKeyUp(e) { invState.keys[e.code] = false; }
+    
     function shootInv() {
         if(!invState.playing) return;
-        invState.bullets.push({ x: invState.playerX + invState.playerW/2 - 2, y: 320, w: 4, h: 10 });
+        // Dependiendo del arma (powerup), disparamos distinto
+        if (invState.weaponType === 1) { // Doble Escucha
+            invState.bullets.push({ x: invState.playerX + 15, y: 320, w: 4, h: 10, dmg: 1, color: '#3498db' });
+            invState.bullets.push({ x: invState.playerX + invState.playerW - 19, y: 320, w: 4, h: 10, dmg: 1, color: '#3498db' });
+        } else if (invState.weaponType === 2) { // Empatía Profunda (Rayo ancho de alto impacto)
+            invState.bullets.push({ x: invState.playerX + invState.playerW/2 - 12, y: 320, w: 24, h: 12, dmg: 3, color: '#2ecc71' });
+        } else { // Arma normal
+            invState.bullets.push({ x: invState.playerX + invState.playerW/2 - 2, y: 320, w: 4, h: 10, dmg: 1, color: '#f1c40f' });
+        }
     }
+
     function stopInvasores() {
         invState.playing = false;
         document.removeEventListener('keydown', invKeyDown);
@@ -925,35 +937,75 @@
         if(!canvas) return;
         let ctx = canvas.getContext('2d');
         
+        // Temporizador de armas pesadas
+        if(invState.weaponTimer > 0) {
+            invState.weaponTimer--;
+            if(invState.weaponTimer <= 0) invState.weaponType = 0; // Vuelve a normal
+        }
+
+        // Progresión estilo Tetris (Aumenta la dificultad cada 15 puntos)
+        invState.level = 1 + Math.floor(invState.score / 15);
+        invState.speedMod = 1 + ((invState.level - 1) * 0.15);
+
         // Movimiento Jugador
         if(invState.keys['ArrowLeft'] && invState.playerX > 0) invState.playerX -= 5;
         if(invState.keys['ArrowRight'] && invState.playerX < canvas.width - invState.playerW) invState.playerX += 5;
 
         // Generar Enemigos
         invState.lastEnemy++;
-        if(invState.lastEnemy > (80 / invState.speedMod)) {
-            invState.enemies.push({
-                x: Math.random() * (canvas.width - 60), y: -20, w: 60, h: 20, 
-                text: bloques[Math.floor(Math.random() * bloques.length)]
-            });
+        if(invState.lastEnemy > (90 / invState.speedMod)) {
+            let esDuro = Math.random() < (0.1 + (invState.level * 0.05)); // Más nivel = Más duros
+            if(esDuro) {
+                invState.enemies.push({
+                    x: Math.random() * (canvas.width - 70), y: -25, w: 70, h: 25, 
+                    text: bloquesDuros[Math.floor(Math.random() * bloquesDuros.length)],
+                    hp: 3, maxHp: 3, speedMult: 0.6, color: '#8e44ad' // Lentos pero duros
+                });
+            } else {
+                invState.enemies.push({
+                    x: Math.random() * (canvas.width - 60), y: -20, w: 60, h: 20, 
+                    text: bloquesNormales[Math.floor(Math.random() * bloquesNormales.length)],
+                    hp: 1, maxHp: 1, speedMult: 1, color: '#e74c3c' // Normales
+                });
+            }
             invState.lastEnemy = 0;
-            invState.speedMod += 0.05; // Aumentar dificultad
         }
 
         // Limpiar Canvas
         ctx.fillStyle = '#1a1a2e'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Dibujar Jugador
-        ctx.fillStyle = '#2ecc71';
+        ctx.fillStyle = invState.weaponType === 0 ? '#2ecc71' : (invState.weaponType === 1 ? '#3498db' : '#f1c40f');
         ctx.fillRect(invState.playerX, 330, invState.playerW, invState.playerH);
         ctx.fillStyle = 'white'; ctx.font = '12px Arial'; ctx.textAlign = 'center';
         ctx.fillText("Counselor", invState.playerX + invState.playerW/2, 345);
 
+        // Dibujar e interactuar Powerups
+        for(let i = invState.powerups.length - 1; i >= 0; i--) {
+            let p = invState.powerups[i];
+            p.y += 2; // Caen constantemente
+            
+            ctx.fillStyle = '#f39c12';
+            ctx.fillRect(p.x, p.y, p.w, p.h);
+            ctx.fillStyle = 'white'; ctx.font = '12px Arial';
+            ctx.fillText("🎁", p.x + p.w/2, p.y + 15);
+
+            // Colisión de jugador con powerup
+            if(p.x < invState.playerX + invState.playerW && p.x + p.w > invState.playerX && p.y + p.h > 330) {
+                invState.weaponType = p.type; // 1 o 2
+                invState.weaponTimer = 400; // Dura aprox 6.5 segundos a 60fps
+                invState.score += 2; // Extra puntos por atraparlo
+                invState.powerups.splice(i, 1);
+            } else if (p.y > canvas.height) {
+                invState.powerups.splice(i, 1); // Se perdió
+            }
+        }
+
         // Actualizar y dibujar balas
-        ctx.fillStyle = '#f1c40f';
         for(let i = invState.bullets.length - 1; i >= 0; i--) {
             let b = invState.bullets[i];
             b.y -= 7;
+            ctx.fillStyle = b.color;
             ctx.fillRect(b.x, b.y, b.w, b.h);
             if(b.y < 0) invState.bullets.splice(i, 1);
         }
@@ -961,37 +1013,56 @@
         // Actualizar y dibujar enemigos
         for(let i = invState.enemies.length - 1; i >= 0; i--) {
             let e = invState.enemies[i];
-            e.y += 1.5 * invState.speedMod;
+            e.y += 1.2 * invState.speedMod * e.speedMult;
             
             // Colisión con balas
             let hit = false;
             for(let j = invState.bullets.length - 1; j >= 0; j--) {
                 let b = invState.bullets[j];
                 if(b.x < e.x + e.w && b.x + b.w > e.x && b.y < e.y + e.h && b.y + b.h > e.y) {
-                    invState.bullets.splice(j, 1);
-                    invState.enemies.splice(i, 1);
-                    invState.score++;
+                    e.hp -= b.dmg;
+                    invState.bullets.splice(j, 1); // La bala se destruye
+                    
+                    if(e.hp <= 0) {
+                        invState.score += e.maxHp; // Da más puntos si era duro
+                        invState.enemies.splice(i, 1);
+                        
+                        // Posibilidad de soltar un powerup (15%)
+                        if(Math.random() < 0.15) {
+                            invState.powerups.push({
+                                x: e.x + e.w/2 - 10, y: e.y, w: 20, h: 20, 
+                                type: Math.random() > 0.5 ? 1 : 2 // Tipo aleatorio
+                            });
+                        }
+                        hit = true; break;
+                    }
                     hit = true; break;
                 }
             }
             if(hit) continue;
 
-            // Enemigo llega abajo
+            // Enemigo llega abajo (Pierdes vida)
             if(e.y > canvas.height) {
                 invState.lives--;
                 invState.enemies.splice(i, 1);
                 if(invState.lives <= 0) return endInvasores();
             } else {
-                ctx.fillStyle = '#e74c3c';
+                ctx.fillStyle = e.color;
                 ctx.fillRect(e.x, e.y, e.w, e.h);
+                // Dibujar barra de vida si tiene más de 1
+                if(e.maxHp > 1) {
+                    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+                    ctx.fillRect(e.x, e.y + e.h - 4, e.w, 4);
+                    ctx.fillStyle = '#2ecc71';
+                    ctx.fillRect(e.x, e.y + e.h - 4, e.w * (e.hp / e.maxHp), 4);
+                }
                 ctx.fillStyle = 'white'; ctx.font = '10px Arial';
-                ctx.fillText(e.text, e.x + e.w/2, e.y + 14);
+                ctx.fillText(e.text, e.x + e.w/2, e.y + (e.maxHp>1?13:14));
             }
         }
         
-        document.getElementById('inv-score').innerText = `Puntos: ${invState.score} | Vidas: ${invState.lives}`;
-        
-        if(invState.score >= 10) return endInvasores(); // Gana a los 10 puntos para mantener coherencia
+        let elScore = document.getElementById('inv-score');
+        if(elScore) elScore.innerText = `Nivel: ${invState.level} | Pts: ${invState.score} | Vidas: ${invState.lives}`;
         
         loopInvasores = requestAnimationFrame(updateInvasores);
     }
@@ -1000,8 +1071,16 @@
         invState.playing = false;
         document.removeEventListener('keydown', invKeyDown);
         document.removeEventListener('keyup', invKeyUp);
-        puntajeJuego = invState.score > 10 ? 10 : invState.score;
-        historialRespuestas.push({pre: "Destruir Bloqueos", res: puntajeJuego + " impactos", cor: "10 impactos", exp: "Disparaste Empatía para frenar juicios y barreras."});
+        
+        // Limitamos el puntaje global máximo que aporta este minijuego para no desbalancear, 
+        // pero registramos el puntaje real en el historial.
+        puntajeJuego = invState.score > 20 ? 20 : invState.score; 
+        historialRespuestas.push({
+            pre: "Resistencia Terapéutica", 
+            res: "Llegaste al Nivel " + invState.level, 
+            cor: invState.score + " pts logrados", 
+            exp: "Sobreviviste a múltiples bloqueos usando habilidades de Counseling."
+        });
         renderFinalResult();
     }
 
