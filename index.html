@@ -422,7 +422,7 @@
 
     function renderCategorias() {
       const cardTodas = `<div class="cat-card ${activeCategoryId === 'all' ? 'active' : ''}" style="--cat-color: var(--brand-color)" onclick="selectCategory('all')"><div class="cat-title">Todas las categorías</div><div class="cat-desc">Ver todos los ítems alfabéticamente</div></div>`;
-      const cardsCategorias = dbCategorias.map(cat => `<div class="cat-card ${activeCategoryId == cat.id ? 'active' : ''}" style="--cat-color: ${cat.color}" onclick="selectCategory('${cat.id}')"><div class="cat-title">	ext.nombre}</div><div class="cat-desc">${cat.descripcion}</div></div>`).join('');
+      const cardsCategorias = dbCategorias.map(cat => `<div class="cat-card ${activeCategoryId == cat.id ? 'active' : ''}" style="--cat-color: ${cat.color}" onclick="selectCategory('${cat.id}')"><div class="cat-title">${cat.nombre}</div><div class="cat-desc">${cat.descripcion}</div></div>`).join('');
       const cardForm = `<div class="cat-card cat-card-form ${activeCategoryId === 'form' ? 'active' : ''}" style="--cat-color: #3498db" onclick="openSection('form')"><div class="cat-title">📝 Sugerir concepto</div><div class="cat-desc">Propone nuevos términos</div></div>`;
       const cardGame = `<div class="cat-card cat-card-game ${activeCategoryId === 'game' ? 'active' : ''}" style="--cat-color: #9b59b6" onclick="openSection('game')"><div class="cat-title">🎮 Arcade de Juegos</div><div class="cat-desc">14 modalidades interactivas</div></div>`;
       
@@ -568,7 +568,7 @@
       if(ronda >= 10 || ronda >= bancoJuego.length) return renderFinalResult();
       let p = bancoJuego[ronda];
       let botones = p.opciones.map(o => `<button class="option-btn" onclick="evaluarRespuestaTrivia(this, '${escapeString(o)}', '${escapeString(p.correcta)}')">${o}</button>`).join('');
-      elArcadeView.innerHTML = `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>❓ Trivia</span><span>Ronda ${ronda + 1} / 10</span></div><div class="game-text-question">	ext.pregunta}</div><div class="options-stack">${botones}</div>`;
+      elArcadeView.innerHTML = `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>❓ Trivia</span><span>Ronda ${ronda + 1} / 10</span></div><div class="game-text-question">${p.pregunta}</div><div class="options-stack">${botones}</div>`;
     }
     function evaluarRespuestaTrivia(btn, sel, corr) {
       elArcadeView.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
@@ -733,7 +733,7 @@
     function renderFragmentado() {
       let fHtml = fragObj.arr.map((w, i) => {
         let isUsed = fragObj.sel.includes(i);
-        return `<div class="frag-word ${isUsed?'used':''}" ${isUsed?'':`onclick="clickFrag(subi})"`}>	ext.w}</div>`;
+        return `<div class="frag-word ${isUsed?'used':''}" ${isUsed?'':`onclick="clickFrag(${i})"`}>${w}</div>`;
       }).join('');
       let currentSentence = fragObj.sel.map(idx => fragObj.arr[idx]).join(' ');
       elArcadeView.innerHTML = `<button class="game-back-menu" onclick="renderArcadeMenu()">← Volver</button><div class="game-active-header"><span>🧩 Fragmentado</span><span>Frase ${ronda + 1} / 3</span></div><h3 style="color:#9b59b6; margin-bottom:10px;">${bancoJuego[ronda].titulo}</h3><div style="min-height:50px; font-size:1.1rem; font-style:italic; margin:20px 0;">${currentSentence}</div><div class="frag-container">${fHtml}</div><button class="game-back-menu" onclick="fragObj.sel=[]; renderFragmentado()">↻ Limpiar</button>`;
